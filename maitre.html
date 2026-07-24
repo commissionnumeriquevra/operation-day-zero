@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MAITRE DU JEU — Operation Day Zero</title>
+<link rel="stylesheet" href="style.css">
+<style>body{color:#aaa;}.hdr{border-color:rgba(255,255,255,0.09);}.hdr-role{color:#fff;font-size:24px;}.hdr-chrono{color:#cc2200;}</style>
+</head>
+<body>
+<div class="page">
+<div class="hdr" style="margin-bottom:14px;"><div><div class="hdr-op">// OPERATION DAY ZERO — CONSOLE MAITREJEU //</div><div class="hdr-role">MAITREJEU</div></div><div class="hdr-chrono" id="chr">57:00</div></div>
+<div class="m-grid">
+<div>
+  <div class="m-card" style="margin-bottom:11px;text-align:center;">
+    <div class="m-lbl">COMPTE A REBOURS</div>
+    <div class="chrono-big" id="cbig">57:00</div>
+    <div style="font-size:10px;letter-spacing:3px;opacity:0.25;" id="plbl">EN ATTENTE</div>
+  </div>
+  <div class="m-card" style="margin-bottom:11px;">
+    <div class="m-lbl">CONTROLES</div>
+    <button class="m-btn m-start" onclick="lancerJeu()">[ LANCER LE JEU ]</button>
+    <button class="m-btn m-appel" onclick="declencherAppel()">[ DECLENCHER L'APPEL TELEPHONE ]</button>
+    <button class="m-btn m-win" onclick="forcerFin('victoire')">[ FORCER VICTOIRE ]</button>
+    <button class="m-btn m-lose" onclick="forcerFin('defaite')">[ FORCER DEFAITE ]</button>
+    <button class="m-btn m-reset" onclick="resetJeu()">[ REINITIALISER ]</button>
+  </div>
+  <div class="m-card" style="margin-bottom:11px;">
+    <div class="m-lbl">RAPPELS IMPORTANTS</div>
+    <div class="rappel">
+      Code deverouillage :<div class="rv">7 — 3 — 5 — 1 — 9 — 4</div>
+      Phrase : ARES NE PEUT PAS ETRE ARRETEE<br><br>
+      Code final (telephone) :<div class="rv">4 — 8 — 2 — 6 — 1 — 9</div>
+      Dire UNE SEULE FOIS au Demineur<br><br>
+      Code cadenas boite :<div class="rv">QR CODE N°3</div>
+    </div>
+  </div>
+  <div class="m-card">
+    <div class="m-lbl">LOG EVENEMENTS</div>
+    <div class="log-box" id="log"><div class="log-ln">Systeme pret — En attente du lancement...</div></div>
+  </div>
+</div>
+<div>
+  <div class="m-card" style="margin-bottom:11px;">
+    <div class="m-lbl">SYNCHRONISATION EQUIPE</div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
+      <span style="font-size:10px;letter-spacing:2px;opacity:0.35;">JOUEURS TERMINES</span>
+      <span style="font-family:'VT323',monospace;font-size:28px;color:#00cc44;" id="syncn">0/6</span>
+    </div>
+    <div class="sync-outer"><div class="sync-inner" id="sbar" style="width:0%"></div></div>
+  </div>
+  <div class="m-card">
+    <div class="m-lbl">ETAT DES TERMINAUX</div>
+    <div class="j-grid">
+      <div class="j-card" style="border-left:3px solid #ff4400;"><div class="j-nom" style="color:#ff4400;">PC01 CRYPTO</div><div class="j-stat" id="js1">Attente</div><div class="j-dots"><span class="j-ed" id="d1-dev">DEV</span><span class="j-ed" id="d1-e1">E1</span><span class="j-ed" id="d1-e2">E2</span><span class="j-ed" id="d1-e3">E3</span></div></div>
+      <div class="j-card" style="border-left:3px solid #0088ff;"><div class="j-nom" style="color:#0088ff;">PC02 ANALYSTE</div><div class="j-stat" id="js2">Attente</div><div class="j-dots"><span class="j-ed" id="d2-dev">DEV</span><span class="j-ed" id="d2-e1">E1</span><span class="j-ed" id="d2-e2">E2</span></div></div>
+      <div class="j-card" style="border-left:3px solid #44ff00;"><div class="j-nom" style="color:#44ff00;">PC03 ING.</div><div class="j-stat" id="js3">Attente</div><div class="j-dots"><span class="j-ed" id="d3-dev">DEV</span><span class="j-ed" id="d3-e1">E1</span><span class="j-ed" id="d3-e2">E2</span></div></div>
+      <div class="j-card" style="border-left:3px solid #dd00dd;"><div class="j-nom" style="color:#dd00dd;">PC04 BIO</div><div class="j-stat" id="js4">Attente</div><div class="j-dots"><span class="j-ed" id="d4-dev">DEV</span><span class="j-ed" id="d4-e1">E1</span><span class="j-ed" id="d4-e2">E2</span></div></div>
+      <div class="j-card" style="border-left:3px solid #ffaa00;"><div class="j-nom" style="color:#ffaa00;">PC05 INTER.</div><div class="j-stat" id="js5">Attente</div><div class="j-dots"><span class="j-ed" id="d5-dev">DEV</span><span class="j-ed" id="d5-e1">E1</span><span class="j-ed" id="d5-e2">E2</span><span class="j-ed" id="d5-e3">E3</span></div></div>
+      <div class="j-card" style="border-left:3px solid #00ddff;"><div class="j-nom" style="color:#00ddff;">PC06 DEMIN.</div><div class="j-stat" id="js6">Attente</div><div class="j-dots"><span class="j-ed" id="d6-dev">DEV</span><span class="j-ed" id="d6-e1">E1</span><span class="j-ed" id="d6-e2">E2</span><span class="j-ed" id="d6-e3">E3</span></div></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getDatabase,ref,onValue,set,update}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation-day-zero.firebaseapp.com",databaseURL:"https://operation-day-zero-default-rtdb.firebaseio.com",projectId:"operation-day-zero",storageBucket:"operation-day-zero.firebasestorage.app",messagingSenderId:"955748193348",appId:"1:955748193348:web:2de3150288aa136725d811"};
+const app=initializeApp(FB),db=getDatabase(app);
+const DUREE=57*60;
+const REQ={1:['e1','e2','e3'],2:['e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e1','e2','e3']};
+let timerInterval=null,currentTemps=DUREE;
+function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');document.getElementById('chr').textContent=v;const b=document.getElementById('cbig');b.textContent=v;if(t<300)b.classList.add('urgent');}
+function log(msg,cls){const b=document.getElementById('log');const now=new Date();const ts=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')+':'+String(now.getSeconds()).padStart(2,'0');const d=document.createElement('div');d.className='log-ln '+(cls||'');d.textContent='['+ts+'] '+msg;b.insertBefore(d,b.firstChild);if(b.children.length>40)b.removeChild(b.lastChild);}
+onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;sc(g.temps||DUREE);currentTemps=g.temps||DUREE;const phases={attente:'EN ATTENTE',jeu:'JEU EN COURS',victoire:'VICTOIRE !',defaite:'DEFAITE'};document.getElementById('plbl').textContent=phases[g.phase]||'EN ATTENTE';const sync=g.sync||0;document.getElementById('syncn').textContent=sync+'/6';document.getElementById('sbar').style.width=(sync/6*100)+'%';for(let i=1;i<=6;i++){const j=g.joueurs?.[i];const stat=document.getElementById('js'+i);const devDot=document.getElementById('d'+i+'-dev');if(!j){if(stat)stat.textContent='Attente';continue;}const allDone=j.dev&&REQ[i].every(k=>j[k]);if(stat){if(allDone){stat.textContent='TERMINE';stat.style.color='#00cc44';}else if(j.dev){stat.textContent='En cours...';stat.style.color='#ffaa00';}else{stat.textContent='Attente';stat.style.color='rgba(255,255,255,0.18)';}}if(devDot)devDot.classList.toggle('ok',!!j.dev);REQ[i].forEach(k=>{const dot=document.getElementById('d'+i+'-'+k);if(dot)dot.classList.toggle('ok',!!j[k]);});}});
+async function startTimer(){if(timerInterval)clearInterval(timerInterval);timerInterval=setInterval(async()=>{currentTemps--;if(currentTemps<=0){clearInterval(timerInterval);await update(ref(db,'game'),{temps:0,phase:'defaite'});log('TEMPS ECOULE — DEFAITE','er');return;}await set(ref(db,'game/temps'),currentTemps);if(currentTemps===42*60){await set(ref(db,'game/alerte'),1);log('Alerte ARES-7 : 42 min','hi');}if(currentTemps===27*60){await set(ref(db,'game/alerte'),2);log('Alerte ARES-7 : 27 min','hi');}if(currentTemps===12*60){await set(ref(db,'game/alerte'),3);log('Alerte ARES-7 : 12 min','hi');}if(currentTemps===4*60){await set(ref(db,'game/alerte'),4);log('Alerte ARES-7 : 4 min','hi');}if(currentTemps===30)log('!!! COMPTE A REBOURS FINAL 30s !!!','er');},1000);}
+window.lancerJeu=async()=>{if(!confirm('Lancer le jeu maintenant ?'))return;await set(ref(db,'game'),{phase:'jeu',temps:DUREE,sync:0,alerte:0,penalite:0,appel:0,joueurs:{1:{dev:false,e1:false,e2:false,e3:false},2:{dev:false,e1:false,e2:false},3:{dev:false,e1:false,e2:false},4:{dev:false,e1:false,e2:false},5:{dev:false,e1:false,e2:false,e3:false},6:{dev:false,e1:false,e2:false,e3:false}}});currentTemps=DUREE;await startTimer();log('JEU LANCE !','ok');};
+window.declencherAppel=async()=>{await set(ref(db,'game/appel'),Date.now());log('>>> APPEL DECLENCHE — Appelle le telephone dans la boite !','hi');alert('APPEL DECLENCHE !\n\nCode a dicter au Demineur :\n4 - 8 - 2 - 6 - 1 - 9\n\nDis-le UNE SEULE FOIS, calmement.');};
+window.forcerFin=async r=>{if(!confirm('Forcer '+r+' ?'))return;if(timerInterval)clearInterval(timerInterval);await update(ref(db,'game'),{phase:r});log('Fin forcee : '+r,r==='victoire'?'ok':'er');};
+window.resetJeu=async()=>{if(!confirm('Reinitialiser completement le jeu ?'))return;if(timerInterval)clearInterval(timerInterval);await set(ref(db,'game'),{phase:'attente',temps:DUREE,sync:0,alerte:0,penalite:0,appel:0,joueurs:{1:{dev:false,e1:false,e2:false,e3:false},2:{dev:false,e1:false,e2:false},3:{dev:false,e1:false,e2:false},4:{dev:false,e1:false,e2:false},5:{dev:false,e1:false,e2:false,e3:false},6:{dev:false,e1:false,e2:false,e3:false}}});currentTemps=DUREE;log('JEU REINITIALISE','er');};
+</script>
+</body>
+</html>

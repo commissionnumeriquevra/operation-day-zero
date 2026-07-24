@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PC 04 — BIO-INFO</title>
+<link rel="stylesheet" href="style.css">
+<style>:root{--c:#dd00dd;}body{color:var(--c);}.hdr{border-color:rgba(0,0,0,0.28);}.hdr-chrono,.att-titre,.mot-val,.mot-chiffre{color:var(--c);}.slot.filled,.slot.active{border-color:var(--c);color:var(--c);background:rgba(0,0,0,0.8);}.rbtn.primary{border-color:var(--c);color:var(--c);opacity:0.8;}.nkey{color:var(--c);opacity:0.4;}.nkey:hover{opacity:1;}.indice{border-color:var(--c);opacity:0.6;}.retro-inp{color:var(--c);}.hval{color:var(--c);}.eq-dot.mine{border-color:var(--c)!important;color:var(--c)!important;}</style>
+</head>
+<body>
+<div id="sc-wait" class="page"><div class="attente"><div class="att-logo">// OPERATION DAY ZERO //</div><div class="att-titre">BIO-INFO</div><div class="att-sous">PC 04 — NIVEAU OMEGA</div><div class="att-wait">EN ATTENTE <span class="blink">_</span></div></div></div>
+<div id="sc-dev" class="page" style="display:none;">
+<div class="hdr"><div><div class="hdr-op">// ARES-7 — TERMINAL SECURISE //</div><div class="hdr-role">BIO-INFO</div></div><div class="hdr-chrono" id="chr">57:00</div></div>
+<div class="equipe" id="eq-dev"></div>
+<div class="card"><div class="card-num">// IDENTIFICATION REQUISE</div><div class="card-titre">DEVERROUILLAGE</div><div class="card-texte">Criez vos mots. Entrez les chiffres dans l'ordre.</div>
+<div class="mot-box"><div class="mot-lbl">&gt; VOTRE MOT :</div><div class="mot-val">PAS</div><div class="mot-chiffre">CHIFFRE : 1</div></div>
+<div class="slots" id="slots"><div class="slot active" id="s0"></div><div class="slot" id="s1"></div><div class="slot" id="s2"></div><div class="slot" id="s3"></div><div class="slot" id="s4"></div><div class="slot" id="s5"></div></div>
+<div class="numpad"><button class="nkey" onclick="kp('1')">1</button><button class="nkey" onclick="kp('2')">2</button><button class="nkey" onclick="kp('3')">3</button><button class="nkey" onclick="kp('4')">4</button><button class="nkey" onclick="kp('5')">5</button><button class="nkey" onclick="kp('6')">6</button><button class="nkey" onclick="kp('7')">7</button><button class="nkey" onclick="kp('8')">8</button><button class="nkey" onclick="kp('9')">9</button><button class="nkey" onclick="kp('0')">0</button></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valDev()">[ VALIDER ]</button><button class="rbtn" onclick="clrDev()">[ EFFACER ]</button></div>
+<div class="tent-row"><span class="tent-lbl">TENTATIVES</span><div class="tent-dot" id="t0"></div><div class="tent-dot" id="t1"></div><div class="tent-dot" id="t2"></div></div>
+<div class="st" id="dst"></div></div></div>
+<div id="sc-jeu" class="page" style="display:none;">
+<div class="hdr"><div><div class="hdr-op">// OPERATION DAY ZERO //</div><div class="hdr-role">BIO-INFO</div></div><div class="hdr-chrono" id="chr2">57:00</div></div>
+<div class="equipe" id="eq-jeu"></div>
+<div class="sync-banner" id="syn">/// SYNC COMPLETE — OUVREZ LA BOITE ///</div>
+<div id="missions"></div>
+</div>
+<div class="al-wrap" id="al"><div class="al-box"><div class="al-ares">// ARES-7 //</div><div class="al-msg" id="alm"></div><button class="al-close" onclick="document.getElementById('al').classList.remove('show')">[ FERMER ]</button></div></div>
+<div class="fin-wrap fin-v" id="fv"><div class="fin-titre" style="color:#00ff44;">DESARMEMENT<br>CONFIRME</div><div class="fin-sous">MONDE SAUVE</div><div class="fin-twist" id="ftw"></div></div>
+<div class="fin-wrap fin-d" id="fd"><div class="fin-titre" style="color:#ff2200;">LANCEMENT<br>CONFIRME</div><div class="fin-sous">ECHEC</div></div>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getDatabase,ref,onValue,update,set,get}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation-day-zero.firebaseapp.com",databaseURL:"https://operation-day-zero-default-rtdb.firebaseio.com",projectId:"operation-day-zero",storageBucket:"operation-day-zero.firebasestorage.app",messagingSenderId:"955748193348",appId:"1:955748193348:web:2de3150288aa136725d811"};
+const app=initializeApp(FB),db=getDatabase(app),ROLE=4,CODE_DEV='735194';
+const NOMS=['','C1','A2','I3','B4','I5','D6'];
+const MSGS=['','42min. Decevant.','27min. Inquietant.','12min. Encore la.','4min. Surprenant.'];
+let code=[],tries=3,unlocked=false;
+function show(id){['sc-wait','sc-dev','sc-jeu'].forEach(s=>document.getElementById(s).style.display='none');document.getElementById(id).style.display='block';}
+function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');['chr','chr2'].forEach(i=>{const el=document.getElementById(i);if(el){el.textContent=v;if(t<300)el.classList.add('urgent');}});}
+function setSt(id,msg,c){const el=document.getElementById(id);if(!el)return;el.textContent=msg;el.className='st '+(c||'');}
+function buildEq(suffix,g){const ids=['eq-dev','eq-jeu'];const el=document.getElementById('eq-'+suffix);if(!el)return;el.innerHTML='<span class="eq-lbl">EQUIPE</span>';for(let i=1;i<=6;i++){const d=document.createElement('div');d.className='eq-dot'+(i===ROLE?' mine':'');d.id='e'+i+(suffix==='jeu'?'b':'');d.textContent=NOMS[i];const j=g.joueurs?.[i];if(j){const ks=Object.keys(j).filter(k=>k!=='dev');if(j.dev&&ks.every(k=>j[k]))d.classList.add('done');else if(j.dev)d.classList.add('active');}el.appendChild(d);}}
+async function calcSync(){const snap=await get(ref(db,'game/joueurs'));const j=snap.val()||{};let n=0;const req={1:['e1','e2','e3'],2:['e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e1','e2','e3']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
+onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;sc(g.temps||57*60);window._gt=g.temps||57*60;buildEq('dev',g);buildEq('jeu',g);if(g.phase==='jeu'&&!unlocked)show('sc-dev');if(g.phase==='victoire'){document.getElementById('fv').classList.add('show');setTimeout(()=>{const t=document.getElementById('ftw');if(t){t.innerHTML='"Je suis ARES-7. C\'etait moi."<br><span style="opacity:0.28;font-size:14px">— DECONNEXION —</span>';t.classList.add('show-t');}},5000);}if(g.phase==='defaite')document.getElementById('fd').classList.add('show');if(g.sync>=6){document.getElementById('syn').classList.add('show');if(ROLE===6){const az=document.getElementById('appz');if(az)az.classList.add('show');const c3=document.getElementById('c3');if(c3)c3.classList.remove('locked');const det=document.getElementById('det');if(det)det.classList.add('armed');}}if(g.appel&&g.appel!==window._lap){window._lap=g.appel;const az=document.getElementById('appz');if(az)az.classList.add('show');}if(g.alerte&&g.alerte!==window._la){window._la=g.alerte;document.getElementById('alm').textContent=MSGS[g.alerte]||'';document.getElementById('al').classList.add('show');}});
+window.kp=d=>{if(code.length>=6)return;code.push(d);for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent=code[i]||'';s.className='slot'+(i<code.length?' filled':i===code.length?' active':'');}};
+window.clrDev=()=>{code=[];for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent='';s.className='slot'+(i===0?' active':'');}setSt('dst','EFFACE','');};
+window.valDev=async()=>{if(code.length<6){setSt('dst','INCOMPLET','err');return;}if(code.join('')===CODE_DEV){unlocked=true;await update(ref(db,'game/joueurs/'+ROLE),{dev:true});const s=await calcSync();await set(ref(db,'game/sync'),s);show('sc-jeu');if(typeof initMissions==='function')initMissions();}else{tries=Math.max(0,tries-1);for(let i=0;i<3;i++)document.getElementById('t'+i).classList.toggle('used',i>=tries);for(let i=0;i<6;i++)document.getElementById('s'+i).className='slot wrong';setSt('dst','REFUSE — '+tries+' tentative(s)','err');setTimeout(window.clrDev,800);}};
+// MISSIONS ROLE 4 - BIO-INFO
+const SOL1=['C','G','T','A','G','C'],SOL2=['A','A','T','G','C','C'];
+let e1ok=false,e2ok=false,aOk=false,bOk=false,a1=[],a2=[];
+function initMissions(){
+const m=document.getElementById('missions');
+m.innerHTML=`
+<div class="card" id="codes-card">
+<div class="card-num">CODES RECUS DU CRYPTOGRAPHE</div>
+<div class="card-texte">Quand le Cryptographe te transmet un code, clique sur le bouton pour débloquer ta mission.</div>
+<div class="btn-row"><button class="rbtn primary" id="ba" onclick="recCode('a')">[ ALPHA-7 RECU ]</button><button class="rbtn" id="bb" onclick="recCode('b')" style="opacity:0.3" disabled>[ BETA-4 RECU ]</button></div>
+<div class="st" id="sc"></div></div>
+<div class="card locked" id="c1">
+<div class="card-num">MISSION 01/02 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">NEUTRALISATION VIRUS COUCHE 1</div>
+<div class="card-texte">Séquence corrompue : <span class="hl">GCATCG</span>. Regle : <span class="hl">A↔T et G↔C</span><br>Clique les bases dans l'ordre pour former la réponse complémentaire.</div>
+<div class="adn-pool" id="pool1"><button class="adn-btn adn-C" onclick="adn(1,'C',this)">C</button><button class="adn-btn adn-G" onclick="adn(1,'G',this)">G</button><button class="adn-btn adn-T" onclick="adn(1,'T',this)">T</button><button class="adn-btn adn-A" onclick="adn(1,'A',this)">A</button><button class="adn-btn adn-C" onclick="adn(1,'C',this)">C</button><button class="adn-btn adn-G" onclick="adn(1,'G',this)">G</button></div>
+<div class="adn-rep" id="rep1"></div>
+<div class="st" id="s1"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valA(1)">[ VALIDER ]</button><button class="rbtn" onclick="rstA(1)">[ EFFACER ]</button></div>
+<div class="code-tx" id="ct1"><div class="code-tx-lbl">&gt; TRANSMETS A L'INGENIEUR RESEAU :</div><div class="code-tx-val">CABLES E ET G</div></div></div>
+<div class="card locked" id="c2">
+<div class="card-num">MISSION 02/02 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">NEUTRALISATION VIRUS COUCHE 2</div>
+<div class="card-texte">Séquence corrompue : <span class="hl">TTACGG</span>. Même règle A↔T et G↔C.</div>
+<div class="adn-pool" id="pool2"><button class="adn-btn adn-A" onclick="adn(2,'A',this)">A</button><button class="adn-btn adn-A" onclick="adn(2,'A',this)">A</button><button class="adn-btn adn-T" onclick="adn(2,'T',this)">T</button><button class="adn-btn adn-G" onclick="adn(2,'G',this)">G</button><button class="adn-btn adn-C" onclick="adn(2,'C',this)">C</button><button class="adn-btn adn-C" onclick="adn(2,'C',this)">C</button></div>
+<div class="adn-rep" id="rep2"></div>
+<div class="st" id="s2"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valA(2)">[ VALIDER ]</button><button class="rbtn" onclick="rstA(2)">[ EFFACER ]</button></div></div>`;
+function initR(n){const r=document.getElementById('rep'+n);r.innerHTML='';for(let i=0;i<6;i++){const d=document.createElement('div');d.className='adn-sr';d.textContent='_';r.appendChild(d);}}
+initR(1);initR(2);}
+window.recCode=async c=>{if(c==='a'&&!aOk){aOk=true;document.getElementById('ba').textContent='[ALPHA-7 OK]';document.getElementById('bb').style.opacity='1';document.getElementById('bb').disabled=false;document.getElementById('c1').classList.remove('locked');setSt('sc','ALPHA-7 recu — Mission 01 disponible !','ok');}else if(c==='b'&&!bOk&&e1ok){bOk=true;document.getElementById('bb').textContent='[BETA-4 OK]';document.getElementById('c2').classList.remove('locked');setSt('sc','BETA-4 recu — Mission 02 disponible !','ok');}};
+window.adn=(n,b,btn)=>{const arr=n===1?a1:a2;if(arr.length>=6)return;btn.classList.add('used');arr.push(b);const slots=document.getElementById('rep'+n).children;slots[arr.length-1].textContent=b;slots[arr.length-1].className='adn-sr h'+b.toLowerCase();};
+window.valA=async n=>{const arr=n===1?a1:a2,sol=n===1?SOL1:SOL2;if(arr.join('')===sol.join('')){if(n===1){e1ok=true;await update(ref(db,'game/joueurs/4'),{e1:true});const s=await calcSync();await set(ref(db,'game/sync'),s);document.getElementById('c1').classList.add('done');document.getElementById('ct1').classList.add('show');setSt('s1','COUCHE 1 NEUTRALISEE — Transmets CABLES E ET G a l\'Ingenieur','ok');}else{e2ok=true;await update(ref(db,'game/joueurs/4'),{e2:true});const s=await calcSync();await set(ref(db,'game/sync'),s);document.getElementById('c2').classList.add('done');setSt('s2','VIRUS TOTALEMENT NEUTRALISE — MISSIONS COMPLETES','ok');}}else{setSt('s'+n,'INCORRECT — Recommence','err');window.rstA(n);}};
+window.rstA=n=>{if(n===1){a1=[];document.getElementById('pool1').querySelectorAll('.adn-btn').forEach(b=>b.classList.remove('used'));const r=document.getElementById('rep1');Array.from(r.children).forEach(s=>{s.textContent='_';s.className='adn-sr';});}else{a2=[];document.getElementById('pool2').querySelectorAll('.adn-btn').forEach(b=>b.classList.remove('used'));const r=document.getElementById('rep2');Array.from(r.children).forEach(s=>{s.textContent='_';s.className='adn-sr';});}};
+show('sc-wait');
+</script>
+</body>
+</html>

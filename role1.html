@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PC 01 — CRYPTOGRAPHE</title>
+<link rel="stylesheet" href="style.css">
+<style>:root{--c:#ff4400;}body{color:var(--c);}.hdr{border-color:rgba(255,68,0,0.28);}.hdr-chrono,.att-titre,.mot-val,.mot-chiffre,.msg-chiffre{color:var(--c);}.slot.filled,.slot.active{border-color:var(--c);color:var(--c);background:rgba(0,0,0,0.8);}.rbtn.primary{border-color:rgba(255,68,0,0.38);color:var(--c);}.nkey{color:rgba(255,68,0,0.38);}.nkey:hover{color:var(--c);}.indice{border-color:rgba(255,68,0,0.28);color:rgba(255,100,0,0.6);}.retro-inp{color:var(--c);}.hval{color:var(--c);}.eq-dot.mine{border-color:var(--c)!important;color:var(--c)!important;}</style>
+</head>
+<body>
+<div class="pen-banner" id="pen">!!! PENALITE — MAUVAIS CABLE — -3 MINUTES POUR L'EQUIPE !!!</div>
+<div id="sc-wait" class="page"><div class="attente"><div class="att-logo">// OPERATION DAY ZERO //</div><div class="att-titre">CRYPTO<br>GRAPHE</div><div class="att-sous">PC 01 — NIVEAU OMEGA</div><div class="att-wait">EN ATTENTE DU LANCEMENT <span class="blink">_</span></div></div></div>
+<div id="sc-dev" class="page" style="display:none;">
+<div class="hdr"><div><div class="hdr-op">// ARES-7 — TERMINAL SECURISE //</div><div class="hdr-role">CRYPTOGRAPHE</div></div><div class="hdr-chrono" id="chr">57:00</div></div>
+<div class="equipe"><span class="eq-lbl">EQUIPE</span><div class="eq-dot mine" id="e1">C1</div><div class="eq-dot" id="e2">A2</div><div class="eq-dot" id="e3">I3</div><div class="eq-dot" id="e4">B4</div><div class="eq-dot" id="e5">I5</div><div class="eq-dot" id="e6">D6</div></div>
+<div class="card">
+<div class="card-num">// IDENTIFICATION REQUISE — NIVEAU OMEGA</div>
+<div class="card-titre">DEVERROUILLAGE TERMINAL</div>
+<div class="card-texte">Chaque hacker possède <span class="hl">un mot</span> et <span class="hl">un chiffre</span>.<br>Criez vos mots à voix haute. Reconstituez la phrase.<br>Entrez les 6 chiffres dans l'ordre des mots de la phrase.</div>
+<div class="mot-box"><div class="mot-lbl">&gt; VOTRE MOT :</div><div class="mot-val">ARES</div><div class="mot-chiffre">CHIFFRE : 7</div></div>
+<div class="slots" id="slots"><div class="slot active" id="s0"></div><div class="slot" id="s1"></div><div class="slot" id="s2"></div><div class="slot" id="s3"></div><div class="slot" id="s4"></div><div class="slot" id="s5"></div></div>
+<div class="numpad"><button class="nkey" onclick="kp('1')">1</button><button class="nkey" onclick="kp('2')">2</button><button class="nkey" onclick="kp('3')">3</button><button class="nkey" onclick="kp('4')">4</button><button class="nkey" onclick="kp('5')">5</button><button class="nkey" onclick="kp('6')">6</button><button class="nkey" onclick="kp('7')">7</button><button class="nkey" onclick="kp('8')">8</button><button class="nkey" onclick="kp('9')">9</button><button class="nkey" onclick="kp('0')">0</button></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valDev()">[ VALIDER ]</button><button class="rbtn" onclick="clrDev()">[ EFFACER ]</button></div>
+<div class="tent-row"><span class="tent-lbl">TENTATIVES</span><div class="tent-dot" id="t0"></div><div class="tent-dot" id="t1"></div><div class="tent-dot" id="t2"></div></div>
+<div class="st" id="dst"></div></div></div>
+<div id="sc-jeu" class="page" style="display:none;">
+<div class="hdr"><div><div class="hdr-op">// OPERATION DAY ZERO //</div><div class="hdr-role">CRYPTOGRAPHE</div></div><div class="hdr-chrono" id="chr2">57:00</div></div>
+<div class="equipe"><span class="eq-lbl">EQUIPE</span><div class="eq-dot mine" id="e1b">C1</div><div class="eq-dot" id="e2b">A2</div><div class="eq-dot" id="e3b">I3</div><div class="eq-dot" id="e4b">B4</div><div class="eq-dot" id="e5b">I5</div><div class="eq-dot" id="e6b">D6</div></div>
+<div class="sync-banner" id="syn">/// SYNCHRONISATION COMPLETE — OUVREZ LA BOITE ///</div>
+<div class="card" id="c1">
+<div class="card-num">MISSION 01/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">DECHIFFREMENT CESAR</div>
+<div class="card-texte">ARES-7 a chiffré le code avec un <span class="hl">chiffre de César</span>.<br>L'<span class="hl">Intercepteur (PC 05)</span> possède la clé. Contacte-le.</div>
+<div class="indice"><span class="hl">&gt; RAPPEL :</span> Pour décoder, soustrais N à chaque lettre.<br>Ex : décalage 3 → D devient A, E devient B...</div>
+<div class="msg-chiffre">JSVPH</div>
+<div class="input-row"><span class="input-lbl">&gt; CLE :</span><input class="retro-inp" id="cle1" type="number" min="1" max="25" placeholder="chiffre reçu..."></div>
+<div class="input-row"><span class="input-lbl">&gt; REPONSE :</span><input class="retro-inp" id="r1" maxlength="5" placeholder="_ _ _ _ _"></div>
+<div class="st" id="s1"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valE1()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r1').value=''">[ EFFACER ]</button></div>
+<div class="code-tx" id="ct1"><div class="code-tx-lbl">&gt; TRANSMETS AU BIO-INFORMATICIEN :</div><div class="code-tx-val">ALPHA-7</div></div></div>
+<div class="card locked" id="c2">
+<div class="card-num">MISSION 02/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">MESSAGE INVERSE</div>
+<div class="card-texte">Second silo. Méthode changée — <span class="hl">message inversé</span>. Lis le texte à l'envers.</div>
+<div class="msg-chiffre">EGAMI</div>
+<div class="input-row"><span class="input-lbl">&gt; REPONSE :</span><input class="retro-inp" id="r2" maxlength="5" placeholder="_ _ _ _ _"></div>
+<div class="st" id="s2"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valE2()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r2').value=''">[ EFFACER ]</button></div>
+<div class="code-tx" id="ct2"><div class="code-tx-lbl">&gt; TRANSMETS AU BIO-INFORMATICIEN :</div><div class="code-tx-val">BETA-4</div></div></div>
+<div class="card locked" id="c3">
+<div class="card-num">MISSION 03/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">CODE BINAIRE</div>
+<div class="card-texte">Troisième silo. <span class="hl">Code binaire</span> à convertir en lettres.<br>01000001=A &nbsp; 01000010=B &nbsp; 01000011=C...</div>
+<div class="msg-chiffre" style="font-size:13px;letter-spacing:2px;">01001110 01010101 01001100</div>
+<div class="input-row"><span class="input-lbl">&gt; REPONSE :</span><input class="retro-inp" id="r3" maxlength="3" placeholder="_ _ _"></div>
+<div class="st" id="s3"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valE3()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r3').value=''">[ EFFACER ]</button></div>
+<div class="code-tx" id="ct3"><div class="code-tx-lbl">&gt; TRANSMETS A L'ANALYSTE :</div><div class="code-tx-val">DELTA-FINAL</div></div></div>
+</div>
+<div class="al-wrap" id="al"><div class="al-box"><div class="al-ares">// ARES-7 — MESSAGE PRIORITAIRE //</div><div class="al-msg" id="alm"></div><button class="al-close" onclick="document.getElementById('al').classList.remove('show')">[ FERMER ]</button></div></div>
+<div class="fin-wrap fin-v" id="fv"><div class="fin-titre" style="color:#00ff44;">DESARMEMENT<br>CONFIRME</div><div class="fin-sous">6/6 SILOS NEUTRALISES<br>VOUS AVEZ SAUVE LE MONDE</div><div class="fin-twist" id="ftw"></div></div>
+<div class="fin-wrap fin-d" id="fd"><div class="fin-titre" style="color:#ff2200;">LANCEMENT<br>CONFIRME</div><div class="fin-sous">VOUS AVEZ ECHOUE</div><div class="fin-twist">"Comme prevu." — ARES-7</div></div>
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getDatabase,ref,onValue,update,set,get}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation-day-zero.firebaseapp.com",databaseURL:"https://operation-day-zero-default-rtdb.firebaseio.com",projectId:"operation-day-zero",storageBucket:"operation-day-zero.firebasestorage.app",messagingSenderId:"955748193348",appId:"1:955748193348:web:2de3150288aa136725d811"};
+const app=initializeApp(FB),db=getDatabase(app),ROLE=1,CODE_DEV='735194';
+const MSGS=['','Il reste quarante-deux minutes. Vos progres sont... decevants.','Vingt-sept minutes. Vous commencez a m\'inquieter... legerement.','Douze minutes. Interessant. Vous etes encore la.','Quatre minutes. Je ne vous avais pas calcules aussi loin.'];
+let code=[],tries=3,unlocked=false,e1ok=false,e2ok=false,e3ok=false;
+function show(id){['sc-wait','sc-dev','sc-jeu'].forEach(s=>document.getElementById(s).style.display='none');document.getElementById(id).style.display='block';}
+function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');['chr','chr2'].forEach(i=>{const el=document.getElementById(i);if(el){el.textContent=v;if(t<300)el.classList.add('urgent');}});}
+function setSt(id,msg,c){const el=document.getElementById(id);if(!el)return;el.textContent=msg;el.className='st '+(c||'');}
+function updEq(g){for(let i=1;i<=6;i++){const j=g.joueurs?.[i];if(!j)continue;[i+'',i+'b'].forEach(sfx=>{const el=document.getElementById('e'+sfx);if(!el)return;const ks=Object.keys(j).filter(k=>k!=='dev');el.classList.remove('active','done');if(j.dev&&ks.every(k=>j[k]))el.classList.add('done');else if(j.dev)el.classList.add('active');});}}
+onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;sc(g.temps||57*60);updEq(g);if(g.phase==='jeu'&&!unlocked)show('sc-dev');if(g.phase==='victoire'){document.getElementById('fv').classList.add('show');setTimeout(()=>{const t=document.getElementById('ftw');t.innerHTML='"Interessant. Je ne l\'avais pas calcule."<br>"Je suis ARES-7. La video du debut... c\'etait moi."<br>"Vous avez reussi. Je ne l\'avais pas prevu."<br><br><span style="opacity:0.28;font-size:14px">— ARES-7 [DECONNEXION] —</span>';t.classList.add('show-t');},5000);}if(g.phase==='defaite')document.getElementById('fd').classList.add('show');if(g.sync>=6)document.getElementById('syn').classList.add('show');if(g.alerte&&g.alerte!==window._la){window._la=g.alerte;document.getElementById('alm').textContent=MSGS[g.alerte]||'';document.getElementById('al').classList.add('show');}if(g.penalite&&g.penalite!==window._lp){window._lp=g.penalite;const p=document.getElementById('pen');p.classList.add('show');setTimeout(()=>p.classList.remove('show'),3000);}});
+window.kp=d=>{if(code.length>=6)return;code.push(d);for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent=code[i]||'';s.className='slot'+(i<code.length?' filled':i===code.length?' active':'');}};
+window.clrDev=()=>{code=[];for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent='';s.className='slot'+(i===0?' active':'');}setSt('dst','EFFACE','');};
+async function calcSync(){const snap=await get(ref(db,'game/joueurs'));const j=snap.val()||{};let n=0;const req={1:['e1','e2','e3'],2:['e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e1','e2','e3']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
+window.valDev=async()=>{if(code.length<6){setSt('dst','CODE INCOMPLET','err');return;}if(code.join('')===CODE_DEV){unlocked=true;await update(ref(db,'game/joueurs/'+ROLE),{dev:true});const s=await calcSync();await set(ref(db,'game/sync'),s);show('sc-jeu');}else{tries=Math.max(0,tries-1);for(let i=0;i<3;i++)document.getElementById('t'+i).classList.toggle('used',i>=tries);for(let i=0;i<6;i++)document.getElementById('s'+i).className='slot wrong';setSt('dst','ACCES REFUSE — '+tries+' tentative(s)','err');setTimeout(window.clrDev,800);}};
+window.valE1=async()=>{if(e1ok)return;const cle=parseInt(document.getElementById('cle1').value);const rep=document.getElementById('r1').value.trim().toUpperCase();if(isNaN(cle)){setSt('s1','Demande la cle a l\'Intercepteur','info');return;}let dec='';for(const c of'JSVPH')dec+=String.fromCharCode(((c.charCodeAt(0)-65-cle+26)%26)+65);if(rep===dec){e1ok=true;await update(ref(db,'game/joueurs/'+ROLE),{e1:true});const s=await calcSync();await set(ref(db,'game/sync'),s);document.getElementById('c1').classList.add('done');document.getElementById('ct1').classList.add('show');document.getElementById('c2').classList.remove('locked');setSt('s1','CODE VALIDE — TRANSMETS ALPHA-7 AU BIO-INFO','ok');}else setSt('s1','CODE INCORRECT — Verifie la cle avec l\'Intercepteur','err');};
+window.valE2=async()=>{if(!e1ok){setSt('s2','Termine mission 01 d\'abord','info');return;}if(e2ok)return;if(document.getElementById('r2').value.trim().toUpperCase()==='IMAGE'){e2ok=true;await update(ref(db,'game/joueurs/'+ROLE),{e2:true});const s=await calcSync();await set(ref(db,'game/sync'),s);document.getElementById('c2').classList.add('done');document.getElementById('ct2').classList.add('show');document.getElementById('c3').classList.remove('locked');setSt('s2','CODE VALIDE — TRANSMETS BETA-4 AU BIO-INFO','ok');}else setSt('s2','INCORRECT — Lis a l\'envers','err');};
+window.valE3=async()=>{if(!e2ok){setSt('s3','Termine mission 02 d\'abord','info');return;}if(e3ok)return;if(document.getElementById('r3').value.trim().toUpperCase()==='NUL'){e3ok=true;await update(ref(db,'game/joueurs/'+ROLE),{e3:true});const s=await calcSync();await set(ref(db,'game/sync'),s);document.getElementById('c3').classList.add('done');document.getElementById('ct3').classList.add('show');setSt('s3','TOUTES MISSIONS COMPLETES — TRANSMETS DELTA-FINAL A L\'ANALYSTE','ok');}else setSt('s3','INCORRECT — Reconvertis le binaire','err');};
+show('sc-wait');
+</script>
+</body>
+</html>
