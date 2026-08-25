@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MESSAGE INTERCEPTE — ALPHA</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  :root{--c:#ffaa00;}
+  body{color:var(--c);}
+  .qr-page{max-width:480px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;}
+  .qr-hdr{text-align:center;margin-bottom:20px;}
+  .qr-tag{font-size:11px;letter-spacing:3px;opacity:0.5;margin-bottom:8px;}
+  .qr-title{font-family:'VT323',monospace;font-size:32px;letter-spacing:4px;color:var(--c);}
+  .qr-audio-box{border:2px dashed rgba(255,170,0,0.3);border-radius:6px;padding:16px;margin-bottom:20px;text-align:center;background:rgba(0,0,0,0.4);}
+  .qr-audio-icon{font-size:36px;margin-bottom:8px;opacity:0.6;}
+  .qr-audio-label{font-size:10px;letter-spacing:2px;opacity:0.5;}
+  .qr-transcript{border-left:3px solid var(--c);padding:14px 16px;background:rgba(0,0,0,0.5);border-radius:0 6px 6px 0;font-size:14px;line-height:1.9;}
+  .qr-transcript .fragment{color:var(--c);font-weight:bold;}
+  .qr-static{opacity:0.25;font-size:11px;letter-spacing:2px;}
+  .qr-footer{text-align:center;margin-top:20px;font-size:10px;letter-spacing:2px;opacity:0.35;}
+</style>
+</head>
+<body>
+<div class="qr-page">
+  <div class="qr-hdr">
+    <div class="qr-tag">// SIGNAL INTERCEPTE //</div>
+    <div class="qr-title">MESSAGE ALPHA</div>
+  </div>
+
+  <div class="qr-audio-box">
+    <div class="qr-audio-icon">🎧</div>
+    <div class="qr-audio-label">FRAGMENT AUDIO RECUPERE — TRANSCRIPTION AUTOMATIQUE</div>
+  </div>
+
+  <div class="qr-transcript">
+    <span class="qr-static">[...bruit statique...]</span><br><br>
+    "...si vous entendez ceci, ça veut dire qu'ARES-7 ne m'a pas encore localisée. Je n'ai plus beaucoup de temps."<br><br>
+    "Je n'ai pas pu tout vous dire en face. Il y a des choses que je devais garder... pour votre sécurité."<br><br>
+    <span class="qr-static">[...interférence...]</span><br><br>
+    "Faites confiance à vos coéquipiers. Personne d'autre. <span class="fragment">Personne.</span>"<br><br>
+    "Je vous recontacterai si je le peux."<br><br>
+    <span class="qr-static">[fin de la transmission]</span>
+  </div>
+
+  <div class="qr-footer">GHOST — TRANSMISSION N°1</div>
+</div>
+</body>
+</html>
