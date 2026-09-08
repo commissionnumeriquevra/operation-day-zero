@@ -70,7 +70,16 @@
 
 <div class="card locked" id="c3"><div class="card-num">MISSION 03/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">CODE BINAIRE</div>
 <div class="card-texte">Troisieme silo. Fragment encode en <span class="hl">binaire</span>, un octet par lettre.</div>
-<div class="indice"><span class="hl">&gt; TABLE :</span> 01000001=A &nbsp; 01000010=B &nbsp; 01000011=C &nbsp; 01000100=D<br>Chaque octet suivant vaut la lettre suivante de l'alphabet. Comptez a partir de A.</div>
+<div class="indice"><span class="hl">&gt; METHODE :</span> chaque groupe de 8 chiffres = une lettre.<br>
+Ignorez les <b>3 premiers chiffres</b>. Seuls les <b>5 derniers</b> comptent.<br>
+Additionnez les valeurs situees sous les <b>1</b> :
+<table style="margin:7px 0;border-collapse:collapse;font-size:13px;font-family:'VT323',monospace;">
+<tr><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);opacity:.5;">position</td><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);text-align:center;">1</td><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);text-align:center;">2</td><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);text-align:center;">3</td><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);text-align:center;">4</td><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);text-align:center;">5</td></tr>
+<tr><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);opacity:.5;">vaut</td><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);text-align:center;color:#ff8855;font-size:17px;">16</td><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);text-align:center;color:#ff8855;font-size:17px;">8</td><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);text-align:center;color:#ff8855;font-size:17px;">4</td><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);text-align:center;color:#ff8855;font-size:17px;">2</td><td style="padding:3px 11px;border:1px solid rgba(255,120,60,.35);text-align:center;color:#ff8855;font-size:17px;">1</td></tr>
+</table>
+Le total donne la <b>position de la lettre dans l'alphabet</b>.<br>
+<span style="opacity:.75;">Exemple : 010<b style="opacity:1;">00011</b> &rarr; 0+0+0+2+1 = <b style="opacity:1;">3</b> &rarr; 3e lettre = <b style="opacity:1;">C</b></span><br>
+<span style="opacity:.6;font-size:10px;">Reperes : A=1 &nbsp; E=5 &nbsp; J=10 &nbsp; O=15 &nbsp; T=20 &nbsp; Y=25</span></div>
 <div class="msg-chiffre" style="font-size:19px;letter-spacing:3px;line-height:1.7;color:#ff8855;">01001110 01001111<br>01010010 01000100</div>
 <div class="input-row"><span class="input-lbl">&gt; REPONSE :</span><input class="retro-inp" id="r3" maxlength="4" placeholder="_ _ _ _"></div>
 <div class="st" id="s3"></div>
