@@ -54,11 +54,18 @@
 <div class="st" id="s1"></div>
 <div class="give-box" id="g1">A REDISTRIBUER IMMEDIATEMENT<b>CLE CESAR &rarr; CRYPTOGRAPHE (PC 01)<br>CARTE LATITUDES &rarr; ANALYSTE (PC 02)<br>CODE CADENAS &rarr; gardez-le pour la boite</b></div></div>
 
-<div class="card locked" id="c2"><div class="card-num">MISSION 02/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">LA CLE USB</div>
-<div class="card-texte">GHOST a laisse une preuve materielle dans cette salle.</div>
-<div class="usb-box"><div class="usb-titre">/// INDICE DE LOCALISATION ///</div><div class="usb-texte">"J'ai cache ce qu'il vous faut<br>la ou les mots dorment."</div><div class="usb-indice" style="color:var(--c);">CHERCHEZ <span class="blink">_</span></div></div>
+<div class="card locked" id="c2"><div class="card-num">MISSION 02/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">LE DEPOT DE GHOST</div>
+<div class="card-texte">GHOST n'a pas cache sa preuve. Elle l'a <span class="hl">confiee</span>.</div>
+<div class="usb-box"><div class="usb-titre">/// DERNIER MESSAGE DE GHOST ///</div>
+<div class="usb-texte" style="font-size:12px;line-height:2;">"Je n'ai pas pris le risque de le cacher.<br>
+Je l'ai remis a quelqu'un d'ici.<br><br>
+Cette personne ne vous donnera rien<br>
+tant que vous ne lui direz pas <b>la phrase convenue</b>.<br><br>
+Je l'ai laissee affichee. En evidence.<br>
+Personne ne l'a jamais remarquee."</div>
+<div class="usb-indice" style="color:var(--c);">TROUVEZ LA PHRASE <span class="blink">_</span></div></div>
 <div class="st" id="s2"></div>
-<div class="btn-row"><button class="rbtn primary" onclick="valUsb()">[ CLE USB TROUVEE ET BRANCHEE ]</button></div></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valUsb()">[ DEPOT RECUPERE — CLE USB BRANCHEE ]</button></div></div>
 
 <div class="card locked" id="c3"><div class="card-num">MISSION 03/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">SIMULATEUR DE DEFENSE</div>
 <div class="card-texte">La cle contient un programme de defense verrouille. Lancez-le et atteignez le <span class="hl">score exact</span> demande pour extraire le fragment de donnees.</div>
@@ -98,8 +105,8 @@ window.valDev=async()=>{if(code.length<6){setSt('dst','CODE INCOMPLET','err');re
 window.foundQr=async n=>{const el=document.getElementById('q'+n);if(el.classList.contains('found'))return;el.textContent='[ RECUPERE ]';el.classList.add('found');qrs++;setSt('s1',qrs+'/3 QR codes recuperes','info');
 if(qrs===3&&!e1ok){e1ok=true;await done('e1');document.getElementById('c1').classList.add('done');document.getElementById('g1').classList.add('show');document.getElementById('c2').classList.remove('locked');setSt('s1','3/3 RECUPERES — redistribuez immediatement','ok');}};
 window.valUsb=async()=>{if(e2ok)return;if(!e1ok){setSt('s2','Terminez la mission 01 d\'abord','info');return;}
-e2ok=true;await done('e2');document.getElementById('c2').classList.add('done');document.getElementById('c3').classList.remove('locked');setSt('s2','CLE USB BRANCHEE — lancez le simulateur','ok');};
-window.valScore=async()=>{if(e3ok)return;if(!e2ok){setSt('s3','Trouvez la cle USB d\'abord','info');return;}
+e2ok=true;await done('e2');document.getElementById('c2').classList.add('done');document.getElementById('c3').classList.remove('locked');setSt('s2','DEPOT RECUPERE — lancez le simulateur','ok');};
+window.valScore=async()=>{if(e3ok)return;if(!e2ok){setSt('s3','Recuperez le depot d\'abord','info');return;}
 const v=parseInt(document.getElementById('r3').value);
 if(v===SCORE_CIBLE){e3ok=true;await done('e3');document.getElementById('c3').classList.add('done');document.getElementById('g3').classList.add('show');setSt('s3','FRAGMENT EXTRAIT — transmettez la sequence au Demineur','ok');}
 else if(isNaN(v))setSt('s3','Entrez le score obtenu dans le simulateur','info');
