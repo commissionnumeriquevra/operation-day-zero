@@ -8,7 +8,10 @@
 .rbtn.primary{border-color:rgba(255,68,0,.38);color:var(--c);}
 .nkey{color:rgba(255,68,0,.38);}.nkey:hover{color:var(--c);}
 .indice{border-color:rgba(255,68,0,.28);color:rgba(255,100,0,.6);}
-.retro-inp{color:var(--c);}.eq-dot.mine{border-color:var(--c)!important;color:var(--c)!important;}
+.retro-inp{color:var(--c);}
+.card-texte{font-size:12.5px;opacity:.92}
+.indice{font-size:11px;opacity:.8}
+.msg-chiffre{color:#ff7744}.eq-dot.mine{border-color:var(--c)!important;color:var(--c)!important;}
 .sect-badge{border-color:rgba(255,68,0,.4);color:var(--c);}
 .wait-box{border:2px dashed rgba(255,170,0,.45);background:rgba(50,35,0,.35);color:#ffaa00;padding:10px 12px;border-radius:4px;margin-bottom:10px;font-size:11px;letter-spacing:1px;text-align:center;line-height:1.6}
 .wait-box b{font-size:13px}
@@ -68,11 +71,11 @@
 <div class="card locked" id="c3"><div class="card-num">MISSION 03/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">CODE BINAIRE</div>
 <div class="card-texte">Troisieme silo. Fragment encode en <span class="hl">binaire</span>, un octet par lettre.</div>
 <div class="indice"><span class="hl">&gt; TABLE :</span> 01000001=A &nbsp; 01000010=B &nbsp; 01000011=C &nbsp; 01000100=D<br>Chaque octet suivant vaut la lettre suivante de l'alphabet. Comptez a partir de A.</div>
-<div class="msg-chiffre" style="font-size:12px;letter-spacing:2px;">01000001 01010010 01000101 01010011</div>
+<div class="msg-chiffre" style="font-size:19px;letter-spacing:3px;line-height:1.7;color:#ff8855;">01001110 01001111<br>01010010 01000100</div>
 <div class="input-row"><span class="input-lbl">&gt; REPONSE :</span><input class="retro-inp" id="r3" maxlength="4" placeholder="_ _ _ _"></div>
 <div class="st" id="s3"></div>
 <div class="btn-row"><button class="rbtn primary" onclick="valE3()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r3').value=''">[ EFFACER ]</button></div>
-<div class="give-box" id="g3">TRANSMETS A L'ANALYSTE (PC 02)<b>DELTA-9</b></div></div>
+<div class="give-box" id="g3">TRANSMETS A L'ANALYSTE (PC 02)<b>POINT DE DEPART : NORD</b></div></div>
 </div>
 
 <div class="al-wrap" id="al"><div class="al-box"><div class="al-ares">// ARES-7 — MESSAGE PRIORITAIRE //</div><div class="al-msg" id="alm"></div><button class="al-close" onclick="document.getElementById('al').classList.remove('show')">[ FERMER ]</button></div></div>
@@ -111,7 +114,7 @@ window.valE2=async()=>{if(!e1ok){setSt('s2','Terminez la mission 01 d\'abord','i
 if(document.getElementById('r2').value.trim().toUpperCase()==='IMAGE'){e2ok=true;await done('e2');document.getElementById('c2').classList.add('done');document.getElementById('g2').classList.add('show');document.getElementById('c3').classList.remove('locked');setSt('s2','FRAGMENT DECHIFFRE — transmettez BETA-4 au Bio-informaticien','ok');}
 else setSt('s2','INCORRECT — relisez le fragment a l\'envers','err');};
 window.valE3=async()=>{if(!e2ok){setSt('s3','Terminez la mission 02 d\'abord','info');return;}if(e3ok)return;
-if(document.getElementById('r3').value.trim().toUpperCase()==='ARES'){e3ok=true;await done('e3');document.getElementById('c3').classList.add('done');document.getElementById('g3').classList.add('show');setSt('s3','TOUTES MISSIONS COMPLETES — transmettez DELTA-9 a l\'Analyste','ok');}
+if(document.getElementById('r3').value.trim().toUpperCase()==='NORD'){e3ok=true;await done('e3');document.getElementById('c3').classList.add('done');document.getElementById('g3').classList.add('show');setSt('s3','TOUTES MISSIONS COMPLETES — transmettez le POINT DE DEPART a l\'Analyste','ok');}
 else setSt('s3','INCORRECT — reconvertissez chaque octet','err');};
 show('sc-wait');
 </script></body></html>

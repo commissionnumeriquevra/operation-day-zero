@@ -2,13 +2,18 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PC 04 — BIO-INFORMATICIEN</title><link rel="stylesheet" href="style.css">
 <style>
-:root{--c:#dd00dd;}body{color:var(--c);}
+:root{--c:#ff5cff;}body{color:var(--c);}
 .hdr{border-color:rgba(221,0,221,.28);}.hdr-chrono,.att-titre,.mot-val,.mot-chiffre{color:var(--c);}
 .slot.filled,.slot.active{border-color:var(--c);color:var(--c);background:rgba(0,0,0,.8);}
 .rbtn.primary{border-color:rgba(221,0,221,.38);color:var(--c);}
 .nkey{color:rgba(221,0,221,.38);}.nkey:hover{color:var(--c);}
 .indice{border-color:rgba(221,0,221,.28);color:rgba(200,0,200,.6);}
 .eq-dot.mine{border-color:var(--c)!important;color:var(--c)!important;}
+.card-texte{font-size:12.5px;opacity:.95;color:#ffc2ff}
+.indice{font-size:11px;opacity:.9;color:#ffa8ff}
+.card-titre{color:#ff7aff}
+.adn-btn{font-size:26px}
+.adn-sr{font-size:24px}
 .sect-badge{border-color:rgba(221,0,221,.4);color:var(--c);}
 .wait-box{border:2px dashed rgba(255,170,0,.45);background:rgba(50,35,0,.35);color:#ffaa00;padding:10px 12px;border-radius:4px;margin-bottom:10px;font-size:11px;letter-spacing:1px;text-align:center;line-height:1.6}
 .wait-box b{font-size:13px}
@@ -48,7 +53,7 @@
 <div id="body1" style="display:none;">
 <div class="card-texte">Sequence corrompue : <span class="hl">GCATCG</span><br>Reconstituez le brin complementaire.</div>
 <div class="indice"><span class="hl">&gt; REGLE :</span> A se lie a T, et G se lie a C. Chaque base doit etre remplacee par celle a laquelle elle se lie, en gardant le meme ordre.</div>
-<div class="adn-pool" id="pool1"><button class="adn-btn adn-C" onclick="adn(1,'C',this)">C</button><button class="adn-btn adn-G" onclick="adn(1,'G',this)">G</button><button class="adn-btn adn-T" onclick="adn(1,'T',this)">T</button><button class="adn-btn adn-A" onclick="adn(1,'A',this)">A</button><button class="adn-btn adn-C" onclick="adn(1,'C',this)">C</button><button class="adn-btn adn-G" onclick="adn(1,'G',this)">G</button></div>
+<div class="adn-pool" id="pool1"><button class="adn-btn adn-G" onclick="adn(1,'G',this)">G</button><button class="adn-btn adn-C" onclick="adn(1,'C',this)">C</button><button class="adn-btn adn-A" onclick="adn(1,'A',this)">A</button><button class="adn-btn adn-G" onclick="adn(1,'G',this)">G</button><button class="adn-btn adn-T" onclick="adn(1,'T',this)">T</button><button class="adn-btn adn-C" onclick="adn(1,'C',this)">C</button></div>
 <div class="adn-rep" id="rep1"></div>
 <div class="st" id="s1"></div>
 <div class="btn-row"><button class="rbtn primary" onclick="valA(1)">[ VALIDER ]</button><button class="rbtn" onclick="rstA(1)">[ EFFACER ]</button></div></div>
@@ -59,7 +64,7 @@
 <div class="recv-row" id="rcv2"><button class="recv-btn" onclick="rec(2)">[ J'AI RECU BETA-4 ]</button></div>
 <div id="body2" style="display:none;">
 <div class="card-texte">Seconde couche. Sequence corrompue : <span class="hl">TTACGG</span><br>Meme regle de complementarite.</div>
-<div class="adn-pool" id="pool2"><button class="adn-btn adn-A" onclick="adn(2,'A',this)">A</button><button class="adn-btn adn-A" onclick="adn(2,'A',this)">A</button><button class="adn-btn adn-T" onclick="adn(2,'T',this)">T</button><button class="adn-btn adn-G" onclick="adn(2,'G',this)">G</button><button class="adn-btn adn-C" onclick="adn(2,'C',this)">C</button><button class="adn-btn adn-C" onclick="adn(2,'C',this)">C</button></div>
+<div class="adn-pool" id="pool2"><button class="adn-btn adn-C" onclick="adn(2,'C',this)">C</button><button class="adn-btn adn-A" onclick="adn(2,'A',this)">A</button><button class="adn-btn adn-G" onclick="adn(2,'G',this)">G</button><button class="adn-btn adn-C" onclick="adn(2,'C',this)">C</button><button class="adn-btn adn-A" onclick="adn(2,'A',this)">A</button><button class="adn-btn adn-T" onclick="adn(2,'T',this)">T</button></div>
 <div class="adn-rep" id="rep2"></div>
 <div class="st" id="s2"></div>
 <div class="btn-row"><button class="rbtn primary" onclick="valA(2)">[ VALIDER ]</button><button class="rbtn" onclick="rstA(2)">[ EFFACER ]</button></div></div></div>

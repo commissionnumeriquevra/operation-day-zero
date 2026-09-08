@@ -57,11 +57,11 @@
 <div class="btn-row"><button class="rbtn primary" onclick="valE1()">[ VALIDER LE RECENSEMENT ]</button><button class="rbtn" onclick="resetP()">[ EFFACER ]</button></div></div>
 
 <div class="card locked" id="c2"><div class="card-num">MISSION 02/02 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">ORDRE DE DESARMEMENT</div>
-<div class="wait-box" id="w2">EN ATTENTE DE DEUX ELEMENTS<br><b>La carte des latitudes (INTERCEPTEUR PC 05)<br>et le code DELTA-9 (CRYPTOGRAPHE PC 01)</b></div>
-<div class="recv-row" id="rcv2"><button class="recv-btn" id="bLat" onclick="rec('lat')">[ CARTE DES LATITUDES RECUE ]</button><button class="recv-btn" id="bDel" onclick="rec('del')">[ DELTA-9 RECU ]</button></div>
+<div class="wait-box" id="w2">EN ATTENTE DE DEUX ELEMENTS<br><b>La carte des latitudes (INTERCEPTEUR PC 05)<br>et le POINT DE DEPART (CRYPTOGRAPHE PC 01)</b></div>
+<div class="recv-row" id="rcv2"><button class="recv-btn" id="bLat" onclick="rec('lat')">[ CARTE DES LATITUDES RECUE ]</button><button class="recv-btn" id="bDel" onclick="rec('del')">[ POINT DE DEPART RECU ]</button></div>
 <div id="body2" style="display:none;">
-<div class="card-texte">Les silos doivent etre neutralises <span class="hl">du plus au nord vers le plus au sud</span>. Croisez le recensement avec la carte des latitudes fournie par l'Intercepteur.</div>
-<div class="indice"><span class="hl">&gt; FORMAT ATTENDU :</span> les six numeros de PC separes par des tirets, du plus nord au plus sud.<br>Exemple de forme (pas la reponse) : 4-2-6-1-5-3</div>
+<div class="card-texte">Les silos doivent etre neutralises dans un ordre geographique precis. Le Cryptographe vous a indique <span class="hl">par quel point cardinal commencer</span>. Croisez cette information avec le recensement et la carte des latitudes.</div>
+<div class="indice"><span class="hl">&gt; FORMAT ATTENDU :</span> les six numeros de PC separes par des tirets, dans l'ordre de neutralisation.<br>Exemple de forme (pas la reponse) : 4-2-6-1-5-3</div>
 <div class="input-row"><span class="input-lbl">&gt; ORDRE :</span><input class="retro-inp" id="r2" placeholder="_-_-_-_-_-_" maxlength="11"></div>
 <div class="st" id="s2"></div>
 <div class="btn-row"><button class="rbtn primary" onclick="valE2()">[ VALIDER L'ORDRE ]</button></div>
@@ -105,7 +105,7 @@ for(const k of ['p1','p3','p4','p5','p6']){if(document.getElementById(k).value.t
 if(ok){e1ok=true;await done('e1');document.getElementById('c1').classList.add('done');document.getElementById('c2').classList.remove('locked');['p1','p3','p4','p5','p6'].forEach(k=>document.getElementById(k).closest('.pz-cell').classList.add('ok'));setSt('s1','RECENSEMENT COMPLET — mission 02 debloquee','ok');}
 else setSt('s1','UN OU PLUSIEURS SECTEURS SONT INCORRECTS — reverifiez avec vos coequipiers','err');};
 window.rec=w=>{if(w==='lat'){gotLat=true;const b=document.getElementById('bLat');b.classList.add('ok');b.textContent='[ CARTE RECUE ]';}
-if(w==='del'){gotDel=true;const b=document.getElementById('bDel');b.classList.add('ok');b.textContent='[ DELTA-9 OK ]';}
+if(w==='del'){gotDel=true;const b=document.getElementById('bDel');b.classList.add('ok');b.textContent='[ POINT DE DEPART OK ]';}
 if(gotLat&&gotDel){document.getElementById('w2').style.display='none';document.getElementById('rcv2').style.display='none';document.getElementById('body2').style.display='block';}};
 window.valE2=async()=>{if(!e1ok){setSt('s2','Terminez le recensement d\'abord','info');return;}if(e2ok)return;
 if(document.getElementById('r2').value.trim()===SOL2){e2ok=true;await done('e2');document.getElementById('c2').classList.add('done');document.getElementById('g2a').classList.add('show');document.getElementById('g2b').classList.add('show');setSt('s2','ORDRE VALIDE — transmettez les deux sequences ci-dessous','ok');}
