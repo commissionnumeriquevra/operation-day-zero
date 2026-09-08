@@ -1,0 +1,81 @@
+╔══════════════════════════════════════════════════════════════╗
+║   OPERATION DAY ZERO — VERSION 3 (chaine de dependances)     ║
+╚══════════════════════════════════════════════════════════════╝
+
+CE QUI A CHANGE PAR RAPPORT A LA VERSION TESTEE
+═══════════════════════════════════════════════
+1. Toutes les SOLUTIONS ont ete retirees des ecrans joueurs.
+   (avant, l'ordre des cables et les cables surs etaient ecrits
+   noir sur blanc dans les encarts "indice")
+
+2. Chaque joueur voit maintenant son NOM DE SECTEUR a l'ecran.
+   L'Analyste peut enfin faire son recensement.
+
+3. QR BETA donne la CARTE DES LATITUDES -> l'ordre nord/sud
+   devient deductible. Avant, c'etait de la devinette.
+
+4. QR ALPHA donne la CLE CESAR -> il sert enfin a quelque chose.
+
+5. QR GAMMA : inchange, toujours 238 pour le cadenas.
+
+6. La mission 2 de l'INGENIEUR est corrigee (elle etait
+   impossible a valider).
+
+7. Le DEMINEUR a une mission de CALIBRAGE qu'il fait SEUL
+   des le debut : il n'attend plus sans rien faire.
+
+8. Le MINI-JEU de la cle USB est integre : score exact 420
+   -> revele la sequence SUD au Demineur.
+
+9. Chaque ecran affiche en permanence :
+   "EN ATTENTE DE : ..." ou "TRANSMETS A : ..."
+
+
+FICHIERS A METTRE EN LIGNE SUR GITHUB (remplacer les anciens)
+═════════════════════════════════════════════════════════════
+  role1.html   role2.html   role3.html
+  role4.html   role5.html   role6.html
+  maitre.html
+  qr-alpha.html   qr-beta.html   qr-gamma.html
+
+  -> 10 fichiers. Meme methode que d'habitude :
+     Add file > Upload files > glisser > Commit changes
+     GitHub remplace automatiquement les anciens.
+
+  style.css : NE PAS TOUCHER, il est deja bon.
+
+
+FICHIER A METTRE SUR LA CLE USB
+═══════════════════════════════
+  MINI-JEU-defense-protocol.html
+  + votre video d'introduction
+
+  Le joueur ouvre le fichier dans Chrome, joue, et doit
+  atteindre EXACTEMENT 420 points.
+
+
+LA CHAINE DE DEPENDANCES (a connaitre par coeur)
+════════════════════════════════════════════════
+  PC5 INTERCEPTEUR = le declencheur. Il est le seul mobile.
+     QR Alpha  -> cle Cesar      -> PC1
+     QR Beta   -> latitudes      -> PC2
+     QR Gamma  -> cadenas 238    -> equipe
+     Cle USB   -> mini-jeu 420   -> sequence SUD -> PC6
+
+  PC1 CRYPTO   -> ALPHA-7 et BETA-4 -> PC4
+               -> DELTA-9           -> PC2
+  PC4 BIO      -> cables E et G     -> PC3
+  PC2 ANALYSTE -> ordre cables      -> PC3
+               -> sequence NORD     -> PC6
+  PC6 DEMINEUR -> calibrage (seul) + NORD + SUD -> detonateur
+
+  Si un joueur est bloque : regardez QUI doit lui transmettre
+  quelque chose, et relancez cette personne.
+
+
+CODES
+═════
+  Deverrouillage PC ....... 7-3-5-1-9-4
+  Cadenas de la boite ..... 238
+  Mini-jeu (score exact) .. 420
+  Code final (telephone) .. 4-8-2-6-1-9

@@ -1,65 +1,29 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>IMAGE SATELLITE — BETA</title>
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>CARTE BETA</title>
 <link rel="stylesheet" href="style.css">
-<style>
-  :root{--c:#ffaa00;}
-  body{color:var(--c);}
-  .qr-page{max-width:480px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;}
-  .qr-hdr{text-align:center;margin-bottom:20px;}
-  .qr-tag{font-size:11px;letter-spacing:3px;opacity:0.5;margin-bottom:8px;}
-  .qr-title{font-family:'VT323',monospace;font-size:32px;letter-spacing:4px;color:var(--c);}
-  .sat-box{border:2px solid rgba(255,170,0,0.3);border-radius:6px;padding:0;margin-bottom:20px;overflow:hidden;background:#050505;position:relative;}
-  .sat-grid{
-    width:100%;aspect-ratio:1/1;position:relative;
-    background:
-      radial-gradient(circle at 20% 30%, rgba(255,170,0,0.15) 0%, transparent 8%),
-      radial-gradient(circle at 65% 25%, rgba(255,170,0,0.15) 0%, transparent 8%),
-      radial-gradient(circle at 45% 55%, rgba(255,170,0,0.15) 0%, transparent 8%),
-      radial-gradient(circle at 80% 60%, rgba(255,170,0,0.15) 0%, transparent 8%),
-      radial-gradient(circle at 30% 80%, rgba(255,170,0,0.15) 0%, transparent 8%),
-      radial-gradient(circle at 70% 85%, rgba(255,170,0,0.15) 0%, transparent 8%),
-      linear-gradient(rgba(0,50,0,0.4), rgba(0,20,0,0.6));
-  }
-  .sat-grid::before{
-    content:'';position:absolute;inset:0;
-    background-image:linear-gradient(rgba(0,255,100,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,100,0.06) 1px,transparent 1px);
-    background-size:20px 20px;
-  }
-  .sat-marker{position:absolute;width:8px;height:8px;border:2px solid #ff3300;border-radius:50%;background:rgba(255,51,0,0.3);transform:translate(-50%,-50%);}
-  .sat-marker::after{content:attr(data-label);position:absolute;top:12px;left:50%;transform:translateX(-50%);font-size:8px;color:#ff5522;white-space:nowrap;letter-spacing:1px;}
-  .sat-scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,100,0.03) 3px,rgba(0,255,100,0.03) 4px);pointer-events:none;}
-  .sat-label{padding:10px 14px;font-size:10px;letter-spacing:2px;opacity:0.6;border-top:1px solid rgba(255,170,0,0.2);}
-  .qr-desc{font-size:13px;line-height:1.8;opacity:0.7;text-align:center;margin-top:10px;}
-  .qr-footer{text-align:center;margin-top:20px;font-size:10px;letter-spacing:2px;opacity:0.35;}
-</style>
-</head>
-<body>
-<div class="qr-page">
-  <div class="qr-hdr">
-    <div class="qr-tag">// IMAGERIE SATELLITE //</div>
-    <div class="qr-title">IMAGE BETA</div>
-  </div>
-
-  <div class="sat-box">
-    <div class="sat-grid">
-      <div class="sat-scanline"></div>
-      <div class="sat-marker" style="top:30%;left:20%;" data-label="SILO 1"></div>
-      <div class="sat-marker" style="top:25%;left:65%;" data-label="SILO 2"></div>
-      <div class="sat-marker" style="top:55%;left:45%;" data-label="SILO 3"></div>
-      <div class="sat-marker" style="top:60%;left:80%;" data-label="SILO 4"></div>
-      <div class="sat-marker" style="top:80%;left:30%;" data-label="SILO 5"></div>
-      <div class="sat-marker" style="top:85%;left:70%;" data-label="SILO 6"></div>
-    </div>
-    <div class="sat-label">IMAGE SATELLITE — RESOLUTION DEGRADEE — SIGNAL PARTIEL</div>
-  </div>
-
-  <div class="qr-desc">6 signatures thermiques détectées, correspondant aux 6 silos actifs. Localisation précise cryptée — nécessite les codes secteur de chaque terminal.</div>
-
-  <div class="qr-footer">GHOST — IMAGERIE RECUPEREE</div>
+<style>:root{--c:#ffaa00}body{color:var(--c)}
+.qp{max-width:480px;margin:0 auto;padding:20px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+.qt{font-size:11px;letter-spacing:3px;opacity:.5;margin-bottom:8px;text-align:center}
+.qh{font-family:'VT323',monospace;font-size:30px;letter-spacing:4px;color:var(--c);text-align:center;margin-bottom:20px}
+.tbl{border:2px solid rgba(255,170,0,.35);border-radius:6px;overflow:hidden;margin-bottom:18px}
+.tr{display:flex;justify-content:space-between;padding:11px 16px;border-bottom:1px solid rgba(255,170,0,.12);font-size:15px;letter-spacing:2px}
+.tr:last-child{border-bottom:none}
+.tr.hd{background:rgba(255,170,0,.12);font-size:10px;letter-spacing:2px;opacity:.7}
+.tr b{font-family:'VT323',monospace;font-size:22px;color:var(--c)}
+.qd{font-size:13px;line-height:1.8;opacity:.75;text-align:center}
+.qf{text-align:center;margin-top:20px;font-size:10px;letter-spacing:2px;opacity:.35}</style></head><body>
+<div class="qp">
+<div class="qt">// RELEVE SATELLITE //</div>
+<div class="qh">CARTE BETA</div>
+<div class="tbl">
+<div class="tr hd"><span>SECTEUR</span><span>LATITUDE</span></div>
+<div class="tr"><span>ABYSSAL</span><b>08&deg; N</b></div>
+<div class="tr"><span>AUSTRAL</span><b>14&deg; N</b></div>
+<div class="tr"><span>MERIDIEN</span><b>25&deg; N</b></div>
+<div class="tr"><span>EQUATOR</span><b>33&deg; N</b></div>
+<div class="tr"><span>BOREAL</span><b>47&deg; N</b></div>
+<div class="tr"><span>ARCTIC</span><b>58&deg; N</b></div>
 </div>
-</body>
-</html>
+<div class="qd">Transmettez ce releve a l'<strong>ANALYSTE (PC 02)</strong>.<br>Plus la latitude est elevee, plus le silo est au nord.</div>
+<div class="qf">GHOST — TRANSMISSION 2/3</div>
+</div></body></html>
