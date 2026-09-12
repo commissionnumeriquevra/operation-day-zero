@@ -76,19 +76,22 @@
 </div>
 
 <div class="card locked" id="c0c"><div class="card-num">MISSION 03/05 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">BROUILLAGE RADIO</div>
-<div class="card-texte">Dix canaux ont ete captes avant la coupure. Neuf suivent un espacement regulier. Un seul s'en ecarte.</div>
-<div class="indice"><span class="hl">&gt; A CHERCHER :</span> chaque canal est espace du precedent de 0.05 MHz. Un seul ne respecte pas cet ecart.</div>
+<div class="card-texte">Treize canaux ont ete captes avant la coupure, dans le desordre. Douze respectent la norme des frequences autorisees. Un seul est illegal.</div>
+<div class="indice"><span class="hl">&gt; REGLE :</span> une frequence est autorisee si (frequence - 121.00) divise par 0.05 donne un nombre entier, sans reste. Testez chaque ligne.</div>
 <div class="signal" style="font-size:12px;line-height:2.2;">
-CANAL 01&nbsp;&nbsp;&nbsp;121.10 MHz<br>
-CANAL 02&nbsp;&nbsp;&nbsp;121.15 MHz<br>
-CANAL 03&nbsp;&nbsp;&nbsp;121.20 MHz<br>
-CANAL 04&nbsp;&nbsp;&nbsp;121.25 MHz<br>
-CANAL 05&nbsp;&nbsp;&nbsp;121.30 MHz<br>
-CANAL 06&nbsp;&nbsp;&nbsp;121.35 MHz<br>
-CANAL 07&nbsp;&nbsp;&nbsp;121.42 MHz<br>
-CANAL 08&nbsp;&nbsp;&nbsp;121.45 MHz<br>
-CANAL 09&nbsp;&nbsp;&nbsp;121.50 MHz<br>
-CANAL 10&nbsp;&nbsp;&nbsp;121.55 MHz
+CANAL 01&nbsp;&nbsp;&nbsp;121.35 MHz<br>
+CANAL 02&nbsp;&nbsp;&nbsp;121.30 MHz<br>
+CANAL 03&nbsp;&nbsp;&nbsp;121.10 MHz<br>
+CANAL 04&nbsp;&nbsp;&nbsp;121.37 MHz<br>
+CANAL 05&nbsp;&nbsp;&nbsp;121.55 MHz<br>
+CANAL 06&nbsp;&nbsp;&nbsp;121.25 MHz<br>
+CANAL 07&nbsp;&nbsp;&nbsp;121.50 MHz<br>
+CANAL 08&nbsp;&nbsp;&nbsp;121.40 MHz<br>
+CANAL 09&nbsp;&nbsp;&nbsp;121.15 MHz<br>
+CANAL 10&nbsp;&nbsp;&nbsp;121.20 MHz<br>
+CANAL 11&nbsp;&nbsp;&nbsp;121.00 MHz<br>
+CANAL 12&nbsp;&nbsp;&nbsp;121.05 MHz<br>
+CANAL 13&nbsp;&nbsp;&nbsp;121.45 MHz
 </div>
 <div class="input-row"><span class="input-lbl">&gt; FREQUENCE :</span><input class="retro-inp" id="r0c" maxlength="6" placeholder="ex: 121.10"></div>
 <div class="st" id="s0c"></div>
@@ -163,8 +166,8 @@ if(rep0b==='58'){e0bok=true;await done('e0b');document.getElementById('c0b').cla
 else setSt('s0b','INCORRECT — cherchez la regle qui relie chaque terme au suivant','err');};
 window.valE0c=async()=>{if(e0cok)return;if(!e0bok){setSt('s0c','Terminez la sequence interrompue d\'abord','info');return;}
 const rep0c=document.getElementById('r0c').value.trim().replace(',','.');
-if(rep0c==='121.42'){e0cok=true;await done('e0c');document.getElementById('c0c').classList.add('done');document.getElementById('c1').classList.remove('locked');setSt('s0c','SIGNAL PIRATE IDENTIFIE — recensement disponible','ok');}
-else setSt('s0c','INCORRECT — comparez chaque canal a un ecart de 0.05 MHz','err');};
+if(rep0c==='121.37'){e0cok=true;await done('e0c');document.getElementById('c0c').classList.add('done');document.getElementById('c1').classList.remove('locked');setSt('s0c','SIGNAL PIRATE IDENTIFIE — recensement disponible','ok');}
+else setSt('s0c','INCORRECT — verifiez le calcul pour chaque canal, un seul ne tombe pas juste','err');};
 window.valE1=async()=>{if(e1ok)return;if(!e0cok){setSt('s1','Terminez les analyses precedentes d\'abord','info');return;}let ok=true;
 for(const k of ['p1','p3','p4','p5','p6']){if(document.getElementById(k).value.trim().toUpperCase()!==SECT[k])ok=false;}
 if(ok){e1ok=true;await done('e1');document.getElementById('c1').classList.add('done');document.getElementById('c2').classList.remove('locked');['p1','p3','p4','p5','p6'].forEach(k=>document.getElementById(k).closest('.pz-cell').classList.add('ok'));setSt('s1','RECENSEMENT COMPLET — mission 02 debloquee','ok');}
