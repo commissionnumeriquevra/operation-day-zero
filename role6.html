@@ -47,7 +47,42 @@
 <div class="sync-banner" id="syn">/// SYNCHRONISATION COMPLETE — OUVREZ LA BOITE ///</div>
 <div class="sect-badge">VOTRE SECTEUR — a communiquer a l'ANALYSTE (PC 02)<b>ABYSSAL</b></div>
 
-<div class="card" id="c0"><div class="card-num">MISSION 01/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">CALIBRAGE DU DETONATEUR</div>
+<div class="card" id="cA"><div class="card-num">MISSION 01/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">CIRCUIT A REPARER</div>
+<div class="card-texte">Cinq fils colores relies a cinq bornes. Deux d'entre eux ont ete inverses au montage.</div>
+<div class="indice"><span class="hl">&gt; A CHERCHER :</span> chaque fil doit rejoindre la borne de la meme couleur. Deux fils sont croises entre eux.</div>
+<div class="signal" style="font-size:13px;line-height:2.3;">
+FIL 1 [ROUGE]&nbsp;&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&nbsp;BORNE A [ROUGE]<br>
+FIL 2 [BLEU]&nbsp;&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&nbsp;BORNE B [BLEU]<br>
+FIL 3 [VERT]&nbsp;&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&nbsp;BORNE D [JAUNE]<br>
+FIL 4 [JAUNE]&nbsp;&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&nbsp;BORNE C [VERT]<br>
+FIL 5 [BLANC]&nbsp;&nbsp;&nbsp;&rarr;&nbsp;&nbsp;&nbsp;BORNE E [BLANC]
+</div>
+<div class="input-row"><span class="input-lbl">&gt; FILS :</span><input class="retro-inp" id="rA" maxlength="5" placeholder="ex: 1 2"></div>
+<div class="st" id="sAm"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valEA()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('rA').value=''">[ EFFACER ]</button></div>
+</div>
+
+<div class="card locked" id="cB"><div class="card-num">MISSION 02/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">IMPULSIONS ELECTRIQUES</div>
+<div class="card-texte">Le detonateur emet une suite d'impulsions avant de se stabiliser. Trouvez la prochaine valeur.</div>
+<div class="indice"><span class="hl">&gt; SUITE :</span> chaque valeur suit une regle liee aux deux precedentes.</div>
+<div class="calib"><div class="calib-c">3</div><div class="calib-c">4</div><div class="calib-c">8</div><div class="calib-c">13</div><div class="calib-c">22</div><div class="calib-c">36</div><div class="calib-c q">?</div></div>
+<div class="input-row"><span class="input-lbl">&gt; VALEUR :</span><input class="retro-inp" id="rB" type="number" placeholder="valeur manquante..."></div>
+<div class="st" id="sBm"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valEB()">[ VALIDER ]</button></div>
+</div>
+
+<div class="card locked" id="cC"><div class="card-num">MISSION 03/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">ORDRE D'ACTIVATION</div>
+<div class="card-texte">Quatre leviers doivent etre actives dans un ordre precis. Trois regles determinent cet ordre.</div>
+<div class="indice"><span class="hl">&gt; CONTRAINTES :</span><br>
+1. Le levier A doit etre active avant le levier C.<br>
+2. Le levier D doit etre active en dernier.<br>
+3. Le levier B doit etre active juste apres le levier A.</div>
+<div class="input-row"><span class="input-lbl">&gt; ORDRE :</span><input class="retro-inp" id="rC" maxlength="4" placeholder="4 lettres, ex: DCBA"></div>
+<div class="st" id="sCm"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valEC()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('rC').value=''">[ EFFACER ]</button></div>
+</div>
+
+<div class="card locked" id="c0"><div class="card-num">MISSION 04/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">CALIBRAGE DU DETONATEUR</div>
 <div class="card-texte">Le detonateur doit etre calibre avant toute intervention. <span class="hl">Vous pouvez le faire seul, immediatement.</span></div>
 <div class="indice"><span class="hl">&gt; SEQUENCE DE CALIBRAGE :</span> chaque valeur suit une progression reguliere. Trouvez la valeur manquante.</div>
 <div class="calib"><div class="calib-c">2</div><div class="calib-c">4</div><div class="calib-c">8</div><div class="calib-c">16</div><div class="calib-c q">?</div></div>
@@ -55,7 +90,7 @@
 <div class="st" id="s0m"></div>
 <div class="btn-row"><button class="rbtn primary" onclick="valCal()">[ CALIBRER ]</button></div></div>
 
-<div class="card locked" id="c1"><div class="card-num">MISSION 02/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">DESACTIVATION — SYSTEMES NORD</div>
+<div class="card locked" id="c1"><div class="card-num">MISSION 05/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">DESACTIVATION — SYSTEMES NORD</div>
 <div class="wait-box" id="w1">EN ATTENTE DE L'ANALYSTE (PC 02)<br><b>Il doit vous transmettre la SEQUENCE NORD</b></div>
 <div class="recv-row" id="rcv1"><button class="recv-btn" onclick="rec(1)">[ J'AI RECU LA SEQUENCE NORD ]</button></div>
 <div id="body1" style="display:none;">
@@ -63,7 +98,7 @@
 <div class="seq-grid" id="sq1"><button class="seq-btn sr" onclick="seq(1,'R',this)">ROUGE</button><button class="seq-btn sg" onclick="seq(1,'G',this)">VERT</button><button class="seq-btn sb" onclick="seq(1,'B',this)">BLEU</button><button class="seq-btn sy" onclick="seq(1,'Y',this)">JAUNE</button><button class="seq-btn so" onclick="seq(1,'O',this)">ORANGE</button><button class="seq-btn sw" onclick="seq(1,'W',this)">BLANC</button></div>
 <div class="st" id="s1"></div></div></div>
 
-<div class="card locked" id="c2"><div class="card-num">MISSION 03/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">DESACTIVATION — SYSTEMES SUD</div>
+<div class="card locked" id="c2"><div class="card-num">MISSION 06/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">DESACTIVATION — SYSTEMES SUD</div>
 <div class="wait-box" id="w2">EN ATTENTE DE L'INTERCEPTEUR (PC 05)<br><b>La sequence SUD est verrouillee dans la cle USB</b></div>
 <div class="recv-row" id="rcv2"><button class="recv-btn" onclick="rec(2)">[ J'AI RECU LA SEQUENCE SUD ]</button></div>
 <div id="body2" style="display:none;">
@@ -94,11 +129,11 @@ const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation
 const app=initializeApp(FB),db=getDatabase(app),ROLE=6,CODE_DEV='735194',CODE_FINAL='482619';
 const SEQ={1:['R','B','G','O'],2:['G','W','Y','R']};
 const MSGS=['','42 minutes. Vos progres sont decevants.','27 minutes. Vous m\'inquietez legerement.','12 minutes. Vous etes encore la.','4 minutes. Je ne vous avais pas calcules aussi loin.'];
-let code=[],tries=3,unlocked=false,calOk=false,ok={1:false,2:false},prog={1:[],2:[]},det=[],finalOk=false;
+let code=[],tries=3,unlocked=false,eAok=false,eBok=false,eCok=false,calOk=false,ok={1:false,2:false},prog={1:[],2:[]},det=[],finalOk=false;
 function show(id){['sc-wait','sc-dev','sc-jeu'].forEach(s=>document.getElementById(s).style.display='none');document.getElementById(id).style.display='block';}
 function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');['chr','chr2'].forEach(i=>{const el=document.getElementById(i);if(el){el.textContent=v;if(t<300)el.classList.add('urgent');}});}
 function setSt(id,m,c){const el=document.getElementById(id);if(el){el.textContent=m;el.className='st '+(c||'');}}
-async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e0','e0b','e0c','e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
+async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e0','e0b','e0c','e1','e2'],5:['e1','e2','e3'],6:['eA','eB','eC','e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
 async function done(k){await update(ref(db,'game/joueurs/'+ROLE),{[k]:true});await set(ref(db,'game/sync'),await calcSync());}
 onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;sc(g.temps||57*60);
 if(g.phase==='jeu'&&!unlocked)show('sc-dev');
@@ -111,7 +146,17 @@ if(g.alerte&&g.alerte!==window._la){window._la=g.alerte;document.getElementById(
 window.kp=d=>{if(code.length>=6)return;code.push(d);for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent=code[i]||'';s.className='slot'+(i<code.length?' filled':i===code.length?' active':'');}};
 window.clrDev=()=>{code=[];for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent='';s.className='slot'+(i===0?' active':'');}setSt('dst','EFFACE','');};
 window.valDev=async()=>{if(code.length<6){setSt('dst','CODE INCOMPLET','err');return;}if(code.join('')===CODE_DEV){unlocked=true;await done('dev');show('sc-jeu');}else{tries=Math.max(0,tries-1);for(let i=0;i<3;i++)document.getElementById('t'+i).classList.toggle('used',i>=tries);for(let i=0;i<6;i++)document.getElementById('s'+i).className='slot wrong';setSt('dst','ACCES REFUSE — '+tries+' tentative(s)','err');setTimeout(window.clrDev,800);}};
-window.valCal=async()=>{if(calOk)return;
+window.valEA=async()=>{if(eAok)return;
+const rep=document.getElementById('rA').value.trim().replace(/[^0-9]/g,' ').trim().split(/\s+/).sort().join(' ');
+if(rep==='3 4'){eAok=true;await done('eA');document.getElementById('cA').classList.add('done');document.getElementById('cB').classList.remove('locked');setSt('sAm','CIRCUIT REPARE — la mission suivante est disponible','ok');}
+else setSt('sAm','INCORRECT — verifiez quelle paire de fils est croisee','err');};
+window.valEB=async()=>{if(eBok)return;if(!eAok){setSt('sBm','Reparez le circuit d\'abord','info');return;}
+if(parseInt(document.getElementById('rB').value)===59){eBok=true;await done('eB');document.getElementById('cB').classList.add('done');document.getElementById('cC').classList.remove('locked');setSt('sBm','IMPULSION STABILISEE — la mission suivante est disponible','ok');}
+else setSt('sBm','INCORRECT — cherchez la regle liant chaque valeur aux deux precedentes','err');};
+window.valEC=async()=>{if(eCok)return;if(!eBok){setSt('sCm','Stabilisez les impulsions d\'abord','info');return;}
+if(document.getElementById('rC').value.trim().toUpperCase()==='ABCD'){eCok=true;await done('eC');document.getElementById('cC').classList.add('done');document.getElementById('c0').classList.remove('locked');setSt('sCm','ORDRE VALIDE — le calibrage est disponible','ok');}
+else setSt('sCm','INCORRECT — reappliquez les trois contraintes une par une','err');};
+window.valCal=async()=>{if(calOk)return;if(!eCok){setSt('s0m','Terminez les trois analyses precedentes d\'abord','info');return;}
 if(parseInt(document.getElementById('r0').value)===32){calOk=true;await done('e0');document.getElementById('c0').classList.add('done');document.getElementById('c1').classList.remove('locked');document.getElementById('c2').classList.remove('locked');setSt('s0m','DETONATEUR CALIBRE — vous pouvez recevoir les sequences','ok');}
 else setSt('s0m','CALIBRAGE REFUSE — observez comment on passe d\'une valeur a la suivante','err');};
 window.rec=n=>{document.getElementById('w'+n).style.display='none';document.getElementById('rcv'+n).style.display='none';document.getElementById('body'+n).style.display='block';};
