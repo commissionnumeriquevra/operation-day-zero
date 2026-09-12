@@ -46,11 +46,11 @@
 <div class="card-num">// ROLE PARTICULIER //</div><div class="card-titre">VOUS ETES MOBILE</div>
 <div class="card-texte">Vous seul quittez votre poste. Toute l'equipe depend de ce que vous rapporterez. <span class="hl">Commencez immediatement.</span></div></div>
 
-<div class="card" id="c1"><div class="card-num">MISSION 01/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">RECUPERATION DES QR CODES</div>
-<div class="card-texte">Trois messages morts sont caches dans cette salle. Trouvez-les et scannez-les avec votre telephone.</div>
-<div class="qr-item"><div class="qr-num" style="color:var(--c);">1</div><div class="qr-text"><span class="hl">QR ALPHA</span> — contient une cle de dechiffrement.<br><button class="qr-ck" id="q1" onclick="foundQr(1)">[ SCANNE ]</button></div></div>
-<div class="qr-item"><div class="qr-num" style="color:var(--c);">2</div><div class="qr-text"><span class="hl">QR BETA</span> — contient une carte des latitudes.<br><button class="qr-ck" id="q2" onclick="foundQr(2)">[ SCANNE ]</button></div></div>
-<div class="qr-item"><div class="qr-num" style="color:var(--c);">3</div><div class="qr-text"><span class="hl">QR GAMMA</span> — contient un code d'acces physique.<br><button class="qr-ck" id="q3" onclick="foundQr(3)">[ SCANNE ]</button></div></div>
+<div class="card" id="c1"><div class="card-num">MISSION 01/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">FRAGMENTS DE GHOST</div>
+<div class="card-texte">Trois messages morts sont caches dans cette salle, quelque part la ou personne ne pense a regarder deux fois. Trouvez-les.</div>
+<div class="qr-item"><div class="qr-num" style="color:var(--c);">1</div><div class="qr-text"><span class="hl">ALPHA</span> — contient une cle de dechiffrement.<br><button class="qr-ck" id="q1" onclick="foundQr(1)">[ FRAGMENT RECUPERE ]</button></div></div>
+<div class="qr-item"><div class="qr-num" style="color:var(--c);">2</div><div class="qr-text"><span class="hl">BETA</span> — contient une carte des latitudes.<br><button class="qr-ck" id="q2" onclick="foundQr(2)">[ FRAGMENT RECUPERE ]</button></div></div>
+<div class="qr-item"><div class="qr-num" style="color:var(--c);">3</div><div class="qr-text"><span class="hl">GAMMA</span> — contient un code d'acces physique.<br><button class="qr-ck" id="q3" onclick="foundQr(3)">[ FRAGMENT RECUPERE ]</button></div></div>
 <div class="st" id="s1"></div>
 <div class="give-box" id="g1">A REDISTRIBUER IMMEDIATEMENT<b>CLE CESAR &rarr; CRYPTOGRAPHE (PC 01)<br>CARTE LATITUDES &rarr; ANALYSTE (PC 02)<br>CODE CADENAS &rarr; gardez-le pour la boite</b></div></div>
 
@@ -103,8 +103,8 @@ if(g.alerte&&g.alerte!==window._la){window._la=g.alerte;document.getElementById(
 window.kp=d=>{if(code.length>=6)return;code.push(d);for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent=code[i]||'';s.className='slot'+(i<code.length?' filled':i===code.length?' active':'');}};
 window.clrDev=()=>{code=[];for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent='';s.className='slot'+(i===0?' active':'');}setSt('dst','EFFACE','');};
 window.valDev=async()=>{if(code.length<6){setSt('dst','CODE INCOMPLET','err');return;}if(code.join('')===CODE_DEV){unlocked=true;await done('dev');show('sc-jeu');}else{tries=Math.max(0,tries-1);for(let i=0;i<3;i++)document.getElementById('t'+i).classList.toggle('used',i>=tries);for(let i=0;i<6;i++)document.getElementById('s'+i).className='slot wrong';setSt('dst','ACCES REFUSE — '+tries+' tentative(s)','err');setTimeout(window.clrDev,800);}};
-window.foundQr=async n=>{const el=document.getElementById('q'+n);if(el.classList.contains('found'))return;el.textContent='[ RECUPERE ]';el.classList.add('found');qrs++;setSt('s1',qrs+'/3 QR codes recuperes','info');
-if(qrs===3&&!e1ok){e1ok=true;await done('e1');document.getElementById('c1').classList.add('done');document.getElementById('g1').classList.add('show');document.getElementById('c2').classList.remove('locked');setSt('s1','3/3 RECUPERES — redistribuez immediatement','ok');}};
+window.foundQr=async n=>{const el=document.getElementById('q'+n);if(el.classList.contains('found'))return;el.textContent='[ RECUPERE ]';el.classList.add('found');qrs++;setSt('s1',qrs+'/3 fragments recuperes','info');
+if(qrs===3&&!e1ok){e1ok=true;await done('e1');document.getElementById('c1').classList.add('done');document.getElementById('g1').classList.add('show');document.getElementById('c2').classList.remove('locked');setSt('s1','3/3 FRAGMENTS RECUPERES — redistribuez immediatement','ok');}};
 window.valUsb=async()=>{if(e2ok)return;if(!e1ok){setSt('s2','Terminez la mission 01 d\'abord','info');return;}
 e2ok=true;await done('e2');document.getElementById('c2').classList.add('done');document.getElementById('c3').classList.remove('locked');setSt('s2','DEPOT RECUPERE — lancez le simulateur','ok');};
 window.valScore=async()=>{if(e3ok)return;if(!e2ok){setSt('s3','Recuperez le depot d\'abord','info');return;}
