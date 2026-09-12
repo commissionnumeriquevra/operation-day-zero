@@ -43,7 +43,40 @@
 <div class="sync-banner" id="syn">/// SYNCHRONISATION COMPLETE — OUVREZ LA BOITE ///</div>
 <div class="sect-badge">VOTRE SECTEUR — a communiquer a l'ANALYSTE (PC 02)<b>BOREAL</b></div>
 
-<div class="card" id="c1"><div class="card-num">MISSION 01/02 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">COUPURE RESEAU — NIVEAU 1</div>
+<div class="card" id="c0"><div class="card-num">MISSION 01/04 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">TABLE DE ROUTAGE</div>
+<div class="card-texte">Sept routes actives. Chaque IP doit appartenir au reseau declare selon son masque. Une route est incoherente.</div>
+<div class="indice"><span class="hl">&gt; REGLE :</span> avec un masque /24, les 3 premiers nombres de l'IP doivent etre identiques a ceux du reseau declare. Verifiez chaque ligne.</div>
+<div class="signal" style="font-size:12px;line-height:2.3;">
+R1&nbsp;&nbsp;&nbsp;IP 10.0.4.22&nbsp;&nbsp;&nbsp;/24&nbsp;&nbsp;&nbsp;RESEAU 10.0.4.0<br>
+R2&nbsp;&nbsp;&nbsp;IP 10.0.5.14&nbsp;&nbsp;&nbsp;/24&nbsp;&nbsp;&nbsp;RESEAU 10.0.5.0<br>
+R3&nbsp;&nbsp;&nbsp;IP 10.0.6.201&nbsp;&nbsp;&nbsp;/24&nbsp;&nbsp;&nbsp;RESEAU 10.0.6.0<br>
+R4&nbsp;&nbsp;&nbsp;IP 10.0.7.88&nbsp;&nbsp;&nbsp;/24&nbsp;&nbsp;&nbsp;RESEAU 10.0.7.0<br>
+R5&nbsp;&nbsp;&nbsp;IP 10.0.9.45&nbsp;&nbsp;&nbsp;/24&nbsp;&nbsp;&nbsp;RESEAU 10.0.8.0<br>
+R6&nbsp;&nbsp;&nbsp;IP 10.0.10.3&nbsp;&nbsp;&nbsp;/24&nbsp;&nbsp;&nbsp;RESEAU 10.0.10.0<br>
+R7&nbsp;&nbsp;&nbsp;IP 10.0.11.199&nbsp;&nbsp;&nbsp;/24&nbsp;&nbsp;&nbsp;RESEAU 10.0.11.0
+</div>
+<div class="input-row"><span class="input-lbl">&gt; ROUTE :</span><input class="retro-inp" id="r0" maxlength="3" placeholder="ex: R1"></div>
+<div class="st" id="s0m"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valE0()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r0').value=''">[ EFFACER ]</button></div>
+</div>
+
+<div class="card locked" id="c0b"><div class="card-num">MISSION 02/04 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">DIAGRAMME DE CONNEXIONS</div>
+<div class="card-texte">Six noeuds relies en chaine. Le port de sortie de chaque noeud doit correspondre au port d'entree du suivant. Un maillon a ete rompu.</div>
+<div class="indice"><span class="hl">&gt; A CHERCHER :</span> suivez la chaine noeud par noeud. Trouvez le port de sortie qui n'a trouve aucun noeud pour le recevoir.</div>
+<div class="signal" style="font-size:12px;line-height:2.3;">
+NOEUD-A&nbsp;&nbsp;&nbsp;ENTREE 2201&nbsp;&nbsp;&nbsp;SORTIE 4471<br>
+NOEUD-B&nbsp;&nbsp;&nbsp;ENTREE 4471&nbsp;&nbsp;&nbsp;SORTIE 3390<br>
+NOEUD-C&nbsp;&nbsp;&nbsp;ENTREE 3390&nbsp;&nbsp;&nbsp;SORTIE 5512<br>
+NOEUD-D&nbsp;&nbsp;&nbsp;ENTREE 5512&nbsp;&nbsp;&nbsp;SORTIE 8804<br>
+NOEUD-E&nbsp;&nbsp;&nbsp;ENTREE 9001&nbsp;&nbsp;&nbsp;SORTIE 6623<br>
+NOEUD-F&nbsp;&nbsp;&nbsp;ENTREE 6623&nbsp;&nbsp;&nbsp;SORTIE 1188
+</div>
+<div class="input-row"><span class="input-lbl">&gt; PORT :</span><input class="retro-inp" id="r0b" maxlength="4" placeholder="port manquant"></div>
+<div class="st" id="s0b"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valE0b()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r0b').value=''">[ EFFACER ]</button></div>
+</div>
+
+<div class="card locked" id="c1"><div class="card-num">MISSION 03/04 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">COUPURE RESEAU — NIVEAU 1</div>
 <div class="wait-box" id="w1">EN ATTENTE DE L'ANALYSTE (PC 02)<br><b>Il doit vous transmettre l'ORDRE DES CABLES</b></div>
 <div class="recv-row" id="rcv1"><button class="recv-btn" onclick="rec1()">[ J'AI RECU L'ORDRE DE L'ANALYSTE ]</button></div>
 <div id="body1" style="display:none;">
@@ -54,7 +87,7 @@
 <div class="cable-row"><span class="cable-lbl">CABLE D</span><button class="cable-btn" id="cD" onclick="cut(1,'D')">[ CONNEXION ACTIVE — COUPER ]</button></div>
 <div class="st" id="s1"></div></div></div>
 
-<div class="card locked" id="c2"><div class="card-num">MISSION 02/02 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">COUPURE RESEAU — NIVEAU 2</div>
+<div class="card locked" id="c2"><div class="card-num">MISSION 04/04 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">COUPURE RESEAU — NIVEAU 2</div>
 <div class="wait-box" id="w2">EN ATTENTE DU BIO-INFORMATICIEN (PC 04)<br><b>Il doit vous transmettre les DEUX CABLES SURS</b></div>
 <div class="recv-row" id="rcv2"><button class="recv-btn" onclick="rec2()">[ J'AI RECU LES CABLES SURS ]</button></div>
 <div id="body2" style="display:none;">
@@ -77,11 +110,11 @@ const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation
 const app=initializeApp(FB),db=getDatabase(app),ROLE=3,CODE_DEV='735194';
 const ORD1=['B','D','A','C'],SURS=['E','G'];
 const MSGS=['','42 minutes. Vos progres sont decevants.','27 minutes. Vous m\'inquietez legerement.','12 minutes. Vous etes encore la.','4 minutes. Je ne vous avais pas calcules aussi loin.'];
-let code=[],tries=3,unlocked=false,e1ok=false,e2ok=false,prog1=[],cut2=[],temps=57*60;
+let code=[],tries=3,unlocked=false,e0ok=false,e0bok=false,e1ok=false,e2ok=false,prog1=[],cut2=[],temps=57*60;
 function show(id){['sc-wait','sc-dev','sc-jeu'].forEach(s=>document.getElementById(s).style.display='none');document.getElementById(id).style.display='block';}
 function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');['chr','chr2'].forEach(i=>{const el=document.getElementById(i);if(el){el.textContent=v;if(t<300)el.classList.add('urgent');}});}
 function setSt(id,m,c){const el=document.getElementById(id);if(el){el.textContent=m;el.className='st '+(c||'');}}
-async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
+async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
 async function done(k){await update(ref(db,'game/joueurs/'+ROLE),{[k]:true});await set(ref(db,'game/sync'),await calcSync());}
 async function penalite(){await set(ref(db,'game/penalite'),Date.now());await set(ref(db,'game/temps'),Math.max(0,temps-180));const p=document.getElementById('pen');p.classList.add('show');setTimeout(()=>p.classList.remove('show'),3000);}
 onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;temps=g.temps||57*60;sc(temps);
@@ -94,7 +127,15 @@ if(g.alerte&&g.alerte!==window._la){window._la=g.alerte;document.getElementById(
 window.kp=d=>{if(code.length>=6)return;code.push(d);for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent=code[i]||'';s.className='slot'+(i<code.length?' filled':i===code.length?' active':'');}};
 window.clrDev=()=>{code=[];for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent='';s.className='slot'+(i===0?' active':'');}setSt('dst','EFFACE','');};
 window.valDev=async()=>{if(code.length<6){setSt('dst','CODE INCOMPLET','err');return;}if(code.join('')===CODE_DEV){unlocked=true;await done('dev');show('sc-jeu');}else{tries=Math.max(0,tries-1);for(let i=0;i<3;i++)document.getElementById('t'+i).classList.toggle('used',i>=tries);for(let i=0;i<6;i++)document.getElementById('s'+i).className='slot wrong';setSt('dst','ACCES REFUSE — '+tries+' tentative(s)','err');setTimeout(window.clrDev,800);}};
-window.rec1=()=>{document.getElementById('w1').style.display='none';document.getElementById('rcv1').style.display='none';document.getElementById('body1').style.display='block';};
+window.valE0=async()=>{if(e0ok)return;
+const rep0=document.getElementById('r0').value.trim().toUpperCase();
+if(rep0==='R5'){e0ok=true;await done('e0');document.getElementById('c0').classList.add('done');document.getElementById('c0b').classList.remove('locked');setSt('s0m','INCOHERENCE CONFIRMEE — la mission suivante est disponible','ok');}
+else setSt('s0m','INCORRECT — verifiez chaque IP par rapport a son reseau declare','err');};
+window.valE0b=async()=>{if(e0bok)return;if(!e0ok){setSt('s0b','Terminez la table de routage d\'abord','info');return;}
+const rep0b=document.getElementById('r0b').value.trim();
+if(rep0b==='8804'){e0bok=true;await done('e0b');document.getElementById('c0b').classList.add('done');document.getElementById('c1').classList.remove('locked');setSt('s0b','MAILLON IDENTIFIE — la mission suivante est disponible','ok');}
+else setSt('s0b','INCORRECT — suivez la chaine noeud par noeud','err');};
+window.rec1=()=>{if(!e0bok){setSt('s1','Terminez le diagramme de connexions d\'abord','info');return;}document.getElementById('w1').style.display='none';document.getElementById('rcv1').style.display='none';document.getElementById('body1').style.display='block';};
 window.rec2=()=>{document.getElementById('w2').style.display='none';document.getElementById('rcv2').style.display='none';document.getElementById('body2').style.display='block';};
 window.cut=async(niv,l)=>{
  const btn=document.getElementById('c'+l);
