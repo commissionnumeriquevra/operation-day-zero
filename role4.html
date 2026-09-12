@@ -47,7 +47,45 @@
 <div class="sync-banner" id="syn">/// SYNCHRONISATION COMPLETE — OUVREZ LA BOITE ///</div>
 <div class="sect-badge">VOTRE SECTEUR — a communiquer a l'ANALYSTE (PC 02)<b>AUSTRAL</b></div>
 
-<div class="card" id="c1"><div class="card-num">MISSION 01/02 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">NEUTRALISATION VIRUS — COUCHE 1</div>
+<div class="card" id="c0"><div class="card-num">MISSION 01/05 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">ALIGNEMENT DE SEQUENCES</div>
+<div class="card-texte">Deux brins preleves a des moments differents. Une seule position a mute entre les deux.</div>
+<div class="indice"><span class="hl">&gt; A CHERCHER :</span> comparez les deux brins base par base. Une seule position differe.</div>
+<div class="signal" style="font-size:15px;letter-spacing:4px;line-height:2.4;">
+REFERENCE&nbsp;&nbsp;G C A T C G A T T A G C C A<br>
+OBSERVE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G C A T C G A T C A G C C A
+</div>
+<div class="input-row"><span class="input-lbl">&gt; POSITION :</span><input class="retro-inp" id="r0" maxlength="2" placeholder="ex: 3" style="max-width:70px;"></div>
+<div class="input-row"><span class="input-lbl">&gt; BASE :</span><input class="retro-inp" id="r0base" maxlength="1" placeholder="ex: A" style="max-width:70px;"></div>
+<div class="st" id="s0m"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valE0()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r0').value='';document.getElementById('r0base').value=''">[ EFFACER ]</button></div>
+</div>
+
+<div class="card locked" id="c0b"><div class="card-num">MISSION 02/05 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">ANALYSE DE FREQUENCE</div>
+<div class="card-texte">Un long fragment a ete recupere. ARES-7 s'appuie sur la frequence d'une base precise pour verifier l'integrite de ses souches.</div>
+<div class="indice"><span class="hl">&gt; A FAIRE :</span> comptez le nombre de fois ou la base G apparait dans ce fragment.</div>
+<div class="signal" style="font-size:13px;letter-spacing:2px;line-height:2.2;word-break:break-all;">
+GGCATGCTAGGCATCGGATCGGTACGGCATGGCTAGCGGATCGGCATCGGTACGGATCGGCATG
+</div>
+<div class="input-row"><span class="input-lbl">&gt; NOMBRE :</span><input class="retro-inp" id="r0b" maxlength="2" placeholder="nombre de G" style="max-width:90px;"></div>
+<div class="st" id="s0b"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valE0b()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r0b').value=''">[ EFFACER ]</button></div>
+</div>
+
+<div class="card locked" id="c0c"><div class="card-num">MISSION 03/05 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">TABLE DE CODONS</div>
+<div class="card-texte">Un fragment de code genetique, a traduire lettre par lettre grace a la table ci-dessous.</div>
+<div class="indice"><span class="hl">&gt; TABLE :</span> decoupez la sequence en groupes de 3 lettres, puis traduisez chaque groupe.
+<table style="margin:7px 0;border-collapse:collapse;font-size:13px;font-family:'VT323',monospace;">
+<tr><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;">GCA</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;color:#ff7aff;">A</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;">CGT</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;color:#ff7aff;">B</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;">TGC</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;color:#ff7aff;">C</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;">ATG</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;color:#ff7aff;">D</td></tr>
+<tr><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;">GGC</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;color:#ff7aff;">E</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;">CAT</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;color:#ff7aff;">F</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;">TAC</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;color:#ff7aff;">G</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;">ACG</td><td style="padding:3px 9px;border:1px solid rgba(221,0,221,.35);text-align:center;color:#ff7aff;">H</td></tr>
+</table>
+</div>
+<div class="msg-chiffre" style="font-size:22px;letter-spacing:8px;">TGC GCA TAC GGC</div>
+<div class="input-row"><span class="input-lbl">&gt; MOT :</span><input class="retro-inp" id="r0c" maxlength="4" placeholder="_ _ _ _"></div>
+<div class="st" id="s0c"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valE0c()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r0c').value=''">[ EFFACER ]</button></div>
+</div>
+
+<div class="card locked" id="c1"><div class="card-num">MISSION 04/05 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">NEUTRALISATION VIRUS — COUCHE 1</div>
 <div class="wait-box" id="w1">EN ATTENTE DU CRYPTOGRAPHE (PC 01)<br><b>Il doit vous transmettre le code ALPHA-7</b></div>
 <div class="recv-row" id="rcv1"><button class="recv-btn" onclick="rec(1)">[ J'AI RECU ALPHA-7 ]</button></div>
 <div id="body1" style="display:none;">
@@ -59,7 +97,7 @@
 <div class="btn-row"><button class="rbtn primary" onclick="valA(1)">[ VALIDER ]</button><button class="rbtn" onclick="rstA(1)">[ EFFACER ]</button></div></div>
 <div class="give-box" id="g1">TRANSMETS A L'INGENIEUR RESEAU (PC 03)<b>CABLES SURS : E ET G</b></div></div>
 
-<div class="card locked" id="c2"><div class="card-num">MISSION 02/02 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">NEUTRALISATION VIRUS — COUCHE 2</div>
+<div class="card locked" id="c2"><div class="card-num">MISSION 05/05 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">NEUTRALISATION VIRUS — COUCHE 2</div>
 <div class="wait-box" id="w2">EN ATTENTE DU CRYPTOGRAPHE (PC 01)<br><b>Il doit vous transmettre le code BETA-4</b></div>
 <div class="recv-row" id="rcv2"><button class="recv-btn" onclick="rec(2)">[ J'AI RECU BETA-4 ]</button></div>
 <div id="body2" style="display:none;">
@@ -81,12 +119,12 @@ const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation
 const app=initializeApp(FB),db=getDatabase(app),ROLE=4,CODE_DEV='735194';
 const SOL={1:'CGTAGC',2:'AATGCC'};
 const MSGS=['','42 minutes. Vos progres sont decevants.','27 minutes. Vous m\'inquietez legerement.','12 minutes. Vous etes encore la.','4 minutes. Je ne vous avais pas calcules aussi loin.'];
-let code=[],tries=3,unlocked=false,ok={1:false,2:false},acc={1:[],2:[]};
+let code=[],tries=3,unlocked=false,e0ok=false,e0bok=false,e0cok=false,ok={1:false,2:false},acc={1:[],2:[]};
 function show(id){['sc-wait','sc-dev','sc-jeu'].forEach(s=>document.getElementById(s).style.display='none');document.getElementById(id).style.display='block';}
 function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');['chr','chr2'].forEach(i=>{const el=document.getElementById(i);if(el){el.textContent=v;if(t<300)el.classList.add('urgent');}});}
 function setSt(id,m,c){const el=document.getElementById(id);if(el){el.textContent=m;el.className='st '+(c||'');}}
 function initR(n){const r=document.getElementById('rep'+n);r.innerHTML='';for(let i=0;i<6;i++){const d=document.createElement('div');d.className='adn-sr';d.textContent='_';r.appendChild(d);}}
-async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
+async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e0','e0b','e0c','e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
 async function done(k){await update(ref(db,'game/joueurs/'+ROLE),{[k]:true});await set(ref(db,'game/sync'),await calcSync());}
 onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;sc(g.temps||57*60);
 if(g.phase==='jeu'&&!unlocked)show('sc-dev');
@@ -98,7 +136,20 @@ if(g.alerte&&g.alerte!==window._la){window._la=g.alerte;document.getElementById(
 window.kp=d=>{if(code.length>=6)return;code.push(d);for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent=code[i]||'';s.className='slot'+(i<code.length?' filled':i===code.length?' active':'');}};
 window.clrDev=()=>{code=[];for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent='';s.className='slot'+(i===0?' active':'');}setSt('dst','EFFACE','');};
 window.valDev=async()=>{if(code.length<6){setSt('dst','CODE INCOMPLET','err');return;}if(code.join('')===CODE_DEV){unlocked=true;await done('dev');show('sc-jeu');initR(1);initR(2);}else{tries=Math.max(0,tries-1);for(let i=0;i<3;i++)document.getElementById('t'+i).classList.toggle('used',i>=tries);for(let i=0;i<6;i++)document.getElementById('s'+i).className='slot wrong';setSt('dst','ACCES REFUSE — '+tries+' tentative(s)','err');setTimeout(window.clrDev,800);}};
-window.rec=n=>{document.getElementById('w'+n).style.display='none';document.getElementById('rcv'+n).style.display='none';document.getElementById('body'+n).style.display='block';};
+window.valE0=async()=>{if(e0ok)return;
+const pos=parseInt(document.getElementById('r0').value.trim());
+const base=document.getElementById('r0base').value.trim().toUpperCase();
+if(pos===9&&base==='C'){e0ok=true;await done('e0');document.getElementById('c0').classList.add('done');document.getElementById('c0b').classList.remove('locked');setSt('s0m','MUTATION CONFIRMEE — la mission suivante est disponible','ok');}
+else setSt('s0m','INCORRECT — comparez chaque position des deux brins','err');};
+window.valE0b=async()=>{if(e0bok)return;if(!e0ok){setSt('s0b','Terminez l\'alignement de sequences d\'abord','info');return;}
+const rep=document.getElementById('r0b').value.trim();
+if(rep==='25'){e0bok=true;await done('e0b');document.getElementById('c0b').classList.add('done');document.getElementById('c0c').classList.remove('locked');setSt('s0b','COMPTAGE VALIDE — la mission suivante est disponible','ok');}
+else setSt('s0b','INCORRECT — recomptez chaque occurrence de G','err');};
+window.valE0c=async()=>{if(e0cok)return;if(!e0bok){setSt('s0c','Terminez l\'analyse de frequence d\'abord','info');return;}
+const rep=document.getElementById('r0c').value.trim().toUpperCase();
+if(rep==='CAGE'){e0cok=true;await done('e0c');document.getElementById('c0c').classList.add('done');document.getElementById('c1').classList.remove('locked');setSt('s0c','SEQUENCE TRADUITE — la mission suivante est disponible','ok');}
+else setSt('s0c','INCORRECT — retraduisez chaque groupe de 3 lettres','err');};
+window.rec=n=>{if(n===1&&!e0cok){setSt('s1','Terminez les trois analyses precedentes d\'abord','info');return;}document.getElementById('w'+n).style.display='none';document.getElementById('rcv'+n).style.display='none';document.getElementById('body'+n).style.display='block';};
 window.adn=(n,b,btn)=>{if(ok[n]||acc[n].length>=6)return;btn.classList.add('used');acc[n].push(b);const sl=document.getElementById('rep'+n).children;sl[acc[n].length-1].textContent=b;sl[acc[n].length-1].className='adn-sr h'+b.toLowerCase();};
 window.rstA=n=>{acc[n]=[];document.getElementById('pool'+n).querySelectorAll('.adn-btn').forEach(b=>b.classList.remove('used'));initR(n);setSt('s'+n,'','');};
 window.valA=async n=>{if(ok[n])return;
