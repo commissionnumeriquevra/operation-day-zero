@@ -42,7 +42,31 @@
 <div class="sync-banner" id="syn">/// SYNCHRONISATION COMPLETE — OUVREZ LA BOITE ///</div>
 <div class="sect-badge">VOTRE SECTEUR<b>MERIDIEN</b></div>
 
-<div class="card" id="c1"><div class="card-num">MISSION 01/02 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">RECENSEMENT DES SILOS</div>
+<div class="card" id="c0"><div class="card-num">MISSION 01/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">ANALYSE DES JOURNAUX</div>
+<div class="card-texte">Un flux de connexions a ete intercepte avant l'alerte. Quatorze entrees, toutes validees. Une seule ne devrait pas etre la.</div>
+<div class="indice"><span class="hl">&gt; A CHERCHER :</span> chaque entree est plus tardive que la precedente. Une seule ligne ne respecte pas cet ordre.</div>
+<div class="signal" style="font-size:11px;line-height:2.2;">
+08:14:00&nbsp;&nbsp;&nbsp;192.168.4.10&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:04&nbsp;&nbsp;&nbsp;192.168.4.11&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:08&nbsp;&nbsp;&nbsp;192.168.4.12&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:12&nbsp;&nbsp;&nbsp;192.168.4.13&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:16&nbsp;&nbsp;&nbsp;192.168.4.14&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:20&nbsp;&nbsp;&nbsp;192.168.4.15&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:24&nbsp;&nbsp;&nbsp;192.168.4.16&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:28&nbsp;&nbsp;&nbsp;192.168.4.17&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:25&nbsp;&nbsp;&nbsp;192.168.4.18&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:36&nbsp;&nbsp;&nbsp;192.168.4.19&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:40&nbsp;&nbsp;&nbsp;192.168.4.20&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:44&nbsp;&nbsp;&nbsp;192.168.4.21&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:48&nbsp;&nbsp;&nbsp;192.168.4.22&nbsp;&nbsp;&nbsp;[OK]<br>
+08:14:52&nbsp;&nbsp;&nbsp;192.168.4.23&nbsp;&nbsp;&nbsp;[OK]
+</div>
+<div class="input-row"><span class="input-lbl">&gt; REPONSE :</span><input class="retro-inp" id="r0" maxlength="2" placeholder="derniers chiffres de l'IP fautive"></div>
+<div class="st" id="s0m"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valE0()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r0').value=''">[ EFFACER ]</button></div>
+</div>
+
+<div class="card locked" id="c1"><div class="card-num">MISSION 02/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">RECENSEMENT DES SILOS</div>
 <div class="card-texte">Chaque coequipier a un <span class="hl">nom de secteur</span> affiche sur son ecran. Appelez-les un par un et notez leur secteur ici. Le votre est deja rempli.</div>
 <div class="indice"><span class="hl">&gt; A FAIRE :</span> demandez a voix haute a chaque PC son nom de secteur. Vous ne pouvez pas avancer sans eux.</div>
 <div class="puzzle-grid">
@@ -56,7 +80,7 @@
 <div class="st" id="s1"></div>
 <div class="btn-row"><button class="rbtn primary" onclick="valE1()">[ VALIDER LE RECENSEMENT ]</button><button class="rbtn" onclick="resetP()">[ EFFACER ]</button></div></div>
 
-<div class="card locked" id="c2"><div class="card-num">MISSION 02/02 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">ORDRE DE DESARMEMENT</div>
+<div class="card locked" id="c2"><div class="card-num">MISSION 03/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">ORDRE DE DESARMEMENT</div>
 <div class="wait-box" id="w2">EN ATTENTE DE DEUX ELEMENTS<br><b>La carte des latitudes (INTERCEPTEUR PC 05)<br>et le POINT DE DEPART (CRYPTOGRAPHE PC 01)</b></div>
 <div class="recv-row" id="rcv2"><button class="recv-btn" id="bLat" onclick="rec('lat')">[ CARTE DES LATITUDES RECUE ]</button><button class="recv-btn" id="bDel" onclick="rec('del')">[ POINT DE DEPART RECU ]</button></div>
 <div id="body2" style="display:none;">
@@ -83,11 +107,11 @@ const app=initializeApp(FB),db=getDatabase(app),ROLE=2,CODE_DEV='735194';
 const SECT={p1:'ARCTIC',p2:'MERIDIEN',p3:'BOREAL',p4:'AUSTRAL',p5:'EQUATOR',p6:'ABYSSAL'};
 const SOL2='1-3-5-2-4-6';
 const MSGS=['','42 minutes. Vos progres sont decevants.','27 minutes. Vous m\'inquietez legerement.','12 minutes. Vous etes encore la.','4 minutes. Je ne vous avais pas calcules aussi loin.'];
-let code=[],tries=3,unlocked=false,e1ok=false,e2ok=false,gotLat=false,gotDel=false;
+let code=[],tries=3,unlocked=false,e0ok=false,e1ok=false,e2ok=false,gotLat=false,gotDel=false;
 function show(id){['sc-wait','sc-dev','sc-jeu'].forEach(s=>document.getElementById(s).style.display='none');document.getElementById(id).style.display='block';}
 function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');['chr','chr2'].forEach(i=>{const el=document.getElementById(i);if(el){el.textContent=v;if(t<300)el.classList.add('urgent');}});}
 function setSt(id,m,c){const el=document.getElementById(id);if(el){el.textContent=m;el.className='st '+(c||'');}}
-async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
+async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e0','e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
 async function done(k){await update(ref(db,'game/joueurs/'+ROLE),{[k]:true});await set(ref(db,'game/sync'),await calcSync());}
 onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;sc(g.temps||57*60);
 if(g.phase==='jeu'&&!unlocked)show('sc-dev');
@@ -100,7 +124,11 @@ window.kp=d=>{if(code.length>=6)return;code.push(d);for(let i=0;i<6;i++){const s
 window.clrDev=()=>{code=[];for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent='';s.className='slot'+(i===0?' active':'');}setSt('dst','EFFACE','');};
 window.valDev=async()=>{if(code.length<6){setSt('dst','CODE INCOMPLET','err');return;}if(code.join('')===CODE_DEV){unlocked=true;await done('dev');show('sc-jeu');}else{tries=Math.max(0,tries-1);for(let i=0;i<3;i++)document.getElementById('t'+i).classList.toggle('used',i>=tries);for(let i=0;i<6;i++)document.getElementById('s'+i).className='slot wrong';setSt('dst','ACCES REFUSE — '+tries+' tentative(s)','err');setTimeout(window.clrDev,800);}};
 window.resetP=()=>['p1','p3','p4','p5','p6'].forEach(i=>document.getElementById(i).value='');
-window.valE1=async()=>{if(e1ok)return;let ok=true;
+window.valE0=async()=>{if(e0ok)return;
+const rep0=document.getElementById('r0').value.trim();
+if(rep0==='18'){e0ok=true;await done('e0');document.getElementById('c0').classList.add('done');document.getElementById('c1').classList.remove('locked');setSt('s0m','ANOMALIE CONFIRMEE — la mission suivante est disponible','ok');}
+else setSt('s0m','INCORRECT — comparez chaque horodatage au precedent','err');};
+window.valE1=async()=>{if(e1ok)return;if(!e0ok){setSt('s1','Terminez l\'analyse des journaux d\'abord','info');return;}let ok=true;
 for(const k of ['p1','p3','p4','p5','p6']){if(document.getElementById(k).value.trim().toUpperCase()!==SECT[k])ok=false;}
 if(ok){e1ok=true;await done('e1');document.getElementById('c1').classList.add('done');document.getElementById('c2').classList.remove('locked');['p1','p3','p4','p5','p6'].forEach(k=>document.getElementById(k).closest('.pz-cell').classList.add('ok'));setSt('s1','RECENSEMENT COMPLET — mission 02 debloquee','ok');}
 else setSt('s1','UN OU PLUSIEURS SECTEURS SONT INCORRECTS — reverifiez avec vos coequipiers','err');};
