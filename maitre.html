@@ -29,7 +29,7 @@
   <div class="m-card" style="margin-bottom:11px;"><div class="m-lbl">TERMINAUX</div>
     <div class="j-grid">
       <div class="j-card" style="border-left:3px solid #ff4400;"><div class="j-nom" style="color:#ff4400;">PC01 CRYPTO</div><div class="j-stat" id="js1">Attente</div><div class="j-dots"><span class="j-ed" id="d1-dev">DEV</span><span class="j-ed" id="d1-e1">CES</span><span class="j-ed" id="d1-e2">INV</span><span class="j-ed" id="d1-e3">BIN</span></div></div>
-      <div class="j-card" style="border-left:3px solid #0088ff;"><div class="j-nom" style="color:#0088ff;">PC02 ANALYSTE</div><div class="j-stat" id="js2">Attente</div><div class="j-dots"><span class="j-ed" id="d2-dev">DEV</span><span class="j-ed" id="d2-e0">ANA</span><span class="j-ed" id="d2-e1">REC</span><span class="j-ed" id="d2-e2">ORD</span></div></div>
+      <div class="j-card" style="border-left:3px solid #0088ff;"><div class="j-nom" style="color:#0088ff;">PC02 ANALYSTE</div><div class="j-stat" id="js2">Attente</div><div class="j-dots"><span class="j-ed" id="d2-dev">DEV</span><span class="j-ed" id="d2-e0">ANA</span><span class="j-ed" id="d2-e0b">SEQ</span><span class="j-ed" id="d2-e0c">RAD</span><span class="j-ed" id="d2-e1">REC</span><span class="j-ed" id="d2-e2">ORD</span></div></div>
       <div class="j-card" style="border-left:3px solid #44ff00;"><div class="j-nom" style="color:#44ff00;">PC03 INGE.</div><div class="j-stat" id="js3">Attente</div><div class="j-dots"><span class="j-ed" id="d3-dev">DEV</span><span class="j-ed" id="d3-e1">CBL1</span><span class="j-ed" id="d3-e2">CBL2</span></div></div>
       <div class="j-card" style="border-left:3px solid #dd00dd;"><div class="j-nom" style="color:#dd00dd;">PC04 BIO</div><div class="j-stat" id="js4">Attente</div><div class="j-dots"><span class="j-ed" id="d4-dev">DEV</span><span class="j-ed" id="d4-e1">ADN1</span><span class="j-ed" id="d4-e2">ADN2</span></div></div>
       <div class="j-card" style="border-left:3px solid #ffaa00;"><div class="j-nom" style="color:#ffaa00;">PC05 INTER.</div><div class="j-stat" id="js5">Attente</div><div class="j-dots"><span class="j-ed" id="d5-dev">DEV</span><span class="j-ed" id="d5-e1">QR</span><span class="j-ed" id="d5-e2">USB</span><span class="j-ed" id="d5-e3">JEU</span></div></div>
@@ -54,7 +54,7 @@ import{getDatabase,ref,onValue,set,update}from'https://www.gstatic.com/firebasej
 const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation-day-zero.firebaseapp.com",databaseURL:"https://operation-day-zero-default-rtdb.firebaseio.com",projectId:"operation-day-zero",storageBucket:"operation-day-zero.firebasestorage.app",messagingSenderId:"955748193348",appId:"1:955748193348:web:2de3150288aa136725d811"};
 const app=initializeApp(FB),db=getDatabase(app);
 const DUREE=57*60;
-const REQ={1:['e0','e1','e2','e3'],2:['e0','e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};
+const REQ={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};
 const INIT={1:{dev:false,e1:false,e2:false,e3:false},2:{dev:false,e1:false,e2:false},3:{dev:false,e1:false,e2:false},4:{dev:false,e1:false,e2:false},5:{dev:false,e1:false,e2:false,e3:false},6:{dev:false,e0:false,e1:false,e2:false}};
 let timer=null,temps=DUREE;
 function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');document.getElementById('chr').textContent=v;const b=document.getElementById('cbig');b.textContent=v;if(t<300)b.classList.add('urgent');}
