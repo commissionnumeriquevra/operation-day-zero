@@ -45,7 +45,21 @@
 <div class="sync-banner" id="syn">/// SYNCHRONISATION COMPLETE — OUVREZ LA BOITE ///</div>
 <div class="sect-badge">VOTRE SECTEUR — a communiquer a l'ANALYSTE (PC 02)<b>ARCTIC</b></div>
 
-<div class="card" id="c1"><div class="card-num">MISSION 01/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">DECHIFFREMENT CESAR</div>
+<div class="card" id="c0"><div class="card-num">MISSION 01/04 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">GRILLE DE SUBSTITUTION</div>
+<div class="card-texte">Avant l'alerte, un fragment mineur trainait deja dans vos archives personnelles. Une substitution simple, sans lien avec ARES-7 — un bon echauffement.</div>
+<div class="indice"><span class="hl">&gt; GRILLE FOURNIE :</span> chaque symbole correspond a une lettre precise.
+<table style="margin:7px 0;border-collapse:collapse;font-size:15px;font-family:'VT323',monospace;">
+<tr><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;color:#ff8855;font-size:19px;">@</td><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;color:#ff8855;font-size:19px;">#</td><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;color:#ff8855;font-size:19px;">$</td><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;color:#ff8855;font-size:19px;">%</td><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;color:#ff8855;font-size:19px;">&amp;</td><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;color:#ff8855;font-size:19px;">*</td></tr>
+<tr><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;">C</td><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;">E</td><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;">I</td><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;">L</td><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;">N</td><td style="padding:4px 12px;border:1px solid rgba(255,120,60,.35);text-align:center;">S</td></tr>
+</table>
+</div>
+<div class="msg-chiffre">*$%#&amp;@#</div>
+<div class="input-row"><span class="input-lbl">&gt; REPONSE :</span><input class="retro-inp" id="r0" maxlength="7" placeholder="_ _ _ _ _ _ _"></div>
+<div class="st" id="s0m"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valE0()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r0').value=''">[ EFFACER ]</button></div>
+</div>
+
+<div class="card locked" id="c1"><div class="card-num">MISSION 02/04 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">DECHIFFREMENT CESAR</div>
 <div class="wait-box" id="w1">EN ATTENTE DE L'INTERCEPTEUR (PC 05)<br><b>Il doit vous transmettre la CLE DE DECALAGE</b></div>
 <div class="recv-row" id="rcv1"><button class="recv-btn" onclick="recCle()">[ J'AI RECU LA CLE DE L'INTERCEPTEUR ]</button></div>
 <div id="body1" style="display:none;">
@@ -59,7 +73,7 @@
 </div>
 <div class="give-box" id="g1">TRANSMETS AU BIO-INFORMATICIEN (PC 04)<b>ALPHA-7</b></div></div>
 
-<div class="card locked" id="c2"><div class="card-num">MISSION 02/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">MESSAGE INVERSE</div>
+<div class="card locked" id="c2"><div class="card-num">MISSION 03/04 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">MESSAGE INVERSE</div>
 <div class="card-texte">Second silo. ARES-7 a change de methode : <span class="hl">le message est inverse</span>.</div>
 <div class="indice"><span class="hl">&gt; METHODE :</span> lisez le fragment de droite a gauche, lettre par lettre.</div>
 <div class="msg-chiffre">EGAMI</div>
@@ -68,7 +82,7 @@
 <div class="btn-row"><button class="rbtn primary" onclick="valE2()">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r2').value=''">[ EFFACER ]</button></div>
 <div class="give-box" id="g2">TRANSMETS AU BIO-INFORMATICIEN (PC 04)<b>BETA-4</b></div></div>
 
-<div class="card locked" id="c3"><div class="card-num">MISSION 03/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">CODE BINAIRE</div>
+<div class="card locked" id="c3"><div class="card-num">MISSION 04/04 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">CODE BINAIRE</div>
 <div class="card-texte">Troisieme silo. Fragment encode en <span class="hl">binaire</span>, un octet par lettre.</div>
 <div class="indice"><span class="hl">&gt; METHODE :</span> chaque groupe de 8 chiffres = une lettre.<br>
 Ignorez les <b>3 premiers chiffres</b>. Seuls les <b>5 derniers</b> comptent.<br>
@@ -97,11 +111,11 @@ import{getDatabase,ref,onValue,update,set,get}from'https://www.gstatic.com/fireb
 const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation-day-zero.firebaseapp.com",databaseURL:"https://operation-day-zero-default-rtdb.firebaseio.com",projectId:"operation-day-zero",storageBucket:"operation-day-zero.firebasestorage.app",messagingSenderId:"955748193348",appId:"1:955748193348:web:2de3150288aa136725d811"};
 const app=initializeApp(FB),db=getDatabase(app),ROLE=1,CODE_DEV='735194';
 const MSGS=['','Il reste quarante-deux minutes. Vos progres sont decevants.','Vingt-sept minutes. Vous commencez a m\'inquieter... legerement.','Douze minutes. Interessant. Vous etes encore la.','Quatre minutes. Je ne vous avais pas calcules aussi loin.'];
-let code=[],tries=3,unlocked=false,e1ok=false,e2ok=false,e3ok=false;
+let code=[],tries=3,unlocked=false,e0ok=false,e1ok=false,e2ok=false,e3ok=false;
 function show(id){['sc-wait','sc-dev','sc-jeu'].forEach(s=>document.getElementById(s).style.display='none');document.getElementById(id).style.display='block';}
 function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');['chr','chr2'].forEach(i=>{const el=document.getElementById(i);if(el){el.textContent=v;if(t<300)el.classList.add('urgent');}});}
 function setSt(id,m,c){const el=document.getElementById(id);if(el){el.textContent=m;el.className='st '+(c||'');}}
-async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e1','e2','e3'],2:['e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
+async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
 async function done(k){await update(ref(db,'game/joueurs/'+ROLE),{[k]:true});await set(ref(db,'game/sync'),await calcSync());}
 onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;sc(g.temps||57*60);
 if(g.phase==='jeu'&&!unlocked)show('sc-dev');
@@ -112,9 +126,12 @@ if(g.sync>=6)document.getElementById('syn').classList.add('show');
 if(g.alerte&&g.alerte!==window._la){window._la=g.alerte;document.getElementById('alm').textContent=MSGS[g.alerte]||'';document.getElementById('al').classList.add('show');}});
 window.kp=d=>{if(code.length>=6)return;code.push(d);for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent=code[i]||'';s.className='slot'+(i<code.length?' filled':i===code.length?' active':'');}};
 window.clrDev=()=>{code=[];for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent='';s.className='slot'+(i===0?' active':'');}setSt('dst','EFFACE','');};
+window.valE0=async()=>{if(e0ok)return;
+if(document.getElementById('r0').value.trim().toUpperCase()==='SILENCE'){e0ok=true;await done('e0');document.getElementById('c0').classList.add('done');document.getElementById('c1').classList.remove('locked');setSt('s0m','GRILLE RESOLUE — la mission suivante est disponible','ok');}
+else setSt('s0m','INCORRECT — reportez chaque symbole selon la grille','err');};
 window.valDev=async()=>{if(code.length<6){setSt('dst','CODE INCOMPLET','err');return;}if(code.join('')===CODE_DEV){unlocked=true;await done('dev');show('sc-jeu');}else{tries=Math.max(0,tries-1);for(let i=0;i<3;i++)document.getElementById('t'+i).classList.toggle('used',i>=tries);for(let i=0;i<6;i++)document.getElementById('s'+i).className='slot wrong';setSt('dst','ACCES REFUSE — '+tries+' tentative(s)','err');setTimeout(window.clrDev,800);}};
 window.recCle=()=>{document.getElementById('w1').style.display='none';document.getElementById('rcv1').style.display='none';document.getElementById('body1').style.display='block';};
-window.valE1=async()=>{if(e1ok)return;const k=parseInt(document.getElementById('cle1').value);const r=document.getElementById('r1').value.trim().toUpperCase();
+window.valE1=async()=>{if(e1ok)return;if(!e0ok){setSt('s1','Terminez la grille de substitution d\'abord','info');return;}const k=parseInt(document.getElementById('cle1').value);const r=document.getElementById('r1').value.trim().toUpperCase();
 if(isNaN(k)){setSt('s1','Entrez d\'abord la cle transmise par l\'Intercepteur','info');return;}
 let d='';for(const c of 'ZPNTH')d+=String.fromCharCode(((c.charCodeAt(0)-65-k+26)%26)+65);
 if(r===d&&r.length===5){e1ok=true;await done('e1');document.getElementById('c1').classList.add('done');document.getElementById('g1').classList.add('show');document.getElementById('c2').classList.remove('locked');setSt('s1','FRAGMENT DECHIFFRE — transmettez ALPHA-7 au Bio-informaticien','ok');}

@@ -54,7 +54,7 @@ import{getDatabase,ref,onValue,set,update}from'https://www.gstatic.com/firebasej
 const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation-day-zero.firebaseapp.com",databaseURL:"https://operation-day-zero-default-rtdb.firebaseio.com",projectId:"operation-day-zero",storageBucket:"operation-day-zero.firebasestorage.app",messagingSenderId:"955748193348",appId:"1:955748193348:web:2de3150288aa136725d811"};
 const app=initializeApp(FB),db=getDatabase(app);
 const DUREE=57*60;
-const REQ={1:['e1','e2','e3'],2:['e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};
+const REQ={1:['e0','e1','e2','e3'],2:['e1','e2'],3:['e1','e2'],4:['e1','e2'],5:['e1','e2','e3'],6:['e0','e1','e2']};
 const INIT={1:{dev:false,e1:false,e2:false,e3:false},2:{dev:false,e1:false,e2:false},3:{dev:false,e1:false,e2:false},4:{dev:false,e1:false,e2:false},5:{dev:false,e1:false,e2:false,e3:false},6:{dev:false,e0:false,e1:false,e2:false}};
 let timer=null,temps=DUREE;
 function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');document.getElementById('chr').textContent=v;const b=document.getElementById('cbig');b.textContent=v;if(t<300)b.classList.add('urgent');}
