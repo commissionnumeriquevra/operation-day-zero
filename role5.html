@@ -21,6 +21,11 @@
 .recv-btn{flex:1;height:38px;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;border:1px dashed rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:rgba(255,255,255,.45);text-transform:uppercase}
 .recv-btn.ok{border-style:solid;border-color:#00aa44;color:#00cc44;pointer-events:none}
 
+body::after{will-change:auto;transform:translateZ(0);}
+body::before{will-change:auto;transform:translateZ(0);}
+.card.locked{opacity:.16!important;filter:blur(.4px);}
+.card.locked::after{content:'VERROUILLE';position:absolute;top:8px;right:10px;font-size:9px;letter-spacing:2px;opacity:.5;color:var(--c);font-family:'Share Tech Mono',monospace;}
+.card.locked{position:relative;}
 </style></head><body>
 <div id="sc-wait" class="page"><div class="attente"><div class="att-logo">// OPERATION DAY ZERO //</div><div class="att-titre">INTER-<br>CEPTEUR</div><div class="att-sous">PC 05 — NIVEAU OMEGA</div><div class="att-wait">EN ATTENTE DU LANCEMENT <span class="blink">_</span></div></div></div>
 
@@ -55,7 +60,7 @@
 <div class="give-box" id="g1">A REDISTRIBUER IMMEDIATEMENT<b>CLE CESAR &rarr; CRYPTOGRAPHE (PC 01)<br>CARTE LATITUDES &rarr; ANALYSTE (PC 02)<br>CODE CADENAS &rarr; gardez-le pour la boite</b></div></div>
 
 <div class="card locked" id="c2"><div class="card-num">MISSION 02/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">LE DEPOT DE GHOST</div>
-<div class="card-texte">GHOST n'a pas cache sa preuve. Elle l'a <span class="hl">confiee</span>.</div>
+<div class="card-texte">GHOST n'a pas cache sa preuve. Il l'a <span class="hl">confiee</span>.</div>
 <div class="usb-box"><div class="usb-titre">/// DERNIER MESSAGE DE GHOST ///</div>
 <div class="usb-texte" style="font-size:12px;line-height:2;">"Je n'ai pas pris le risque de le cacher.<br>
 Je l'ai confie a quelqu'un,<br>
