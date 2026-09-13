@@ -57,6 +57,19 @@ const DUREE=57*60;
 const REQ={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e0','e0b','e0c','e1','e2'],5:['e1','e2','e3'],6:['eA','eB','eC','e0','e1','e2']};
 const INIT={1:{dev:false,e1:false,e2:false,e3:false},2:{dev:false,e1:false,e2:false},3:{dev:false,e1:false,e2:false},4:{dev:false,e1:false,e2:false},5:{dev:false,e1:false,e2:false,e3:false},6:{dev:false,e0:false,e1:false,e2:false}};
 let timer=null,temps=DUREE;
+let prevState={};
+let audioCtx=null;
+function bip(){
+  try{
+    if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+    o.connect(g);g.connect(audioCtx.destination);
+    o.frequency.value=880;o.type='sine';
+    g.gain.setValueAtTime(0.15,audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.15);
+    o.start();o.stop(audioCtx.currentTime+0.15);
+  }catch(e){}
+}
 function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');document.getElementById('chr').textContent=v;const b=document.getElementById('cbig');b.textContent=v;if(t<300)b.classList.add('urgent');}
 function log(m,c){const b=document.getElementById('log'),n=new Date();const ts=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');const d=document.createElement('div');d.className='log-ln '+(c||'');d.textContent='['+ts+'] '+m;b.insertBefore(d,b.firstChild);if(b.children.length>40)b.removeChild(b.lastChild);}
 onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;temps=g.temps||DUREE;sc(temps);
@@ -68,7 +81,10 @@ for(let i=1;i<=6;i++){const j=g.joueurs?.[i],st=document.getElementById('js'+i),
  const all=j.dev&&REQ[i].every(k=>j[k]);
  if(st){if(all){st.textContent='TERMINE';st.style.color='#00cc44';}else if(j.dev){st.textContent='En cours...';st.style.color='#ffaa00';}else{st.textContent='Attente';st.style.color='rgba(255,255,255,.18)';}}
  if(dv)dv.classList.toggle('ok',!!j.dev);
- REQ[i].forEach(k=>{const d=document.getElementById('d'+i+'-'+k);if(d)d.classList.toggle('ok',!!j[k]);});}});
+ REQ[i].forEach(k=>{const d=document.getElementById('d'+i+'-'+k);const val=!!j[k];const key=i+'-'+k;
+ if(val&&!prevState[key])bip();
+ prevState[key]=val;
+ if(d)d.classList.toggle('ok',val);});}});
 async function startTimer(){if(timer)clearInterval(timer);
  timer=setInterval(async()=>{temps--;
   if(temps<=0){clearInterval(timer);await update(ref(db,'game'),{temps:0,phase:'defaite'});log('TEMPS ECOULE — DEFAITE','er');return;}
@@ -78,7 +94,7 @@ async function startTimer(){if(timer)clearInterval(timer);
   if(temps===12*60){await set(ref(db,'game/alerte'),3);log('Alerte ARES-7 : 12 min','hi');}
   if(temps===4*60){await set(ref(db,'game/alerte'),4);log('Alerte ARES-7 : 4 min','hi');}
   if(temps===30)log('!!! 30 SECONDES !!!','er');},1000);}
-window.lancerJeu=async()=>{if(!confirm('Lancer le jeu maintenant ?'))return;
+window.lancerJeu=async()=>{if(!audioCtx){try{audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}if(!confirm('Lancer le jeu maintenant ?'))return;
  await set(ref(db,'game'),{phase:'jeu',temps:DUREE,sync:0,alerte:0,penalite:0,appel:0,joueurs:INIT});
  temps=DUREE;await startTimer();log('JEU LANCE !','ok');};
 window.declencherAppel=async()=>{await set(ref(db,'game/appel'),Date.now());log('APPEL DECLENCHE','hi');
