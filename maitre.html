@@ -2,8 +2,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MAITRE DU JEU — Operation Day Zero</title><link rel="stylesheet" href="style.css">
 <style>body{color:#aaa;}.hdr{border-color:rgba(255,255,255,.09);}.hdr-role{color:#fff;font-size:24px;}.hdr-chrono{color:#cc2200;}
-.chain{background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.06);border-radius:3px;padding:9px;font-size:9.5px;line-height:1.9;color:#888}
-.chain b{color:#ffaa00}</style></head><body>
+.chain-legend{font-size:8px;line-height:1.5;color:rgba(255,255,255,.28);margin-bottom:7px}
+.ch-row{display:flex;align-items:center;gap:6px;font-size:9px;line-height:1.6;padding:3px 5px;border-radius:2px;color:rgba(255,255,255,.22);transition:all .4s;margin-bottom:1px}
+.ch-row.done{color:rgba(255,255,255,.72);background:rgba(0,40,18,.5)}
+.ch-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.1);flex-shrink:0;transition:all .4s}
+.ch-row.done .ch-dot{background:#00cc44;box-shadow:0 0 5px rgba(0,204,68,.7)}
+.ch-sep{height:1px;background:rgba(255,255,255,.05);margin:5px 0}
+.ch-row b{opacity:.45;transition:opacity .4s}
+.ch-row.done b{opacity:1}
+.ch-row b.p1{color:#ff4400}.ch-row b.p2{color:#0088ff}.ch-row b.p3{color:#44ff00}
+.ch-row b.p4{color:#dd00dd}.ch-row b.p5{color:#ffaa00}.ch-row b.p6{color:#00ddff}</style></head><body>
 <div class="page">
 <div class="hdr" style="margin-bottom:14px;"><div><div class="hdr-op">// OPERATION DAY ZERO — CONSOLE //</div><div class="hdr-role">MAITREJEU</div></div><div class="hdr-chrono" id="chr">57:00</div></div>
 <div class="m-grid">
@@ -35,17 +43,23 @@
       <div class="j-card" style="border-left:3px solid #ffaa00;"><div class="j-nom" style="color:#ffaa00;">PC05 INTER.</div><div class="j-stat" id="js5">Attente</div><div class="j-dots"><span class="j-ed" id="d5-dev">DEV</span><span class="j-ed" id="d5-e1">QR</span><span class="j-ed" id="d5-e2">USB</span><span class="j-ed" id="d5-e3">JEU</span></div></div>
       <div class="j-card" style="border-left:3px solid #00ddff;"><div class="j-nom" style="color:#00ddff;">PC06 DEMIN.</div><div class="j-stat" id="js6">Attente</div><div class="j-dots"><span class="j-ed" id="d6-dev">DEV</span><span class="j-ed" id="d6-eA">CIR</span><span class="j-ed" id="d6-eB">IMP</span><span class="j-ed" id="d6-eC">ORD</span><span class="j-ed" id="d6-e0">CAL</span><span class="j-ed" id="d6-e1">NORD</span><span class="j-ed" id="d6-e2">SUD</span></div></div>
     </div></div>
-  <div class="m-card"><div class="m-lbl">CHAINE DE DEPENDANCES</div>
-    <div class="chain">
-    <b>PC5</b> QR Alpha &rarr; cle Cesar &rarr; <b>PC1</b><br>
-    <b>PC5</b> QR Beta &rarr; latitudes &rarr; <b>PC2</b><br>
-    <b>PC5</b> QR Gamma &rarr; cadenas 238<br>
-    <b>PC5</b> USB + mini-jeu 420 &rarr; seq. SUD &rarr; <b>PC6</b><br>
-    <b>PC1</b> ALPHA-7 / BETA-4 &rarr; <b>PC4</b> &nbsp;|&nbsp; DELTA-9 &rarr; <b>PC2</b><br>
-    <b>PC4</b> cables E+G &rarr; <b>PC3</b><br>
-    <b>PC2</b> ordre cables &rarr; <b>PC3</b> &nbsp;|&nbsp; seq. NORD &rarr; <b>PC6</b><br>
-    <b>PC6</b> calibrage (seul) + NORD + SUD &rarr; detonateur
-    </div></div>
+  <div class="m-card"><div class="m-lbl">CHAINE DE TRANSMISSION</div>
+    <div class="chain-legend">Vert = transmission debloquee. Gris = en attente. Si un joueur bloque, regardez qui doit lui transmettre.</div>
+    <div class="ch-row" id="ch-a"><span class="ch-dot"></span><b class="p5">PC5</b> Alpha &rarr; cle Cesar &rarr; <b class="p1">PC1</b></div>
+    <div class="ch-row" id="ch-b"><span class="ch-dot"></span><b class="p5">PC5</b> Beta &rarr; latitudes &rarr; <b class="p2">PC2</b></div>
+    <div class="ch-row" id="ch-c"><span class="ch-dot"></span><b class="p5">PC5</b> Gamma &rarr; cadenas 238</div>
+    <div class="ch-row" id="ch-d"><span class="ch-dot"></span><b class="p5">PC5</b> mini-jeu 420 &rarr; seq. SUD &rarr; <b class="p6">PC6</b></div>
+    <div class="ch-sep"></div>
+    <div class="ch-row" id="ch-e"><span class="ch-dot"></span><b class="p1">PC1</b> Cesar &rarr; ALPHA-7 &rarr; <b class="p4">PC4</b></div>
+    <div class="ch-row" id="ch-f"><span class="ch-dot"></span><b class="p1">PC1</b> Polybe &rarr; BETA-4 &rarr; <b class="p4">PC4</b></div>
+    <div class="ch-row" id="ch-g"><span class="ch-dot"></span><b class="p1">PC1</b> binaire &rarr; pt. depart NORD &rarr; <b class="p2">PC2</b></div>
+    <div class="ch-sep"></div>
+    <div class="ch-row" id="ch-h"><span class="ch-dot"></span><b class="p4">PC4</b> ADN1 &rarr; cables E+G &rarr; <b class="p3">PC3</b></div>
+    <div class="ch-row" id="ch-i"><span class="ch-dot"></span><b class="p2">PC2</b> ordre &rarr; cables B&gt;D&gt;A&gt;C &rarr; <b class="p3">PC3</b></div>
+    <div class="ch-row" id="ch-j"><span class="ch-dot"></span><b class="p2">PC2</b> ordre &rarr; seq. NORD &rarr; <b class="p6">PC6</b></div>
+    <div class="ch-sep"></div>
+    <div class="ch-row" id="ch-k"><span class="ch-dot"></span><b class="p6">PC6</b> calibrage + NORD + SUD &rarr; DETONATEUR</div>
+    </div>
 </div>
 </div></div>
 <script type="module">
@@ -84,7 +98,19 @@ for(let i=1;i<=6;i++){const j=g.joueurs?.[i],st=document.getElementById('js'+i),
  REQ[i].forEach(k=>{const d=document.getElementById('d'+i+'-'+k);const val=!!j[k];const key=i+'-'+k;
  if(val&&!prevState[key])bip();
  prevState[key]=val;
- if(d)d.classList.toggle('ok',val);});}});
+ if(d)d.classList.toggle('ok',val);});}
+majChaine(g.joueurs||{});});
+
+function majChaine(J){
+ const f=(pc,k)=>!!(J[pc]&&J[pc][k]);
+ const etat={
+  'ch-a':f(5,'e1'), 'ch-b':f(5,'e1'), 'ch-c':f(5,'e1'), 'ch-d':f(5,'e3'),
+  'ch-e':f(1,'e1'), 'ch-f':f(1,'e2'), 'ch-g':f(1,'e3'),
+  'ch-h':f(4,'e1'), 'ch-i':f(2,'e2'), 'ch-j':f(2,'e2'),
+  'ch-k':f(6,'e0')&&f(6,'e1')&&f(6,'e2')
+ };
+ for(const id in etat){const el=document.getElementById(id);if(el)el.classList.toggle('done',etat[id]);}
+}
 async function startTimer(){if(timer)clearInterval(timer);
  timer=setInterval(async()=>{temps--;
   if(temps<=0){clearInterval(timer);await update(ref(db,'game'),{temps:0,phase:'defaite'});log('TEMPS ECOULE — DEFAITE','er');return;}
