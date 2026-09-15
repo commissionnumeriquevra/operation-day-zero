@@ -184,3 +184,61 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 .rappel .rv{color:#ffaa00;font-family:'VT323',monospace;font-size:18px;letter-spacing:3px;}
 .sync-outer{height:6px;background:rgba(255,255,255,0.04);border-radius:3px;margin-top:5px;}
 .sync-inner{height:6px;background:#00aa44;border-radius:3px;transition:width 0.5s;}
+
+/* ============ SEQUENCE DE DEFAITE : DECOLLAGE + EXPLOSION ============ */
+.boom-scene{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+
+/* --- le missile qui decolle --- */
+.boom-missile{position:absolute;left:50%;bottom:-70px;width:16px;height:52px;margin-left:-8px;
+ background:linear-gradient(180deg,#f2f2f2 0%,#bbb 35%,#777 70%,#444 100%);
+ clip-path:polygon(50% 0,100% 26%,100% 100%,0 100%,0 26%);
+ animation:boom-up 2s cubic-bezier(.45,0,.85,.5) forwards;}
+.boom-missile::after{content:'';position:absolute;top:100%;left:50%;width:22px;height:54px;margin-left:-11px;
+ background:radial-gradient(ellipse at 50% 0%,#fff 0%,#ffe066 22%,#ff8800 48%,#ff2200 68%,transparent 80%);
+ animation:boom-flame .07s steps(2) infinite alternate;}
+@keyframes boom-up{0%{transform:translateY(0)}100%{transform:translateY(-125vh)}}
+@keyframes boom-flame{0%{transform:scaleY(1) scaleX(1);opacity:1}100%{transform:scaleY(1.45) scaleX(.82);opacity:.82}}
+
+/* --- trainee de fumee laissee par le missile --- */
+.boom-trail{position:absolute;left:50%;bottom:0;width:4px;margin-left:-2px;height:0;
+ background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0));
+ animation:boom-trail 2s cubic-bezier(.45,0,.85,.5) forwards}
+@keyframes boom-trail{0%{height:0;opacity:.7}70%{opacity:.5}100%{height:125vh;opacity:0}}
+
+/* --- flash blanc a l'impact --- */
+.boom-flash{position:absolute;inset:0;background:#fff;opacity:0;
+ animation:boom-flash .45s ease-out 1.95s forwards}
+@keyframes boom-flash{0%{opacity:0}12%{opacity:1}100%{opacity:0}}
+
+/* --- boule de feu --- */
+.boom-fire{position:absolute;left:50%;top:50%;width:200px;height:200px;margin:-100px 0 0 -100px;border-radius:50%;
+ background:radial-gradient(circle,#fff 0%,#ffe066 14%,#ff9900 32%,#ff3300 52%,#901000 70%,transparent 78%);
+ transform:scale(0);opacity:0;
+ animation:boom-fire 2.6s ease-out 2s forwards}
+@keyframes boom-fire{0%{transform:scale(0);opacity:1}
+ 18%{transform:scale(4.5);opacity:1}
+ 55%{transform:scale(7);opacity:.75}
+ 100%{transform:scale(9);opacity:0}}
+
+/* --- onde de choc --- */
+.boom-ring{position:absolute;left:50%;top:50%;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;
+ border:3px solid rgba(255,200,120,.9);transform:scale(0);opacity:0;
+ animation:boom-ring 1.5s ease-out 2.05s forwards}
+.boom-ring.r2{animation-delay:2.28s;border-color:rgba(255,120,60,.6)}
+@keyframes boom-ring{0%{transform:scale(0);opacity:1}100%{transform:scale(16);opacity:0}}
+
+/* --- secousse de l'ecran --- */
+.fin-d.show{animation:boom-shake .7s ease-out 2s}
+@keyframes boom-shake{
+ 0%,100%{transform:translate(0,0)}
+ 10%{transform:translate(-14px,7px)}25%{transform:translate(12px,-9px)}
+ 40%{transform:translate(-9px,-5px)}55%{transform:translate(7px,6px)}
+ 70%{transform:translate(-4px,3px)}85%{transform:translate(2px,-2px)}}
+
+/* --- le texte n'apparait qu'apres l'explosion --- */
+.fin-d .fin-titre,.fin-d .fin-sous,.fin-d .fin-twist{position:relative;z-index:2;opacity:0;
+ animation:boom-text 1.4s ease-out forwards}
+.fin-d .fin-titre{animation-delay:2.5s}
+.fin-d .fin-sous{animation-delay:2.9s}
+.fin-d .fin-twist{animation-delay:3.4s;opacity:0}
+@keyframes boom-text{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:none}}
