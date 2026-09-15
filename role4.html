@@ -25,6 +25,11 @@
 .recv-row{display:flex;gap:7px;margin-bottom:9px}
 .recv-btn{flex:1;height:38px;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;border:1px dashed rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:rgba(255,255,255,.45);text-transform:uppercase}
 .recv-btn.ok{border-style:solid;border-color:#00aa44;color:#00cc44;pointer-events:none}
+.recv-row{display:flex;gap:7px;margin-bottom:9px;align-items:center;flex-wrap:wrap}
+.recv-inp{flex:1;min-width:150px;height:38px;background:rgba(0,0,0,.6);border:1px dashed rgba(255,255,255,.3);border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:12px;padding:0 10px;outline:none;text-transform:uppercase;color:inherit}
+.recv-btn{flex:0 0 auto!important;padding:0 16px}
+.recv-err{font-size:10px;color:#ff4400;min-height:14px;margin-bottom:6px;letter-spacing:1px}
+
 
 </style></head><body>
 <div id="sc-wait" class="page"><div class="attente"><div class="att-logo">// OPERATION DAY ZERO //</div><div class="att-titre">BIO-<br>INFO</div><div class="att-sous">PC 04 — NIVEAU OMEGA</div><div class="att-wait">EN ATTENTE DU LANCEMENT <span class="blink">_</span></div></div></div>
@@ -86,8 +91,9 @@ GGCATGCTAGGCATCGGATCGGTACGGCATGGCTAGCGGATCGGCATCGGTACGGATCGGCATG
 </div>
 
 <div class="card locked" id="c1"><div class="card-num">MISSION 04/05 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">NEUTRALISATION VIRUS — COUCHE 1</div>
-<div class="wait-box" id="w1">EN ATTENTE DU CRYPTOGRAPHE (PC 01)<br><b>Il doit vous transmettre le code ALPHA-7</b></div>
-<div class="recv-row" id="rcv1"><button class="recv-btn" onclick="rec(1)">[ J'AI RECU ALPHA-7 ]</button></div>
+<div class="wait-box" id="w1">EN ATTENTE DU CRYPTOGRAPHE (PC 01)<br><b>Il detient le code qui debloque cette couche</b></div>
+<div class="recv-row" id="rcv1"><input class="recv-inp" id="code1" placeholder="code transmis par le PC 01"><button class="recv-btn" onclick="rec(1)">[ VALIDER ]</button></div>
+<div class="recv-err" id="err1"></div>
 <div id="body1" style="display:none;">
 <div class="card-texte">Sequence corrompue : <span class="hl">GCATCG</span><br>Reconstituez le brin complementaire.</div>
 <div class="indice"><span class="hl">&gt; REGLE :</span> A se lie a T, et G se lie a C. Chaque base doit etre remplacee par celle a laquelle elle se lie, en gardant le meme ordre.</div>
@@ -98,8 +104,9 @@ GGCATGCTAGGCATCGGATCGGTACGGCATGGCTAGCGGATCGGCATCGGTACGGATCGGCATG
 <div class="give-box" id="g1">TRANSMETS A L'INGENIEUR RESEAU (PC 03)<b>CABLES SURS : E ET G</b></div></div>
 
 <div class="card locked" id="c2"><div class="card-num">MISSION 05/05 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">NEUTRALISATION VIRUS — COUCHE 2</div>
-<div class="wait-box" id="w2">EN ATTENTE DU CRYPTOGRAPHE (PC 01)<br><b>Il doit vous transmettre le code BETA-4</b></div>
-<div class="recv-row" id="rcv2"><button class="recv-btn" onclick="rec(2)">[ J'AI RECU BETA-4 ]</button></div>
+<div class="wait-box" id="w2">EN ATTENTE DU CRYPTOGRAPHE (PC 01)<br><b>Il detient le second code d'acces</b></div>
+<div class="recv-row" id="rcv2"><input class="recv-inp" id="code2" placeholder="code transmis par le PC 01"><button class="recv-btn" onclick="rec(2)">[ VALIDER ]</button></div>
+<div class="recv-err" id="err2"></div>
 <div id="body2" style="display:none;">
 <div class="card-texte">Seconde couche. Sequence corrompue : <span class="hl">TTACGG</span><br>Meme regle de complementarite.</div>
 <div class="adn-pool" id="pool2"><button class="adn-btn adn-C" onclick="adn(2,'C',this)">C</button><button class="adn-btn adn-A" onclick="adn(2,'A',this)">A</button><button class="adn-btn adn-G" onclick="adn(2,'G',this)">G</button><button class="adn-btn adn-C" onclick="adn(2,'C',this)">C</button><button class="adn-btn adn-A" onclick="adn(2,'A',this)">A</button><button class="adn-btn adn-T" onclick="adn(2,'T',this)">T</button></div>
@@ -149,7 +156,12 @@ window.valE0c=async()=>{if(e0cok)return;if(!e0bok){setSt('s0c','Terminez l\'anal
 const rep=document.getElementById('r0c').value.trim().toUpperCase();
 if(rep==='CAGE'){e0cok=true;await done('e0c');document.getElementById('c0c').classList.add('done');document.getElementById('c1').classList.remove('locked');setSt('s0c','SEQUENCE TRADUITE — la mission suivante est disponible','ok');}
 else setSt('s0c','INCORRECT — retraduisez chaque groupe de 3 lettres','err');};
-window.rec=n=>{if(n===1&&!e0cok){setSt('s1','Terminez les trois analyses precedentes d\'abord','info');return;}document.getElementById('w'+n).style.display='none';document.getElementById('rcv'+n).style.display='none';document.getElementById('body'+n).style.display='block';};
+window.rec=n=>{if(n===1&&!e0cok){setSt('s1','Terminez les trois analyses precedentes d\'abord','info');return;}
+const attendu={1:'ALPHA-7',2:'BETA-4'}[n];
+const saisi=document.getElementById('code'+n).value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'');
+if(saisi!==attendu.replace('-','')){document.getElementById('err'+n).textContent='CODE INCORRECT — demandez-le au Cryptographe (PC 01)';return;}
+document.getElementById('err'+n).textContent='';
+document.getElementById('w'+n).style.display='none';document.getElementById('rcv'+n).style.display='none';document.getElementById('body'+n).style.display='block';};
 window.adn=(n,b,btn)=>{if(ok[n]||acc[n].length>=6)return;btn.classList.add('used');acc[n].push(b);const sl=document.getElementById('rep'+n).children;sl[acc[n].length-1].textContent=b;sl[acc[n].length-1].className='adn-sr h'+b.toLowerCase();};
 window.rstA=n=>{acc[n]=[];document.getElementById('pool'+n).querySelectorAll('.adn-btn').forEach(b=>b.classList.remove('used'));initR(n);setSt('s'+n,'','');};
 window.valA=async n=>{if(ok[n])return;

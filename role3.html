@@ -20,6 +20,11 @@
 .recv-row{display:flex;gap:7px;margin-bottom:9px}
 .recv-btn{flex:1;height:38px;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;cursor:pointer;border:1px dashed rgba(255,255,255,.2);background:rgba(0,0,0,.5);color:rgba(255,255,255,.45);text-transform:uppercase}
 .recv-btn.ok{border-style:solid;border-color:#00aa44;color:#00cc44;pointer-events:none}
+.recv-row{display:flex;gap:7px;margin-bottom:9px;align-items:center;flex-wrap:wrap}
+.recv-inp{flex:1;min-width:150px;height:38px;background:rgba(0,0,0,.6);border:1px dashed rgba(255,255,255,.3);border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:12px;padding:0 10px;outline:none;text-transform:uppercase;color:inherit}
+.recv-btn{flex:0 0 auto!important;padding:0 16px}
+.recv-err{font-size:10px;color:#ff4400;min-height:14px;margin-bottom:6px;letter-spacing:1px}
+
 
 </style></head><body>
 <div class="pen-banner" id="pen">!!! ERREUR DE CABLAGE — PENALITE -3 MINUTES POUR L'EQUIPE !!!</div>
@@ -78,7 +83,8 @@ NOEUD-F&nbsp;&nbsp;&nbsp;ENTREE 6623&nbsp;&nbsp;&nbsp;SORTIE 1188
 
 <div class="card locked" id="c1"><div class="card-num">MISSION 03/04 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">COUPURE RESEAU — NIVEAU 1</div>
 <div class="wait-box" id="w1">EN ATTENTE DE L'ANALYSTE (PC 02)<br><b>Il doit vous transmettre l'ORDRE DES CABLES</b></div>
-<div class="recv-row" id="rcv1"><button class="recv-btn" onclick="rec1()">[ J'AI RECU L'ORDRE DE L'ANALYSTE ]</button></div>
+<div class="recv-row" id="rcv1"><input class="recv-inp" id="cOrd" placeholder="ordre des cables transmis par le PC 02"><button class="recv-btn" onclick="rec1()">[ VALIDER ]</button></div>
+<div class="recv-err" id="errO"></div>
 <div id="body1" style="display:none;">
 <div class="card-texte">Quatre connexions actives vers les silos. Coupez-les dans l'ordre exact transmis par l'Analyste.<br><span class="hl">ATTENTION : un mauvais cable coute 3 minutes a toute l'equipe.</span></div>
 <div class="cable-row"><span class="cable-lbl">CABLE A</span><button class="cable-btn" id="cA" onclick="cut(1,'A')">[ CONNEXION ACTIVE — COUPER ]</button></div>
@@ -89,7 +95,8 @@ NOEUD-F&nbsp;&nbsp;&nbsp;ENTREE 6623&nbsp;&nbsp;&nbsp;SORTIE 1188
 
 <div class="card locked" id="c2"><div class="card-num">MISSION 04/04 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">COUPURE RESEAU — NIVEAU 2</div>
 <div class="wait-box" id="w2">EN ATTENTE DU BIO-INFORMATICIEN (PC 04)<br><b>Il doit vous transmettre les DEUX CABLES SURS</b></div>
-<div class="recv-row" id="rcv2"><button class="recv-btn" onclick="rec2()">[ J'AI RECU LES CABLES SURS ]</button></div>
+<div class="recv-row" id="rcv2"><input class="recv-inp" id="cSur" placeholder="cables surs transmis par le PC 04"><button class="recv-btn" onclick="rec2()">[ VALIDER ]</button></div>
+<div class="recv-err" id="errS"></div>
 <div id="body2" style="display:none;">
 <div class="card-texte">Reseau de secours actif. Deux de ces quatre cables sont piegees. Coupez uniquement les deux cables surs indiques par le Bio-informaticien. <span class="hl">L'ordre n'a pas d'importance ici.</span></div>
 <div class="cable-row"><span class="cable-lbl">CABLE E</span><button class="cable-btn" id="cE" onclick="cut(2,'E')">[ CONNEXION ACTIVE — COUPER ]</button></div>
@@ -135,8 +142,16 @@ window.valE0b=async()=>{if(e0bok)return;if(!e0ok){setSt('s0b','Terminez la table
 const rep0b=document.getElementById('r0b').value.trim();
 if(rep0b==='8804'){e0bok=true;await done('e0b');document.getElementById('c0b').classList.add('done');document.getElementById('c1').classList.remove('locked');setSt('s0b','MAILLON IDENTIFIE — la mission suivante est disponible','ok');}
 else setSt('s0b','INCORRECT — suivez la chaine noeud par noeud','err');};
-window.rec1=()=>{if(!e0bok){setSt('s1','Terminez le diagramme de connexions d\'abord','info');return;}document.getElementById('w1').style.display='none';document.getElementById('rcv1').style.display='none';document.getElementById('body1').style.display='block';};
-window.rec2=()=>{document.getElementById('w2').style.display='none';document.getElementById('rcv2').style.display='none';document.getElementById('body2').style.display='block';};
+window.rec1=()=>{if(!e0bok){setSt('s1','Terminez le diagramme de connexions d\'abord','info');return;}
+const v=document.getElementById('cOrd').value.trim().toUpperCase().replace(/[^A-D]/g,'');
+if(v!=='BDAC'){document.getElementById('errO').textContent='INCORRECT — demandez l\'ordre exact a l\'Analyste (PC 02)';return;}
+document.getElementById('errO').textContent='';
+document.getElementById('w1').style.display='none';document.getElementById('rcv1').style.display='none';document.getElementById('body1').style.display='block';};
+window.rec2=()=>{
+const v=[...new Set(document.getElementById('cSur').value.toUpperCase().replace(/[^E-H]/g,''))].sort().join('');
+if(v!=='EG'){document.getElementById('errS').textContent='INCORRECT — demandez les cables surs au Bio-informaticien (PC 04)';return;}
+document.getElementById('errS').textContent='';
+document.getElementById('w2').style.display='none';document.getElementById('rcv2').style.display='none';document.getElementById('body2').style.display='block';};
 window.cut=async(niv,l)=>{
  const btn=document.getElementById('c'+l);
  if(niv===1){
