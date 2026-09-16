@@ -72,6 +72,7 @@ const REQ={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b',
 const INIT={1:{dev:false,e1:false,e2:false,e3:false},2:{dev:false,e1:false,e2:false},3:{dev:false,e1:false,e2:false},4:{dev:false,e1:false,e2:false},5:{dev:false,e1:false,e2:false,e3:false},6:{dev:false,e0:false,e1:false,e2:false}};
 let timer=null,temps=DUREE;
 let prevState={};
+let prevPhase=null;
 let audioCtx=null;
 function bip(){
   try{
@@ -84,10 +85,64 @@ function bip(){
     o.start();o.stop(audioCtx.currentTime+0.15);
   }catch(e){}
 }
+function bufBruit(duree){
+  const sr=audioCtx.sampleRate,b=audioCtx.createBuffer(1,Math.floor(sr*duree),sr),d=b.getChannelData(0);
+  for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  return b;
+}
+function sonDefaite(){
+  try{
+    if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    const T=audioCtx.currentTime;
+    // limiteur de securite : empeche toute saturation
+    const LIM=audioCtx.createDynamicsCompressor();
+    LIM.threshold.value=-3;LIM.knee.value=0;LIM.ratio.value=20;
+    LIM.attack.value=0.002;LIM.release.value=0.25;
+    LIM.connect(audioCtx.destination);
+
+    // --- 0.0s a 2.0s : le missile qui decolle (souffle montant) ---
+    const wS=audioCtx.createBufferSource();wS.buffer=bufBruit(2.1);
+    const wF=audioCtx.createBiquadFilter();wF.type='bandpass';wF.Q.value=1.4;
+    wF.frequency.setValueAtTime(180,T);
+    wF.frequency.exponentialRampToValueAtTime(2200,T+1.95);
+    const wG=audioCtx.createGain();
+    wG.gain.setValueAtTime(0.001,T);
+    wG.gain.exponentialRampToValueAtTime(0.18,T+0.5);
+    wG.gain.exponentialRampToValueAtTime(0.08,T+1.95);
+    wS.connect(wF);wF.connect(wG);wG.connect(LIM);
+    wS.start(T);wS.stop(T+2.05);
+
+    // --- 2.0s : la detonation (bruit filtre qui s'effondre) ---
+    const D=T+2.0;
+    const eS=audioCtx.createBufferSource();eS.buffer=bufBruit(3.2);
+    const eF=audioCtx.createBiquadFilter();eF.type='lowpass';eF.Q.value=0.7;
+    eF.frequency.setValueAtTime(1600,D);
+    eF.frequency.exponentialRampToValueAtTime(55,D+2.4);
+    const eG=audioCtx.createGain();
+    eG.gain.setValueAtTime(0.0001,D);
+    eG.gain.linearRampToValueAtTime(0.5,D+0.015);
+    eG.gain.exponentialRampToValueAtTime(0.0001,D+2.9);
+    eS.connect(eF);eF.connect(eG);eG.connect(LIM);
+    eS.start(D);eS.stop(D+3.0);
+
+    // --- 2.0s : le grondement grave sous la detonation ---
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+    o.type='sine';
+    o.frequency.setValueAtTime(95,D);
+    o.frequency.exponentialRampToValueAtTime(22,D+1.6);
+    g.gain.setValueAtTime(0.0001,D);
+    g.gain.linearRampToValueAtTime(0.4,D+0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001,D+2.6);
+    o.connect(g);g.connect(LIM);
+    o.start(D);o.stop(D+2.7);
+  }catch(e){}
+}
 function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');document.getElementById('chr').textContent=v;const b=document.getElementById('cbig');b.textContent=v;if(t<300)b.classList.add('urgent');}
 function log(m,c){const b=document.getElementById('log'),n=new Date();const ts=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');const d=document.createElement('div');d.className='log-ln '+(c||'');d.textContent='['+ts+'] '+m;b.insertBefore(d,b.firstChild);if(b.children.length>40)b.removeChild(b.lastChild);}
 onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;temps=g.temps||DUREE;sc(temps);
 const ph={attente:'EN ATTENTE',jeu:'JEU EN COURS',victoire:'VICTOIRE !',defaite:'DEFAITE'};
+if(prevPhase!==null&&prevPhase!=='defaite'&&g.phase==='defaite'){sonDefaite();log('LANCEMENT — sequence sonore','er');}
+prevPhase=g.phase;
 document.getElementById('plbl').textContent=ph[g.phase]||'EN ATTENTE';
 const s=g.sync||0;document.getElementById('syncn').textContent=s+'/6';document.getElementById('sbar').style.width=(s/6*100)+'%';
 for(let i=1;i<=6;i++){const j=g.joueurs?.[i],st=document.getElementById('js'+i),dv=document.getElementById('d'+i+'-dev');
