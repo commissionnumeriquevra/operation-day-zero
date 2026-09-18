@@ -51,35 +51,45 @@ body::before{will-change:auto;transform:translateZ(0);}
 <div class="card-num">// ROLE PARTICULIER //</div><div class="card-titre">VOUS ETES MOBILE</div>
 <div class="card-texte">Vous seul quittez votre poste. Toute l'equipe depend de ce que vous rapporterez. <span class="hl">Commencez immediatement.</span></div></div>
 
-<div class="card" id="c1"><div class="card-num">MISSION 01/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">FRAGMENTS DE GHOST</div>
-<div class="card-texte">Trois messages morts sont caches dans cette salle, quelque part la ou personne ne pense a regarder deux fois. Trouvez-les.</div>
-<div class="qr-item"><div class="qr-num" style="color:var(--c);">1</div><div class="qr-text"><span class="hl">ALPHA</span> — contient une cle de dechiffrement.<br><button class="qr-ck" id="q1" onclick="foundQr(1)">[ FRAGMENT RECUPERE ]</button></div></div>
-<div class="qr-item"><div class="qr-num" style="color:var(--c);">2</div><div class="qr-text"><span class="hl">BETA</span> — contient une carte des latitudes.<br><button class="qr-ck" id="q2" onclick="foundQr(2)">[ FRAGMENT RECUPERE ]</button></div></div>
-<div class="qr-item"><div class="qr-num" style="color:var(--c);">3</div><div class="qr-text"><span class="hl">GAMMA</span> — contient un code d'acces physique.<br><button class="qr-ck" id="q3" onclick="foundQr(3)">[ FRAGMENT RECUPERE ]</button></div></div>
+<div class="card" id="c1"><div class="card-num">MISSION 01/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">SIGNAL REPETE</div>
+<div class="indice">Une machine repete le meme signe depuis des heures.<br>Plus personne ne la regarde.</div>
+<div class="input-row"><span class="input-lbl">&gt; SIGNE :</span><input class="retro-inp" id="r1" maxlength="2" placeholder="ce que vous avez releve"></div>
 <div class="st" id="s1"></div>
-<div class="give-box" id="g1">A REDISTRIBUER IMMEDIATEMENT<b>CLE CESAR &rarr; CRYPTOGRAPHE (PC 01)<br>CARTE LATITUDES &rarr; ANALYSTE (PC 02)<br>CODE CADENAS &rarr; gardez-le pour la boite</b></div></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valM(1)">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r1').value=''">[ EFFACER ]</button></div>
+<div class="give-box" id="g1">TRANSMETS AU CRYPTOGRAPHE (PC 01)<b>CLE DE DECHIFFREMENT</b></div></div>
 
-<div class="card locked" id="c2"><div class="card-num">MISSION 02/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">LE DEPOT DE GHOST</div>
-<div class="card-texte">GHOST n'a pas cache sa preuve. Il l'a <span class="hl">confiee</span>.</div>
-<div class="usb-box"><div class="usb-titre">/// DERNIER MESSAGE DE GHOST ///</div>
-<div class="usb-texte" style="font-size:12px;line-height:2;">"Je n'ai pas pris le risque de le cacher.<br>
-Je l'ai confie a quelqu'un,<br>
-<b>la ou les mots dorment.</b><br><br>
-Cette personne ne vous donnera rien<br>
-tant que vous ne lui direz pas <b>la phrase convenue</b>.<br><br>
-Je l'ai laissee affichee. En evidence.<br>
-Personne ne l'a jamais remarquee."</div>
-<div class="usb-indice" style="color:var(--c);">TROUVEZ LA PHRASE <span class="blink">_</span></div></div>
+<div class="card locked" id="c2"><div class="card-num">MISSION 02/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">VUE ORBITALE</div>
+<div class="indice">Une vue prise de tres haut. Six points.<br>Elle ne se lit qu'a travers un ecran.</div>
+<div class="input-row"><span class="input-lbl">&gt; SECTEUR :</span><input class="retro-inp" id="r2" maxlength="10" placeholder="le point le plus au nord"></div>
 <div class="st" id="s2"></div>
-<div class="btn-row"><button class="rbtn primary" onclick="valUsb()">[ DEPOT RECUPERE — CLE USB BRANCHEE ]</button></div></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valM(2)">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r2').value=''">[ EFFACER ]</button></div>
+<div class="give-box" id="g2">TRANSMETS A L'ANALYSTE (PC 02)<b>CARTE DES LATITUDES</b></div></div>
 
-<div class="card locked" id="c3"><div class="card-num">MISSION 03/03 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">SIMULATEUR DE DEFENSE</div>
-<div class="card-texte">La cle contient un programme de defense verrouille. Lancez-le et suivez ses instructions pour extraire le fragment de donnees.</div>
-<div class="indice"><span class="hl">&gt; A FAIRE :</span> ouvrez le fichier du mini-jeu present sur la cle USB. Le simulateur vous indiquera lui-meme ce qu'il attend de vous. Une fois termine, reportez votre resultat ci-dessous.</div>
-<div class="input-row"><span class="input-lbl">&gt; SCORE :</span><input class="retro-inp" id="r3" type="number" placeholder="score obtenu..."></div>
+<div class="card locked" id="c3"><div class="card-num">MISSION 03/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">L'ARTICLE</div>
+<div class="indice">Ce que dit le monde te menera a la cle.</div>
+<div class="input-row"><span class="input-lbl">&gt; RELEVE :</span><input class="retro-inp" id="r3" maxlength="8" placeholder="__:__:__"></div>
 <div class="st" id="s3"></div>
-<div class="btn-row"><button class="rbtn primary" onclick="valScore()">[ VALIDER LE SCORE ]</button></div>
-<div class="give-box" id="g3">TRANSMETS AU DEMINEUR (PC 06)<b>SEQUENCE SUD : VERT &gt; BLANC &gt; JAUNE &gt; ROUGE</b></div></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valM(3)">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r3').value=''">[ EFFACER ]</button></div></div>
+
+<div class="card locked" id="c4"><div class="card-num">MISSION 04/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">LE DEPOT</div>
+<div class="usb-box"><div class="usb-titre">/// MESSAGE DECHIFFRE ///</div>
+<div class="usb-texte" style="font-size:12px;line-height:2;">"Cette phrase n'est pas pour vous.<br>Dites-la a celle qui garde les mots.<br>Elle saura ce qu'elle doit vous remettre."</div></div>
+<div class="st" id="s4"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valM(4)">[ DEPOT RECUPERE ]</button></div></div>
+
+<div class="card locked" id="c5"><div class="card-num">MISSION 05/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">SIMULATEUR</div>
+<div class="indice">Ce que contient la cle est verrouille.<br>Le programme vous dira lui-meme ce qu'il exige.</div>
+<div class="input-row"><span class="input-lbl">&gt; EXTRAIT :</span><input class="retro-inp" id="r5" maxlength="40" placeholder="ce que le programme a revele"></div>
+<div class="st" id="s5"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valM(5)">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r5').value=''">[ EFFACER ]</button></div>
+<div class="give-box" id="g5">TRANSMETS AU DEMINEUR (PC 06)<b>SEQUENCE SUD</b></div></div>
+
+<div class="card locked" id="c6"><div class="card-num">MISSION 06/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">ACCES PHYSIQUE</div>
+<div class="indice">Il faut voir deux fois,<br>la ou personne ne regarde.</div>
+<div class="input-row"><span class="input-lbl">&gt; CODE :</span><input class="retro-inp" id="r6" maxlength="3" placeholder="_ _ _"></div>
+<div class="st" id="s6"></div>
+<div class="btn-row"><button class="rbtn primary" onclick="valM(6)">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r6').value=''">[ EFFACER ]</button></div>
+<div class="give-box" id="g6">POUR LA BOITE SECURISEE<b>CODE DU CADENAS</b></div></div>
 </div>
 
 <div class="al-wrap" id="al"><div class="al-box"><div class="al-ares">// ARES-7 //</div><div class="al-msg" id="alm"></div><button class="al-close" onclick="document.getElementById('al').classList.remove('show')">[ FERMER ]</button></div></div>
@@ -90,13 +100,13 @@ Personne ne l'a jamais remarquee."</div>
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getDatabase,ref,onValue,update,set,get}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation-day-zero.firebaseapp.com",databaseURL:"https://operation-day-zero-default-rtdb.firebaseio.com",projectId:"operation-day-zero",storageBucket:"operation-day-zero.firebasestorage.app",messagingSenderId:"955748193348",appId:"1:955748193348:web:2de3150288aa136725d811"};
-const app=initializeApp(FB),db=getDatabase(app),ROLE=5,CODE_DEV='735194',SCORE_CIBLE=420;
+const app=initializeApp(FB),db=getDatabase(app),ROLE=5,CODE_DEV='735194';
 const MSGS=['','42 minutes. Vos progres sont decevants.','27 minutes. Vous m\'inquietez legerement.','12 minutes. Vous etes encore la.','4 minutes. Je ne vous avais pas calcules aussi loin.'];
-let code=[],tries=3,unlocked=false,qrs=0,e1ok=false,e2ok=false,e3ok=false;
+let code=[],tries=3,unlocked=false,ok={1:0,2:0,3:0,4:0,5:0,6:0};
 function show(id){['sc-wait','sc-dev','sc-jeu'].forEach(s=>document.getElementById(s).style.display='none');document.getElementById(id).style.display='block';}
 function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');['chr','chr2'].forEach(i=>{const el=document.getElementById(i);if(el){el.textContent=v;if(t<300)el.classList.add('urgent');}});}
 function setSt(id,m,c){const el=document.getElementById(id);if(el){el.textContent=m;el.className='st '+(c||'');}}
-async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e0','e0b','e0c','e1','e2'],5:['e1','e2','e3'],6:['eA','eB','eC','e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
+async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e0','e0b','e0c','e1','e2'],5:['e1','e2','e3','e4','e5','e6'],6:['eA','eB','eC','e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
 async function done(k){await update(ref(db,'game/joueurs/'+ROLE),{[k]:true});await set(ref(db,'game/sync'),await calcSync());}
 onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;sc(g.temps||57*60);
 if(g.phase==='jeu'&&!unlocked)show('sc-dev');
@@ -108,14 +118,35 @@ if(g.alerte&&g.alerte!==window._la){window._la=g.alerte;document.getElementById(
 window.kp=d=>{if(code.length>=6)return;code.push(d);for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent=code[i]||'';s.className='slot'+(i<code.length?' filled':i===code.length?' active':'');}};
 window.clrDev=()=>{code=[];for(let i=0;i<6;i++){const s=document.getElementById('s'+i);s.textContent='';s.className='slot'+(i===0?' active':'');}setSt('dst','EFFACE','');};
 window.valDev=async()=>{if(code.length<6){setSt('dst','CODE INCOMPLET','err');return;}if(code.join('')===CODE_DEV){unlocked=true;await done('dev');show('sc-jeu');}else{tries=Math.max(0,tries-1);for(let i=0;i<3;i++)document.getElementById('t'+i).classList.toggle('used',i>=tries);for(let i=0;i<6;i++)document.getElementById('s'+i).className='slot wrong';setSt('dst','ACCES REFUSE — '+tries+' tentative(s)','err');setTimeout(window.clrDev,800);}};
-window.foundQr=async n=>{const el=document.getElementById('q'+n);if(el.classList.contains('found'))return;el.textContent='[ RECUPERE ]';el.classList.add('found');qrs++;setSt('s1',qrs+'/3 fragments recuperes','info');
-if(qrs===3&&!e1ok){e1ok=true;await done('e1');document.getElementById('c1').classList.add('done');document.getElementById('g1').classList.add('show');document.getElementById('c2').classList.remove('locked');setSt('s1','3/3 FRAGMENTS RECUPERES — redistribuez immediatement','ok');}};
-window.valUsb=async()=>{if(e2ok)return;if(!e1ok){setSt('s2','Terminez la mission 01 d\'abord','info');return;}
-e2ok=true;await done('e2');document.getElementById('c2').classList.add('done');document.getElementById('c3').classList.remove('locked');setSt('s2','DEPOT RECUPERE — lancez le simulateur','ok');};
-window.valScore=async()=>{if(e3ok)return;if(!e2ok){setSt('s3','Recuperez le depot d\'abord','info');return;}
-const v=parseInt(document.getElementById('r3').value);
-if(v===SCORE_CIBLE){e3ok=true;await done('e3');document.getElementById('c3').classList.add('done');document.getElementById('g3').classList.add('show');setSt('s3','FRAGMENT EXTRAIT — transmettez la sequence au Demineur','ok');}
-else if(isNaN(v))setSt('s3','Entrez le score obtenu dans le simulateur','info');
-else setSt('s3','SCORE INCORRECT — le fragment exige un score exact. Rejouez.','err');};
+function normSeq(v){return (v.toUpperCase().match(/ROUGE|BLEU|BLANC|VERT|ORANGE|JAUNE/g)||[]).join('');}
+window.valM=async n=>{
+ if(ok[n])return;
+ if(n>1&&!ok[n-1]){setSt('s'+n,'Terminez l\'etape precedente d\'abord','info');return;}
+ let bon=false;
+ if(n===1)bon=document.getElementById('r1').value.trim()==='7';
+ if(n===2)bon=document.getElementById('r2').value.trim().toUpperCase().replace(/[^A-Z]/g,'')==='ARCTIC';
+ if(n===3)bon=document.getElementById('r3').value.replace(/[^0-9]/g,'')==='000459';
+ if(n===4)bon=true;
+ if(n===5)bon=normSeq(document.getElementById('r5').value)==='VERTBLANCJAUNEROUGE';
+ if(n===6)bon=document.getElementById('r6').value.replace(/[^0-9]/g,'')==='238';
+ if(!bon){
+  const msg={1:'INCORRECT — ce n\'est pas le bon signe',
+             2:'INCORRECT — relisez la vue orbitale',
+             3:'INCORRECT — le releve est ailleurs sur le document',
+             5:'INCORRECT — recopiez ce que le programme a revele',
+             6:'INCORRECT — vous n\'avez pas regarde au bon endroit'}[n];
+  setSt('s'+n,msg,'err');return;}
+ ok[n]=1;await done('e'+n);
+ document.getElementById('c'+n).classList.add('done');
+ const g=document.getElementById('g'+n);if(g)g.classList.add('show');
+ const suiv=document.getElementById('c'+(n+1));if(suiv)suiv.classList.remove('locked');
+ const fin={1:'SIGNAL RELEVE — transmettez la cle au Cryptographe',
+            2:'VUE EXPLOITEE — transmettez la carte a l\'Analyste',
+            3:'RELEVE VALIDE — instructions dechiffrees ci-dessous',
+            4:'DEPOT RECUPERE — lancez ce qu\'il contient',
+            5:'FRAGMENT EXTRAIT — transmettez la sequence au Demineur',
+            6:'ACCES OBTENU — la boite peut etre ouverte'}[n];
+ setSt('s'+n,fin,'ok');
+};
 show('sc-wait');
 </script></body></html>

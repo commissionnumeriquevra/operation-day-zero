@@ -40,15 +40,15 @@
       <div class="j-card" style="border-left:3px solid #0088ff;"><div class="j-nom" style="color:#0088ff;">PC02 ANALYSTE</div><div class="j-stat" id="js2">Attente</div><div class="j-dots"><span class="j-ed" id="d2-dev">DEV</span><span class="j-ed" id="d2-e0">ANA</span><span class="j-ed" id="d2-e0b">SEQ</span><span class="j-ed" id="d2-e0c">RAD</span><span class="j-ed" id="d2-e1">REC</span><span class="j-ed" id="d2-e2">ORD</span></div></div>
       <div class="j-card" style="border-left:3px solid #44ff00;"><div class="j-nom" style="color:#44ff00;">PC03 INGE.</div><div class="j-stat" id="js3">Attente</div><div class="j-dots"><span class="j-ed" id="d3-dev">DEV</span><span class="j-ed" id="d3-e0">RTE</span><span class="j-ed" id="d3-e0b">DIA</span><span class="j-ed" id="d3-e1">CBL1</span><span class="j-ed" id="d3-e2">CBL2</span></div></div>
       <div class="j-card" style="border-left:3px solid #dd00dd;"><div class="j-nom" style="color:#dd00dd;">PC04 BIO</div><div class="j-stat" id="js4">Attente</div><div class="j-dots"><span class="j-ed" id="d4-dev">DEV</span><span class="j-ed" id="d4-e0">ALI</span><span class="j-ed" id="d4-e0b">FRQ</span><span class="j-ed" id="d4-e0c">COD</span><span class="j-ed" id="d4-e1">ADN1</span><span class="j-ed" id="d4-e2">ADN2</span></div></div>
-      <div class="j-card" style="border-left:3px solid #ffaa00;"><div class="j-nom" style="color:#ffaa00;">PC05 INTER.</div><div class="j-stat" id="js5">Attente</div><div class="j-dots"><span class="j-ed" id="d5-dev">DEV</span><span class="j-ed" id="d5-e1">QR</span><span class="j-ed" id="d5-e2">USB</span><span class="j-ed" id="d5-e3">JEU</span></div></div>
+      <div class="j-card" style="border-left:3px solid #ffaa00;"><div class="j-nom" style="color:#ffaa00;">PC05 INTER.</div><div class="j-stat" id="js5">Attente</div><div class="j-dots"><span class="j-ed" id="d5-dev">DEV</span><span class="j-ed" id="d5-e1">SIG</span><span class="j-ed" id="d5-e2">SAT</span><span class="j-ed" id="d5-e3">ART</span><span class="j-ed" id="d5-e4">LIV</span><span class="j-ed" id="d5-e5">JEU</span><span class="j-ed" id="d5-e6">UV</span></div></div>
       <div class="j-card" style="border-left:3px solid #00ddff;"><div class="j-nom" style="color:#00ddff;">PC06 DEMIN.</div><div class="j-stat" id="js6">Attente</div><div class="j-dots"><span class="j-ed" id="d6-dev">DEV</span><span class="j-ed" id="d6-eA">CIR</span><span class="j-ed" id="d6-eB">IMP</span><span class="j-ed" id="d6-eC">ORD</span><span class="j-ed" id="d6-e0">CAL</span><span class="j-ed" id="d6-e1">NORD</span><span class="j-ed" id="d6-e2">SUD</span></div></div>
     </div></div>
   <div class="m-card"><div class="m-lbl">CHAINE DE TRANSMISSION</div>
     <div class="chain-legend">Vert = transmission debloquee. Gris = en attente. Si un joueur bloque, regardez qui doit lui transmettre.</div>
-    <div class="ch-row" id="ch-a"><span class="ch-dot"></span><b class="p5">PC5</b> Alpha &rarr; cle Cesar &rarr; <b class="p1">PC1</b></div>
-    <div class="ch-row" id="ch-b"><span class="ch-dot"></span><b class="p5">PC5</b> Beta &rarr; latitudes &rarr; <b class="p2">PC2</b></div>
-    <div class="ch-row" id="ch-c"><span class="ch-dot"></span><b class="p5">PC5</b> Gamma &rarr; cadenas 238</div>
-    <div class="ch-row" id="ch-d"><span class="ch-dot"></span><b class="p5">PC5</b> mini-jeu 420 &rarr; seq. SUD &rarr; <b class="p6">PC6</b></div>
+    <div class="ch-row" id="ch-a"><span class="ch-dot"></span><b class="p5">PC5</b> signal &rarr; cle Cesar &rarr; <b class="p1">PC1</b></div>
+    <div class="ch-row" id="ch-b"><span class="ch-dot"></span><b class="p5">PC5</b> vue orbitale &rarr; latitudes &rarr; <b class="p2">PC2</b></div>
+    <div class="ch-row" id="ch-c"><span class="ch-dot"></span><b class="p5">PC5</b> affiches UV &rarr; cadenas 238</div>
+    <div class="ch-row" id="ch-d"><span class="ch-dot"></span><b class="p5">PC5</b> cle USB + mini-jeu &rarr; seq. SUD &rarr; <b class="p6">PC6</b></div>
     <div class="ch-sep"></div>
     <div class="ch-row" id="ch-e"><span class="ch-dot"></span><b class="p1">PC1</b> Cesar &rarr; ALPHA-7 &rarr; <b class="p4">PC4</b></div>
     <div class="ch-row" id="ch-f"><span class="ch-dot"></span><b class="p1">PC1</b> Polybe &rarr; BETA-4 &rarr; <b class="p4">PC4</b></div>
@@ -68,7 +68,7 @@ import{getDatabase,ref,onValue,set,update}from'https://www.gstatic.com/firebasej
 const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation-day-zero.firebaseapp.com",databaseURL:"https://operation-day-zero-default-rtdb.firebaseio.com",projectId:"operation-day-zero",storageBucket:"operation-day-zero.firebasestorage.app",messagingSenderId:"955748193348",appId:"1:955748193348:web:2de3150288aa136725d811"};
 const app=initializeApp(FB),db=getDatabase(app);
 const DUREE=57*60;
-const REQ={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e0','e0b','e0c','e1','e2'],5:['e1','e2','e3'],6:['eA','eB','eC','e0','e1','e2']};
+const REQ={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e0','e0b','e0c','e1','e2'],5:['e1','e2','e3','e4','e5','e6'],6:['eA','eB','eC','e0','e1','e2']};
 const INIT={1:{dev:false,e1:false,e2:false,e3:false},2:{dev:false,e1:false,e2:false},3:{dev:false,e1:false,e2:false},4:{dev:false,e1:false,e2:false},5:{dev:false,e1:false,e2:false,e3:false},6:{dev:false,e0:false,e1:false,e2:false}};
 let timer=null,temps=DUREE;
 let prevState={};
@@ -159,7 +159,7 @@ majChaine(g.joueurs||{});});
 function majChaine(J){
  const f=(pc,k)=>!!(J[pc]&&J[pc][k]);
  const etat={
-  'ch-a':f(5,'e1'), 'ch-b':f(5,'e1'), 'ch-c':f(5,'e1'), 'ch-d':f(5,'e3'),
+  'ch-a':f(5,'e1'), 'ch-b':f(5,'e2'), 'ch-c':f(5,'e6'), 'ch-d':f(5,'e5'),
   'ch-e':f(1,'e1'), 'ch-f':f(1,'e2'), 'ch-g':f(1,'e3'),
   'ch-h':f(4,'e1'), 'ch-i':f(2,'e2'), 'ch-j':f(2,'e2'),
   'ch-k':f(6,'e0')&&f(6,'e1')&&f(6,'e2')
