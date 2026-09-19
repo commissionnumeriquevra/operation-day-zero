@@ -2,26 +2,26 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>OPERATION DAY ZERO — CHRONO</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Orbitron:wght@700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:#050506;overflow:hidden;font-family:'Share Tech Mono',monospace;cursor:none}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:1}
 body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.14) 3px,rgba(0,0,0,.14) 6px);pointer-events:none;z-index:3}
 .wrap{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vh}
-.top{font-family:'VT323',monospace;font-size:2.4vh;letter-spacing:1.4vh;color:rgba(255,255,255,.22)}
-.chrono{font-family:'VT323',monospace;font-size:34vh;line-height:.85;letter-spacing:2vh;color:#cfcfcf;text-shadow:0 0 6vh rgba(255,255,255,.12)}
-.chrono.w1{color:#ffc040;text-shadow:0 0 6vh rgba(255,170,0,.3)}
-.chrono.w2{color:#ff6a1a;text-shadow:0 0 7vh rgba(255,90,0,.4)}
-.chrono.w3{color:#ff2200;text-shadow:0 0 8vh rgba(255,0,0,.5);animation:puls .9s ease-in-out infinite}
+.top{font-family:'VT323',monospace;font-size:2.4vh;letter-spacing:1.4vh;color:rgba(255,60,40,.3)}
+.cbox{position:relative;display:inline-block}
+.chrono,.ghost{font-family:'Orbitron','VT323',monospace;font-size:26vh;line-height:.95;letter-spacing:1.4vh;font-weight:700}
+.ghost{position:absolute;inset:0;color:rgba(255,0,0,.085);z-index:0;pointer-events:none}
+.chrono{position:relative;z-index:1;color:#ff1408;text-shadow:0 0 1.2vh rgba(255,20,8,.95),0 0 5vh rgba(255,0,0,.55),0 0 11vh rgba(255,0,0,.3)}
+.chrono.w1{color:#ff1408}
+.chrono.w2{color:#ff2a08;text-shadow:0 0 1.4vh rgba(255,40,8,1),0 0 6vh rgba(255,0,0,.6),0 0 13vh rgba(255,0,0,.35)}
+.chrono.w3{color:#ff3a10;text-shadow:0 0 1.6vh rgba(255,60,16,1),0 0 7vh rgba(255,0,0,.7),0 0 15vh rgba(255,0,0,.45);animation:puls .9s ease-in-out infinite}
 @keyframes puls{0%,100%{opacity:1}50%{opacity:.45}}
-.phase{font-family:'VT323',monospace;font-size:3.4vh;letter-spacing:1.2vh;color:rgba(255,255,255,.3)}
+.phase{font-family:'VT323',monospace;font-size:3.4vh;letter-spacing:1.2vh;color:rgba(255,70,40,.45)}
 .sync{display:flex;gap:1.2vh;margin-top:1vh}
 .sd{width:5vh;height:1vh;border-radius:.5vh;background:rgba(255,255,255,.08);transition:all .5s}
 .sd.on{background:#00cc44;box-shadow:0 0 1.6vh rgba(0,204,68,.7)}
-.att{font-family:'VT323',monospace;font-size:7vh;letter-spacing:1.6vh;color:rgba(255,255,255,.18)}
-.bk{cursor:pointer;border:2px solid rgba(255,255,255,.2);background:rgba(0,0,0,.6);color:rgba(255,255,255,.5);font-family:'Share Tech Mono',monospace;font-size:2vh;letter-spacing:.4vh;padding:1.6vh 3vh;border-radius:.6vh;margin-top:3vh}
-.bk:hover{border-color:rgba(255,255,255,.5);color:#fff}
-.bk.on{border-color:#00aa44;color:#00cc44}
+.att{font-family:'VT323',monospace;font-size:7vh;letter-spacing:1.6vh;color:rgba(255,40,20,.28)}
 .fin{position:fixed;inset:0;z-index:5;display:none;align-items:center;justify-content:center;flex-direction:column;gap:2vh}
 .fin.show{display:flex}
 .fin .t{font-family:'VT323',monospace;font-size:16vh;line-height:.9;letter-spacing:1.5vh;text-align:center}
@@ -32,10 +32,9 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 
 <div class="wrap" id="scr">
   <div id="att" class="att">EN ATTENTE <span id="bl">_</span></div>
-  <button class="bk" id="snd" onclick="toggleSon()">[ ACTIVER LE SON ]</button>
   <div id="jeu" style="display:none;text-align:center">
     <div class="top">// OPERATION DAY ZERO //</div>
-    <div class="chrono" id="ch">57:00</div>
+    <div class="cbox"><div class="ghost">88:88</div><div class="chrono" id="ch">57:00</div></div>
     <div class="phase" id="ph">SYSTEMES ACTIFS</div>
     <div class="sync" id="sy"></div>
   </div>
@@ -50,56 +49,10 @@ import{getDatabase,ref,onValue}from'https://www.gstatic.com/firebasejs/10.7.1/fi
 const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation-day-zero.firebaseapp.com",databaseURL:"https://operation-day-zero-default-rtdb.firebaseio.com",projectId:"operation-day-zero",storageBucket:"operation-day-zero.firebasestorage.app",messagingSenderId:"955748193348",appId:"1:955748193348:web:2de3150288aa136725d811"};
 const db=getDatabase(initializeApp(FB));
 const DUREE=57*60;
-let temps=DUREE,phase='attente',audio=null,drone=null,gDrone=null,pulseT=null,sonOn=false;
+let temps=DUREE,phase='attente';
 
 for(let i=0;i<6;i++){const d=document.createElement('div');d.className='sd';d.id='sd'+i;document.getElementById('sy').appendChild(d);}
 setInterval(()=>{const b=document.getElementById('bl');if(b)b.style.opacity=b.style.opacity==='0'?'1':'0';},600);
-
-function demarrerSon(){
- audio=new(window.AudioContext||window.webkitAudioContext)();
- const f=audio.createBiquadFilter();f.type='lowpass';f.frequency.value=220;f.Q.value=2;
- gDrone=audio.createGain();gDrone.gain.value=0.0001;
- f.connect(gDrone);gDrone.connect(audio.destination);
- drone=[];
- [55,55.45,110.2].forEach((hz,i)=>{
-  const o=audio.createOscillator();o.type=i===2?'sine':'sawtooth';o.frequency.value=hz;
-  const g=audio.createGain();g.gain.value=i===2?0.25:0.5;
-  o.connect(g);g.connect(f);o.start();drone.push(o);
- });
- gDrone.gain.exponentialRampToValueAtTime(0.14,audio.currentTime+3);
- planifierPulse();
-}
-function pulse(){
- if(!audio||!sonOn)return;
- const t=audio.currentTime;
- const o=audio.createOscillator(),g=audio.createGain();
- o.type='sine';o.frequency.setValueAtTime(64,t);o.frequency.exponentialRampToValueAtTime(34,t+.26);
- const urg=1-Math.min(1,temps/DUREE);
- g.gain.setValueAtTime(.0001,t);
- g.gain.linearRampToValueAtTime(.16+urg*.3,t+.02);
- g.gain.exponentialRampToValueAtTime(.0001,t+.5);
- o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+.55);
-}
-function planifierPulse(){
- if(pulseT)clearTimeout(pulseT);
- if(!sonOn||phase!=='jeu')return;
- pulse();
- const r=temps/DUREE;
- const delai=r>.5?2600:r>.25?1800:r>.1?1150:700;
- pulseT=setTimeout(planifierPulse,delai);
-}
-window.toggleSon=()=>{
- const b=document.getElementById('snd');
- if(!sonOn){
-  if(!audio)demarrerSon();else{gDrone.gain.exponentialRampToValueAtTime(.14,audio.currentTime+1.5);}
-  sonOn=true;b.classList.add('on');b.textContent='[ SON ACTIF ]';planifierPulse();
- }else{
-  sonOn=false;b.classList.remove('on');b.textContent='[ ACTIVER LE SON ]';
-  if(gDrone)gDrone.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+1);
-  if(pulseT)clearTimeout(pulseT);
- }
-};
-function couper(){if(gDrone&&audio)gDrone.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+2);if(pulseT)clearTimeout(pulseT);}
 
 onValue(ref(db,'game'),snap=>{
  const g=snap.val();if(!g)return;
@@ -113,19 +66,17 @@ onValue(ref(db,'game'),snap=>{
 
  if(phase==='jeu'){
   document.getElementById('att').style.display='none';
-  document.getElementById('snd').style.display='none';
   document.getElementById('jeu').style.display='block';
-  if(avant!=='jeu')planifierPulse();
+  
  }
  if(phase==='attente'){
   document.getElementById('att').style.display='block';
-  document.getElementById('snd').style.display='block';
   document.getElementById('jeu').style.display='none';
   document.getElementById('fv').classList.remove('show');
   document.getElementById('fd').classList.remove('show');
-  if(pulseT)clearTimeout(pulseT);
+  
  }
- if(phase==='victoire'){document.getElementById('fv').classList.add('show');couper();}
- if(phase==='defaite'){document.getElementById('fd').classList.add('show');couper();}
+ if(phase==='victoire'){document.getElementById('fv').classList.add('show');}
+ if(phase==='defaite'){document.getElementById('fd').classList.add('show');}
 });
 </script></body></html>

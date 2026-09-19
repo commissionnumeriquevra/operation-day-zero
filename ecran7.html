@@ -7,10 +7,10 @@
 html,body{height:100%;background:#000;overflow:hidden;cursor:none}
 body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.25) 3px,rgba(0,0,0,.25) 6px);pointer-events:none;z-index:3}
 .wrap{height:100%;display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
-.n{font-family:'VT323',monospace;font-size:58vh;line-height:1;color:#3a3a3a;transition:none;letter-spacing:0}
-.n.sept{color:#e8e8e8;text-shadow:0 0 5vh rgba(255,255,255,.45)}
-.n.gl{animation:gl .09s steps(2) infinite}
-@keyframes gl{0%{transform:translate(0,0);opacity:1}50%{transform:translate(-.7vh,.3vh);opacity:.55}100%{transform:translate(.5vh,-.2vh);opacity:1}}
+.n{font-family:'VT323',monospace;font-size:58vh;line-height:1;color:#5a5a5a;transition:none;letter-spacing:0}
+.n.sept{color:#ffffff;text-shadow:0 0 2vh rgba(255,255,255,.9),0 0 7vh rgba(255,255,255,.5)}
+.n.gl{animation:gl .5s steps(3) infinite}
+@keyframes gl{0%{opacity:1}33%{opacity:.72}66%{opacity:1}100%{opacity:.88}}
 .lbl{position:fixed;top:4vh;left:0;right:0;text-align:center;font-family:'VT323',monospace;font-size:2.2vh;letter-spacing:1.2vh;color:rgba(255,255,255,.12);z-index:2}
 .att{font-family:'VT323',monospace;font-size:5vh;letter-spacing:1.4vh;color:rgba(255,255,255,.1)}
 </style></head><body>
@@ -35,7 +35,7 @@ function cycle(i){
  if(i>=suite.length){boucle=setTimeout(()=>cycle(0),1400);return;}
  const v=suite[i],sept=(v===7);
  afficher(v,sept);
- boucle=setTimeout(()=>cycle(i+1),sept?2700:950);
+ boucle=setTimeout(()=>cycle(i+1),sept?1150:950);
 }
 function demarrer(){
  if(actif)return;
