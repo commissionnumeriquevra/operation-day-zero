@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SYS//MONITEUR</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden;cursor:none}
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.25) 3px,rgba(0,0,0,.25) 6px);pointer-events:none;z-index:3}
+.wrap{height:100%;display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
+.n{font-family:'VT323',monospace;font-size:58vh;line-height:1;color:#3a3a3a;transition:none;letter-spacing:0}
+.n.sept{color:#e8e8e8;text-shadow:0 0 5vh rgba(255,255,255,.45)}
+.n.gl{animation:gl .09s steps(2) infinite}
+@keyframes gl{0%{transform:translate(0,0);opacity:1}50%{transform:translate(-.7vh,.3vh);opacity:.55}100%{transform:translate(.5vh,-.2vh);opacity:1}}
+.lbl{position:fixed;top:4vh;left:0;right:0;text-align:center;font-family:'VT323',monospace;font-size:2.2vh;letter-spacing:1.2vh;color:rgba(255,255,255,.12);z-index:2}
+.att{font-family:'VT323',monospace;font-size:5vh;letter-spacing:1.4vh;color:rgba(255,255,255,.1)}
+</style></head><body>
+<div class="lbl" id="lb" style="display:none">// MONITEUR SYSTEME — CANAL 04 //</div>
+<div class="wrap"><div class="att" id="att">—</div><div class="n" id="n" style="display:none">10</div></div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getDatabase,ref,onValue}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+const FB={apiKey:"AIzaSyBZWH8FTWxnjFMgV7aUphiT3RLoaO57Ns4",authDomain:"operation-day-zero.firebaseapp.com",databaseURL:"https://operation-day-zero-default-rtdb.firebaseio.com",projectId:"operation-day-zero",storageBucket:"operation-day-zero.firebasestorage.app",messagingSenderId:"955748193348",appId:"1:955748193348:web:2de3150288aa136725d811"};
+const db=getDatabase(initializeApp(FB));
+let actif=false,boucle=null;
+const N=document.getElementById('n');
+
+function afficher(v,sept){
+ N.textContent=v;
+ N.className='n'+(sept?' sept gl':'');
+}
+function cycle(i){
+ if(!actif)return;
+ const suite=[10,9,8,7,6,5,4,3,2,1,0];
+ if(i>=suite.length){boucle=setTimeout(()=>cycle(0),1400);return;}
+ const v=suite[i],sept=(v===7);
+ afficher(v,sept);
+ boucle=setTimeout(()=>cycle(i+1),sept?2700:950);
+}
+function demarrer(){
+ if(actif)return;
+ actif=true;
+ document.getElementById('att').style.display='none';
+ document.getElementById('lb').style.display='block';
+ N.style.display='block';
+ cycle(0);
+}
+function arreter(){
+ actif=false;if(boucle)clearTimeout(boucle);
+ document.getElementById('att').style.display='block';
+ document.getElementById('lb').style.display='none';
+ N.style.display='none';
+}
+onValue(ref(db,'game'),snap=>{
+ const g=snap.val();if(!g)return;
+ if(g.phase==='jeu')demarrer();else arreter();
+});
+</script></body></html>
