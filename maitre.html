@@ -24,9 +24,10 @@
     <button class="m-btn m-lose" onclick="forcerFin('defaite')">[ FORCER DEFAITE ]</button>
     <button class="m-btn m-reset" onclick="resetJeu()">[ REINITIALISER ]</button></div>
   <div class="m-card" style="margin-bottom:11px;"><div class="m-lbl">RAPPELS</div>
-    <div class="rappel">Deverrouillage :<div class="rv">7 — 3 — 5 — 1 — 9 — 4</div>ARES NE PEUT PAS ETRE ARRETEE<br><br>
+    <div class="rappel"><span style="color:#ff6644">COFFRE DE DEPART</span> (message russe) :<div class="rv">2 7 4 &nbsp;—&nbsp; 8 1 6</div>Saisi sur l'ecran geant. <b>Maj+S</b> pour couper si blocage<br><br>
+    Deverrouillage des postes :<div class="rv">7 — 3 — 5 — 1 — 9 — 4</div>ARES NE PEUT PAS ETRE ARRETEE<br><br>
     Code final (telephone) :<div class="rv">4 — 8 — 2 — 6 — 1 — 9</div>Dire UNE SEULE FOIS au Demineur<br><br>
-    Cadenas boite :<div class="rv">2 3 8</div>via QR Gamma<br><br>
+    Cadenas boite :<div class="rv">2 3 8</div>trouve par le PC5 (affiches UV)<br><br>
     Mini-jeu USB :<div class="rv">SCORE 420</div></div></div>
   <div class="m-card"><div class="m-lbl">LOG</div><div class="log-box" id="log"><div class="log-ln">Systeme pret...</div></div></div>
 </div>
@@ -45,6 +46,8 @@
     </div></div>
   <div class="m-card"><div class="m-lbl">CHAINE DE TRANSMISSION</div>
     <div class="chain-legend">Vert = transmission debloquee. Gris = en attente. Si un joueur bloque, regardez qui doit lui transmettre.</div>
+    <div class="ch-row done" id="ch-z"><span class="ch-dot"></span><b style="color:#ff6644">ZONE 1</b> message russe &rarr; coffre &rarr; les 6 cartes</div>
+    <div class="ch-sep"></div>
     <div class="ch-row" id="ch-a"><span class="ch-dot"></span><b class="p5">PC5</b> signal &rarr; cle Cesar &rarr; <b class="p1">PC1</b></div>
     <div class="ch-row" id="ch-b"><span class="ch-dot"></span><b class="p5">PC5</b> vue orbitale &rarr; latitudes &rarr; <b class="p2">PC2</b></div>
     <div class="ch-row" id="ch-c"><span class="ch-dot"></span><b class="p5">PC5</b> affiches UV &rarr; cadenas 238</div>
