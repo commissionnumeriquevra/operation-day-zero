@@ -43,7 +43,18 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 .rin button:hover{border-color:#ff4422;color:#ff8866}
 .rerr{font-family:'Share Tech Mono',monospace;font-size:2vh;letter-spacing:.4vh;color:#ff3322;min-height:2.6vh;margin-top:1.2vh}
 .rwarn{position:fixed;bottom:1.5vh;left:1.5vh;font-family:'Share Tech Mono',monospace;font-size:1.5vh;color:rgba(255,200,0,.5);z-index:9}
+
+#mx{position:fixed;inset:0;z-index:0;opacity:.38;pointer-events:none}
+.vign{position:fixed;inset:0;z-index:1;pointer-events:none;
+ background:radial-gradient(ellipse 58% 44% at 50% 42%,rgba(0,0,0,.94) 0%,rgba(0,0,0,.84) 40%,rgba(0,0,0,.3) 72%,transparent 100%)}
+.wrap{z-index:2}
+.flash{position:fixed;inset:0;z-index:6;pointer-events:none;background:rgba(255,20,0,0);transition:background .12s}
+.flash.on{background:rgba(255,20,0,.30)}
+.alerte{position:fixed;top:5vh;left:0;right:0;z-index:7;text-align:center;font-family:'VT323',monospace;
+ font-size:4.4vh;letter-spacing:1.5vh;color:#ff2a10;text-shadow:0 0 2vh rgba(255,40,0,.9);opacity:0;transition:opacity .25s}
+.alerte.on{opacity:1}
 </style></head><body>
+<canvas id="mx"></canvas><div class="vign"></div><div class="flash" id="fl"></div><div class="alerte" id="al"></div>
 
 <div class="wrap" id="scr">
   <div id="att" class="att">EN ATTENTE <span id="bl">_</span></div>
@@ -78,6 +89,67 @@ let temps=DUREE,phase='attente';
 for(let i=0;i<6;i++){const d=document.createElement('div');d.className='sd';d.id='sd'+i;document.getElementById('sy').appendChild(d);}
 setInterval(()=>{const b=document.getElementById('bl');if(b)b.style.opacity=b.style.opacity==='0'?'1':'0';},600);
 
+
+// ---------- PLUIE MATRIX ----------
+(function(){
+ const cv=document.getElementById('mx'),cx=cv.getContext('2d');
+ const CH='アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+ let col=[],taille=18;
+ function dim(){cv.width=innerWidth;cv.height=innerHeight;taille=Math.max(14,Math.round(innerWidth/105));
+  col=new Array(Math.ceil(cv.width/taille)).fill(0).map(()=>Math.random()*-70);}
+ dim();addEventListener('resize',dim);
+ setInterval(()=>{
+  cx.fillStyle='rgba(0,0,0,.065)';cx.fillRect(0,0,cv.width,cv.height);
+  cx.font=taille+'px monospace';
+  for(let i=0;i<col.length;i++){
+   const c=CH[Math.floor(Math.random()*CH.length)],x=i*taille,y=col[i]*taille;
+   cx.fillStyle='#d4ffe2';cx.fillText(c,x,y);
+   cx.fillStyle='#00ff41';cx.fillText(CH[Math.floor(Math.random()*CH.length)],x,y-taille);
+   if(y>cv.height&&Math.random()>.972)col[i]=0;
+   col[i]++;
+  }
+ },60);
+})();
+
+// ---------- SIRENES D'ALERTE ----------
+const PALIERS=[3000,2400,1800,1200,600,300,60];
+let sonnes=new Set(),tPrec=null;
+function flash(n){const f=document.getElementById('fl');let i=0;
+ const t=setInterval(()=>{f.classList.toggle('on');if(++i>=n*2){clearInterval(t);f.classList.remove('on');}},170);}
+function banniere(txt,ms){const a=document.getElementById('al');a.textContent=txt;a.classList.add('on');
+ setTimeout(()=>a.classList.remove('on'),ms);}
+function sirene(crit){
+ try{
+  if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();
+  const t=ac.currentTime,n=crit?4:2,d=crit?.55:.85;
+  for(let i=0;i<n;i++){
+   const o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter();
+   f.type='lowpass';f.frequency.value=crit?2200:1700;
+   const s0=t+i*d,f1=crit?540:360,f2=crit?920:660;
+   o.type='sawtooth';
+   o.frequency.setValueAtTime(f1,s0);
+   o.frequency.linearRampToValueAtTime(f2,s0+d*.5);
+   o.frequency.linearRampToValueAtTime(f1,s0+d);
+   g.gain.setValueAtTime(.0001,s0);
+   g.gain.linearRampToValueAtTime(crit?.26:.19,s0+.06);
+   g.gain.setValueAtTime(crit?.26:.19,s0+d-.12);
+   g.gain.exponentialRampToValueAtTime(.0001,s0+d);
+   o.connect(f);f.connect(g);g.connect(ac.destination);
+   o.start(s0);o.stop(s0+d);
+  }
+ }catch(e){}
+}
+function verifPaliers(t){
+ if(tPrec===null){tPrec=t;return;}
+ for(const p of PALIERS){
+  if(tPrec>p&&t<=p&&!sonnes.has(p)){
+   sonnes.add(p);const crit=p<=300,m=Math.floor(p/60);
+   sirene(crit);flash(crit?5:3);
+   banniere('/// '+m+' MINUTE'+(m>1?'S':'')+(crit?' — CRITIQUE':'')+' ///',crit?4200:3200);
+  }
+ }
+ tPrec=t;
+}
 
 // ====== CODE DU COFFRE — modifiable ici ======
 const CADENAS_1='274', CADENAS_2='816';
@@ -170,6 +242,7 @@ document.addEventListener('keydown',e=>{if(e.key==='S'&&e.shiftKey&&!coffreOk)st
 onValue(ref(db,'game'),snap=>{
  const g=snap.val();if(!g)return;
  const avant=phase;phase=g.phase||'attente';temps=g.temps||DUREE;
+ if(phase==='jeu')verifPaliers(temps);
  const m=String(Math.floor(temps/60)).padStart(2,'0'),s=String(temps%60).padStart(2,'0');
  const c=document.getElementById('ch');c.textContent=m+':'+s;
  c.className='chrono'+(temps<300?' w3':temps<720?' w2':temps<1620?' w1':'');
@@ -186,7 +259,7 @@ onValue(ref(db,'game'),snap=>{
  if(phase==='attente'){
   document.getElementById('att').style.display='block';
   document.getElementById('jeu').style.display='none';
-  coffreOk=false;radioOn=false;try{speechSynthesis.cancel();}catch(e){}
+  coffreOk=false;radioOn=false;sonnes.clear();tPrec=null;try{speechSynthesis.cancel();}catch(e){}
   document.getElementById('rad').style.display='block';document.getElementById('rc').value='';
   document.getElementById('fv').classList.remove('show');
   document.getElementById('fd').classList.remove('show');
