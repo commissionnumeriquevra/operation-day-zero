@@ -28,6 +28,21 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
 .fin .s{font-family:'VT323',monospace;font-size:3.4vh;letter-spacing:1vh;opacity:.6}
 #fv{background:rgba(0,10,4,.97)}#fv .t{color:#00ff44}
 #fd{background:rgba(10,0,0,.97)}#fd .t{color:#ff2200}
+
+.radio{margin-top:3vh;border:2px solid rgba(255,40,20,.35);background:rgba(20,0,0,.5);border-radius:1vh;padding:2.6vh 4vh;text-align:center;max-width:78vw}
+.rtit{font-family:'VT323',monospace;font-size:2.4vh;letter-spacing:1.1vh;color:rgba(255,70,40,.55);margin-bottom:1.6vh}
+.wave{display:flex;align-items:flex-end;justify-content:center;gap:.5vh;height:6vh;margin-bottom:2vh}
+.wb{width:.9vh;background:#ff2a10;border-radius:.2vh;height:12%;opacity:.5}
+.cyr{font-family:'VT323',monospace;font-size:9vh;letter-spacing:.8vh;color:#ff5533;min-height:11vh;line-height:1.1;text-shadow:0 0 2vh rgba(255,60,30,.6)}
+.cyr.gl{animation:cgl .11s steps(2) infinite}
+@keyframes cgl{0%{transform:translateX(0);opacity:1}50%{transform:translateX(-.4vh);opacity:.62}100%{transform:translateX(.3vh);opacity:1}}
+.grp{font-family:'VT323',monospace;font-size:2.6vh;letter-spacing:.9vh;color:rgba(255,120,80,.5);min-height:3.4vh}
+.rin{display:flex;gap:1.4vh;justify-content:center;margin-top:2.4vh}
+.rin input{width:26vh;background:rgba(0,0,0,.65);border:2px solid rgba(255,40,20,.4);border-radius:.5vh;color:#ff4422;font-family:'Share Tech Mono',monospace;font-size:3vh;padding:1.2vh 1.6vh;text-align:center;letter-spacing:.8vh;outline:none}
+.rin button{background:rgba(0,0,0,.65);border:2px solid rgba(255,40,20,.4);border-radius:.5vh;color:#ff5533;font-family:'Share Tech Mono',monospace;font-size:2.2vh;letter-spacing:.5vh;padding:0 3vh;cursor:pointer}
+.rin button:hover{border-color:#ff4422;color:#ff8866}
+.rerr{font-family:'Share Tech Mono',monospace;font-size:2vh;letter-spacing:.4vh;color:#ff3322;min-height:2.6vh;margin-top:1.2vh}
+.rwarn{position:fixed;bottom:1.5vh;left:1.5vh;font-family:'Share Tech Mono',monospace;font-size:1.5vh;color:rgba(255,200,0,.5);z-index:9}
 </style></head><body>
 
 <div class="wrap" id="scr">
@@ -37,7 +52,16 @@ body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradie
     <div class="cbox"><div class="ghost">88:88</div><div class="chrono" id="ch">57:00</div></div>
     <div class="phase" id="ph">SYSTEMES ACTIFS</div>
     <div class="sync" id="sy"></div>
+    <div class="radio" id="rad">
+      <div class="rtit">// TRANSMISSION INTERCEPTEE — 4.72 MHz //</div>
+      <div class="wave" id="wv"></div>
+      <div class="cyr" id="cy">&nbsp;</div>
+      <div class="grp" id="gp">&nbsp;</div>
+      <div class="rin"><input id="rc" maxlength="9" placeholder="______"><button onclick="valCoffre()">[ VALIDER ]</button></div>
+      <div class="rerr" id="re"></div>
+    </div>
   </div>
+<div class="rwarn" id="rw" style="display:none"></div>
 </div>
 
 <div class="fin" id="fv"><div class="t">DESARMEMENT<br>CONFIRME</div><div class="s">LES SILOS SONT NEUTRALISES</div></div>
@@ -54,6 +78,95 @@ let temps=DUREE,phase='attente';
 for(let i=0;i<6;i++){const d=document.createElement('div');d.className='sd';d.id='sd'+i;document.getElementById('sy').appendChild(d);}
 setInterval(()=>{const b=document.getElementById('bl');if(b)b.style.opacity=b.style.opacity==='0'?'1':'0';},600);
 
+
+// ====== CODE DU COFFRE — modifiable ici ======
+const CADENAS_1='274', CADENAS_2='816';
+// =============================================
+const MOTS={'0':'НОЛЬ','1':'ОДИН','2':'ДВА','3':'ТРИ','4':'ЧЕТЫРЕ','5':'ПЯТЬ','6':'ШЕСТЬ','7':'СЕМЬ','8':'ВОСЕМЬ','9':'ДЕВЯТЬ'};
+let coffreOk=false,radioOn=false,ac=null,voixRu=null;
+
+for(let i=0;i<26;i++){const b=document.createElement('div');b.className='wb';document.getElementById('wv').appendChild(b);}
+setInterval(()=>{if(!radioOn)return;document.querySelectorAll('.wb').forEach(b=>{b.style.height=(8+Math.random()*92)+'%';b.style.opacity=.35+Math.random()*.6;});},110);
+
+function chercherVoix(){
+ const v=speechSynthesis.getVoices();
+ voixRu=v.find(x=>x.lang&&x.lang.toLowerCase().startsWith('ru'))||null;
+ const w=document.getElementById('rw');
+ if(!voixRu&&v.length){w.style.display='block';w.textContent='! aucune voix russe installee — la prononciation sera approximative';}
+}
+speechSynthesis.onvoiceschanged=chercherVoix;chercherVoix();
+
+function parasites(d){
+ return new Promise(r=>{
+  try{
+   if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();
+   const sr=ac.sampleRate,b=ac.createBuffer(1,Math.floor(sr*d),sr),c=b.getChannelData(0);
+   for(let i=0;i<c.length;i++)c[i]=(Math.random()*2-1)*(.3+Math.random()*.7);
+   const s2=ac.createBufferSource();s2.buffer=b;
+   const f=ac.createBiquadFilter();f.type='bandpass';f.frequency.value=1500;f.Q.value=.8;
+   const g=ac.createGain();g.gain.value=.05;
+   s2.connect(f);f.connect(g);g.connect(ac.destination);s2.start();
+  }catch(e){}
+  setTimeout(r,d*1000);
+ });
+}
+function dire(txt){
+ return new Promise(r=>{
+  try{
+   const u=new SpeechSynthesisUtterance(txt);
+   u.lang='ru-RU';u.rate=.72;u.pitch=.85;
+   if(voixRu)u.voice=voixRu;
+   u.onend=r;u.onerror=r;
+   speechSynthesis.speak(u);
+   setTimeout(r,3500);
+  }catch(e){r();}
+ });
+}
+const attendre=ms=>new Promise(r=>setTimeout(r,ms));
+
+async function serie(code,libelle){
+ document.getElementById('gp').textContent=libelle;
+ for(const ch of code){
+  if(coffreOk||!radioOn)return;
+  const m=MOTS[ch];
+  const el=document.getElementById('cy');
+  el.textContent=m;el.className='cyr gl';
+  await dire(m);
+  await attendre(260);
+  el.className='cyr';
+  await parasites(.35);
+  if(coffreOk||!radioOn)return;
+ }
+ document.getElementById('cy').innerHTML='&nbsp;';
+ document.getElementById('gp').innerHTML='&nbsp;';
+}
+async function transmission(){
+ if(radioOn)return;
+ radioOn=true;
+ while(radioOn&&!coffreOk){
+  await parasites(.9);
+  if(coffreOk||!radioOn)break;
+  await serie(CADENAS_1,'ПЕРВАЯ ГРУППА');
+  if(coffreOk||!radioOn)break;
+  await parasites(1.1);
+  await serie(CADENAS_2,'ВТОРАЯ ГРУППА');
+  if(coffreOk||!radioOn)break;
+  await attendre(2600);
+ }
+ radioOn=false;
+}
+function stopRadio(){
+ radioOn=false;coffreOk=true;
+ try{speechSynthesis.cancel();}catch(e){}
+ document.getElementById('rad').style.display='none';
+}
+window.valCoffre=()=>{
+ const v=document.getElementById('rc').value.replace(/[^0-9]/g,'');
+ if(v===CADENAS_1+CADENAS_2){document.getElementById('re').textContent='';stopRadio();}
+ else document.getElementById('re').textContent='CODE REFUSE';
+};
+document.addEventListener('keydown',e=>{if(e.key==='S'&&e.shiftKey&&!coffreOk)stopRadio();});
+
 onValue(ref(db,'game'),snap=>{
  const g=snap.val();if(!g)return;
  const avant=phase;phase=g.phase||'attente';temps=g.temps||DUREE;
@@ -65,6 +178,7 @@ onValue(ref(db,'game'),snap=>{
  for(let i=0;i<6;i++)document.getElementById('sd'+i).classList.toggle('on',i<n);
 
  if(phase==='jeu'){
+  if(!coffreOk)transmission();
   document.getElementById('att').style.display='none';
   document.getElementById('jeu').style.display='block';
   
@@ -72,11 +186,13 @@ onValue(ref(db,'game'),snap=>{
  if(phase==='attente'){
   document.getElementById('att').style.display='block';
   document.getElementById('jeu').style.display='none';
+  coffreOk=false;radioOn=false;try{speechSynthesis.cancel();}catch(e){}
+  document.getElementById('rad').style.display='block';document.getElementById('rc').value='';
   document.getElementById('fv').classList.remove('show');
   document.getElementById('fd').classList.remove('show');
   
  }
- if(phase==='victoire'){document.getElementById('fv').classList.add('show');}
- if(phase==='defaite'){document.getElementById('fd').classList.add('show');}
+ if(phase==='victoire'){stopRadio();document.getElementById('fv').classList.add('show');}
+ if(phase==='defaite'){stopRadio();document.getElementById('fd').classList.add('show');}
 });
 </script></body></html>
