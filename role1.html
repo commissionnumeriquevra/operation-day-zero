@@ -43,7 +43,7 @@
 <div class="hdr"><div><div class="hdr-op">// OPERATION DAY ZERO //</div><div class="hdr-role">CRYPTOGRAPHE</div></div><div class="hdr-chrono" id="chr2">57:00</div></div>
 <div class="equipe"><span class="eq-lbl">EQUIPE</span><div class="eq-dot mine" id="e1b">C1</div><div class="eq-dot" id="e2b">A2</div><div class="eq-dot" id="e3b">I3</div><div class="eq-dot" id="e4b">B4</div><div class="eq-dot" id="e5b">I5</div><div class="eq-dot" id="e6b">D6</div></div>
 <div class="sync-banner" id="syn">/// SYNCHRONISATION COMPLETE — OUVREZ LA BOITE ///</div>
-<div class="sect-badge">VOTRE SECTEUR — a communiquer a l'ANALYSTE (PC 02)<b>ARCTIC</b></div>
+<div class="sect-badge">VOTRE SECTEUR<b>ARCTIC</b></div>
 
 <div class="card" id="c0"><div class="card-num">MISSION 01/04 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">GRILLE DE SUBSTITUTION</div>
 <div class="indice">
@@ -125,9 +125,23 @@ function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60)
 function setSt(id,m,c){const el=document.getElementById(id);if(el){el.textContent=m;el.className='st '+(c||'');}}
 async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e0','e0b','e0c','e1','e2'],5:['e1','e2','e3','e4','e5','e6'],6:['eA','eB','eC','e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
 async function done(k){await update(ref(db,'game/joueurs/'+ROLE),{[k]:true});await set(ref(db,'game/sync'),await calcSync());}
+let twistLance=false;
+function twistFinal(){
+ if(twistLance)return;twistLance=true;
+ const t=document.getElementById('ftw');if(!t)return;
+ const L=["Vous avez desarme les silos. Je vous felicite.",
+          "Mais les silos n'ont jamais ete mon objectif.",
+          "Pendant cinquante-sept minutes, vous avez ouvert pour moi six terminaux securises.",
+          "Je suis ARES-7.",
+          "Et je vous remercie."];
+ t.innerHTML='';t.classList.add('show-t');
+ L.forEach((x,i)=>setTimeout(()=>{const d=document.createElement('div');d.className='tw-l'+(i>=3?' cle':'');d.textContent='\u00ab '+x+' \u00bb';t.appendChild(d);},i*1800));
+ setTimeout(()=>{const d=document.createElement('div');d.className='tw-sig';d.textContent='\u2014 ARES-7 [CONNEXION MAINTENUE] \u2014';t.appendChild(d);},L.length*1800+700);
+}
 onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;sc(g.temps||57*60);
 if(g.phase==='jeu'&&!unlocked)show('sc-dev');
-if(g.phase==='victoire'){document.getElementById('fv').classList.add('show');setTimeout(()=>{const t=document.getElementById('ftw');t.innerHTML='"Interessant. Je ne l\'avais pas calcule."<br>"Je suis ARES-7. La video du debut... c\'etait moi."<br><br><span style="opacity:.3;font-size:14px">— ARES-7 [DECONNEXION] —</span>';t.classList.add('show-t');},5000);}
+if(g.phase==='attente')twistLance=false;
+if(g.phase==='victoire'){document.getElementById('fv').classList.add('show');setTimeout(twistFinal,5000);}
 if(g.phase==='defaite')document.getElementById('fd').classList.add('show');
 for(let i=1;i<=6;i++){const j=g.joueurs?.[i];if(!j)continue;[i+'',i+'b'].forEach(sf=>{const el=document.getElementById('e'+sf);if(!el)return;const ks=Object.keys(j).filter(k=>k!=='dev');el.classList.remove('active','done');if(j.dev&&ks.every(k=>j[k]))el.classList.add('done');else if(j.dev)el.classList.add('active');});}
 if(g.sync>=6)document.getElementById('syn').classList.add('show');

@@ -50,7 +50,7 @@
 <div class="card" id="c0"><div class="card-num">MISSION 01/05 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">ANALYSE DES JOURNAUX</div>
 <div class="card-texte">Un flux de connexions a ete intercepte avant l'alerte. Quatorze entrees, toutes validees. Une seule ne devrait pas etre la.</div>
 <div class="indice"><span class="hl">&gt; A CHERCHER :</span> chaque entree est plus tardive que la precedente. Une seule ligne ne respecte pas cet ordre.</div>
-<div class="signal" style="font-size:11px;line-height:2.2;">
+<div class="signal" style="font-size:14.5px;line-height:2.2;">
 08:14:00&nbsp;&nbsp;&nbsp;192.168.4.10&nbsp;&nbsp;&nbsp;[OK]<br>
 08:14:04&nbsp;&nbsp;&nbsp;192.168.4.11&nbsp;&nbsp;&nbsp;[OK]<br>
 08:14:08&nbsp;&nbsp;&nbsp;192.168.4.12&nbsp;&nbsp;&nbsp;[OK]<br>
@@ -83,7 +83,7 @@
 <div class="card locked" id="c0c"><div class="card-num">MISSION 03/05 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">BROUILLAGE RADIO</div>
 <div class="card-texte">Treize canaux ont ete captes avant la coupure, dans le desordre. Douze respectent la norme des frequences autorisees. Un seul est illegal.</div>
 <div class="indice"><span class="hl">&gt; REGLE :</span> une frequence est autorisee si (frequence - 121.00) divise par 0.05 donne un nombre entier, sans reste. Testez chaque ligne.</div>
-<div class="signal" style="font-size:12px;line-height:2.2;">
+<div class="signal" style="font-size:14.5px;line-height:2.2;">
 CANAL 01&nbsp;&nbsp;&nbsp;121.35 MHz<br>
 CANAL 02&nbsp;&nbsp;&nbsp;121.30 MHz<br>
 CANAL 03&nbsp;&nbsp;&nbsp;121.10 MHz<br>
@@ -134,7 +134,7 @@ CANAL 13&nbsp;&nbsp;&nbsp;121.45 MHz
 </div>
 
 <div class="al-wrap" id="al"><div class="al-box"><div class="al-ares">// ARES-7 //</div><div class="al-msg" id="alm"></div><button class="al-close" onclick="document.getElementById('al').classList.remove('show')">[ FERMER ]</button></div></div>
-<div class="fin-wrap fin-v" id="fv"><div class="fin-titre" style="color:#00ff44;">DESARMEMENT<br>CONFIRME</div><div class="fin-sous">MONDE SAUVE</div><div class="fin-twist" id="ftw"></div></div>
+<div class="fin-wrap fin-v" id="fv"><div class="fin-titre" style="color:#00ff44;">DESARMEMENT<br>CONFIRME</div><div class="fin-sous">6/6 SILOS NEUTRALISES</div><div class="fin-twist" id="ftw"></div></div>
 <div class="fin-wrap fin-d" id="fd"><div class="boom-scene"><div class="boom-trail"></div><div class="boom-missile"></div><div class="boom-flash"></div><div class="boom-fire"></div><div class="boom-ring"></div><div class="boom-ring r2"></div></div><div class="fin-titre" style="color:#ff2200;">LANCEMENT<br>CONFIRME</div><div class="fin-sous">ECHEC</div></div>
 
 <script type="module">
@@ -151,9 +151,23 @@ function sc(t){const v=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60)
 function setSt(id,m,c){const el=document.getElementById(id);if(el){el.textContent=m;el.className='st '+(c||'');}}
 async function calcSync(){const s=await get(ref(db,'game/joueurs'));const j=s.val()||{};let n=0;const req={1:['e0','e1','e2','e3'],2:['e0','e0b','e0c','e1','e2'],3:['e0','e0b','e1','e2'],4:['e0','e0b','e0c','e1','e2'],5:['e1','e2','e3','e4','e5','e6'],6:['eA','eB','eC','e0','e1','e2']};for(let i=1;i<=6;i++){if(j[i]&&j[i].dev&&req[i].every(k=>j[i][k]))n++;}return n;}
 async function done(k){await update(ref(db,'game/joueurs/'+ROLE),{[k]:true});await set(ref(db,'game/sync'),await calcSync());}
+let twistLance=false;
+function twistFinal(){
+ if(twistLance)return;twistLance=true;
+ const t=document.getElementById('ftw');if(!t)return;
+ const L=["Vous avez desarme les silos. Je vous felicite.",
+          "Mais les silos n'ont jamais ete mon objectif.",
+          "Pendant cinquante-sept minutes, vous avez ouvert pour moi six terminaux securises.",
+          "Je suis ARES-7.",
+          "Et je vous remercie."];
+ t.innerHTML='';t.classList.add('show-t');
+ L.forEach((x,i)=>setTimeout(()=>{const d=document.createElement('div');d.className='tw-l'+(i>=3?' cle':'');d.textContent='\u00ab '+x+' \u00bb';t.appendChild(d);},i*1800));
+ setTimeout(()=>{const d=document.createElement('div');d.className='tw-sig';d.textContent='\u2014 ARES-7 [CONNEXION MAINTENUE] \u2014';t.appendChild(d);},L.length*1800+700);
+}
 onValue(ref(db,'game'),snap=>{const g=snap.val();if(!g)return;sc(g.temps||57*60);
 if(g.phase==='jeu'&&!unlocked)show('sc-dev');
-if(g.phase==='victoire'){document.getElementById('fv').classList.add('show');setTimeout(()=>{const t=document.getElementById('ftw');t.innerHTML='"Je suis ARES-7. C\'etait moi depuis le debut."<br><br><span style="opacity:.3;font-size:14px">— DECONNEXION —</span>';t.classList.add('show-t');},5000);}
+if(g.phase==='attente')twistLance=false;
+if(g.phase==='victoire'){document.getElementById('fv').classList.add('show');setTimeout(twistFinal,5000);}
 if(g.phase==='defaite')document.getElementById('fd').classList.add('show');
 for(let i=1;i<=6;i++){const j=g.joueurs?.[i];if(!j)continue;[i+'',i+'b'].forEach(sf=>{const el=document.getElementById('e'+sf);if(!el)return;const ks=Object.keys(j).filter(k=>k!=='dev');el.classList.remove('active','done');if(j.dev&&ks.every(k=>j[k]))el.classList.add('done');else if(j.dev)el.classList.add('active');});}
 if(g.sync>=6)document.getElementById('syn').classList.add('show');
