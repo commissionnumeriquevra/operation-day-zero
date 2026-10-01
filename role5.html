@@ -33,8 +33,8 @@ body::before{will-change:auto;transform:translateZ(0);}
 <div class="hdr"><div><div class="hdr-op">// ARES-7 — TERMINAL SECURISE //</div><div class="hdr-role">INTERCEPTEUR</div></div><div class="hdr-chrono" id="chr">57:00</div></div>
 <div class="equipe"><span class="eq-lbl">EQUIPE</span><div class="eq-dot" id="e1">C1</div><div class="eq-dot" id="e2">A2</div><div class="eq-dot" id="e3">I3</div><div class="eq-dot" id="e4">B4</div><div class="eq-dot mine" id="e5">I5</div><div class="eq-dot" id="e6">D6</div></div>
 <div class="card"><div class="card-num">// IDENTIFICATION REQUISE</div><div class="card-titre">DEVERROUILLAGE TERMINAL</div>
-<div class="card-texte">Criez vos mots a voix haute, reconstituez la phrase, puis entrez les 6 chiffres dans l'ordre des mots.</div>
-<div class="mot-box"><div class="mot-lbl">&gt; VOTRE MOT :</div><div class="mot-val">ETRE</div><div class="mot-chiffre">CHIFFRE : 9</div></div>
+<div class="card-texte">Votre mot est sur votre carte. Reconstituez la phrase avec vos cartes, puis entrez les 6 chiffres dans l'ordre des mots.</div>
+<div class="mot-box"><div class="mot-lbl">&gt; VOTRE CHIFFRE :</div><div class="mot-val">9</div></div>
 <div class="slots"><div class="slot active" id="s0"></div><div class="slot" id="s1"></div><div class="slot" id="s2"></div><div class="slot" id="s3"></div><div class="slot" id="s4"></div><div class="slot" id="s5"></div></div>
 <div class="numpad"><button class="nkey" onclick="kp('1')">1</button><button class="nkey" onclick="kp('2')">2</button><button class="nkey" onclick="kp('3')">3</button><button class="nkey" onclick="kp('4')">4</button><button class="nkey" onclick="kp('5')">5</button><button class="nkey" onclick="kp('6')">6</button><button class="nkey" onclick="kp('7')">7</button><button class="nkey" onclick="kp('8')">8</button><button class="nkey" onclick="kp('9')">9</button><button class="nkey" onclick="kp('0')">0</button></div>
 <div class="btn-row"><button class="rbtn primary" onclick="valDev()">[ VALIDER ]</button><button class="rbtn" onclick="clrDev()">[ EFFACER ]</button></div>
@@ -59,8 +59,8 @@ body::before{will-change:auto;transform:translateZ(0);}
 <div class="give-box" id="g1">TRANSMETS AU CRYPTOGRAPHE (PC 01)<b>CLE DE DECHIFFREMENT</b></div></div>
 
 <div class="card locked" id="c2"><div class="card-num">MISSION 02/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">VUE ORBITALE</div>
-<div class="indice">Une vue prise de tres haut. Six points.<br>Elle ne se lit qu'a travers un ecran.</div>
-<div class="input-row"><span class="input-lbl">&gt; SECTEUR :</span><input class="retro-inp" id="r2" maxlength="10" placeholder="le point le plus au nord"></div>
+<div class="indice">Un vieux messager noir ne dit plus rien,<br>mais il garde une vue prise de tres haut sous lui.<br>Six points. Elle ne se lit qu'a travers un ecran.</div>
+<div class="input-row"><span class="input-lbl">&gt; SECTEUR :</span><input class="retro-inp" id="r2" maxlength="10" placeholder="nom du secteur"></div>
 <div class="st" id="s2"></div>
 <div class="btn-row"><button class="rbtn primary" onclick="valM(2)">[ VALIDER ]</button><button class="rbtn" onclick="document.getElementById('r2').value=''">[ EFFACER ]</button></div>
 <div class="give-box" id="g2">TRANSMETS A L'ANALYSTE (PC 02)<b>CARTE DES LATITUDES</b></div></div>
@@ -73,7 +73,7 @@ body::before{will-change:auto;transform:translateZ(0);}
 
 <div class="card locked" id="c4"><div class="card-num">MISSION 04/06 — <span class="done-badge">[VALIDEE]</span></div><div class="card-titre">LE DEPOT</div>
 <div class="usb-box"><div class="usb-titre">/// MESSAGE DECHIFFRE ///</div>
-<div class="usb-texte" style="font-size:15px;line-height:2;opacity:.95;">"Le titre de l'article n'est pas pour vous.<br>Repetez-le a celle qui garde les mots.<br>Elle saura ce qu'elle doit vous remettre."</div></div>
+<div class="usb-texte" style="font-size:15px;line-height:2;opacity:.95;">"Vous avez la phrase. Il reste a la dire.<br><b>Allez voir la bibliothecaire</b>, la personne qui s'occupe des livres.<br>Dites-lui la phrase de l'affiche : elle vous remettra le depot."</div></div>
 <div class="st" id="s4"></div>
 <div class="btn-row"><button class="rbtn primary" onclick="valM(4)">[ DEPOT RECUPERE ]</button></div></div>
 
